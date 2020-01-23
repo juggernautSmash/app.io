@@ -6,12 +6,9 @@ module.exports = (model, Schema) => {
       type: String,
       uppercase: true,
     },
+    description: String,
     Owner: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
-    name: String,
-    email: String,
-    phone: String,
-    location: String,
-    timeZone: String,
+    assignedTo: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
     Company: [{ type: Schema.Types.ObjectId, ref: 'Company' }],
     Users: [{ type: Schema.Types.ObjectId, ref: 'Users' }]
   }, { timestamps: { createdAt: 'birthday', updatedAt: 'User Change' } })
