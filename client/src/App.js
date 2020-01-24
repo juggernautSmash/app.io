@@ -5,9 +5,8 @@ import FooterBar from './components/FooterBar'
 function App() {
   return (
     <div>
-        <NavBar />
-        Hello World!!!
-        <FooterBar />
+      <NavBar />
+      <FooterBar />
     </div>
   );
 }
