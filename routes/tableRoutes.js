@@ -18,56 +18,36 @@ module.exports = app => {
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })
+
     // add a table
     app.post('/tables', (req, res) => {
         Table.create(req.body)
             .then(({ _id }) => {
-                User.updateOne({
-                    _id: req.body.board
-                }, {
-                    $push: {
-                        board: _id
-                    }
+                User.updateOne({ _id: req.body.user }, { $push: { table: _id } })
+                Board.updateOne({ _id: req.body.board }, {
+                    $push: { table: _id }
                 })
-                Board.updateOne({
-                    _id: req.body.user
-                }, {
-                    $push: {
-                        board: _id
-                    }
-                })
-                    .then(table => { res.json(table) })
+                    .then(board => res.json(board))
                     .catch(e => console.log(e))
             })
             .catch(e => console.log(e))
 
     })
-    // update table
-    app.put('/tables/:id', (req, res) => {
-        Table.findByIdAndUpdate(req.params.id, { $set: req.body })
-            .then(({ _id }) => {
-                User.updateOne({
-                    _id: req.body.board
-                }, {
-                    $push: {
-                        board: _id
-                    }
-                })
-                Board.updateOne({
-                    _id: req.body.user
-                }, {
-                    $push: {
-                        board: _id
-                    }
-                })
-                    .then(table => { res.json(table) })
-                    .catch(e => console.log(e))
 
-            })
+    // update one table
+    app.put('/tables/:id', (req, res) => {
+        Table.updateOne({ _id: req.params.id }, { $set: req.body })
+        User.updateOne({ _id: req.body.user }, { $push: { table: req.params.id } })
+        Board.updateOne({ _id: req.body.board }, { $push: { table: req.params.id } })
+            .then(table => res.json(table))
+            .catch(e => console.log(e))
+
     })
+
+
     // remove table
     app.delete('/tables/:id', (req, res) => {
-        Table.findByIdAndRemove(req.params.id)
+        Table.deleteOne({ _id: req.params.id })
             .then(table => { res.json(table) })
             .catch(e => console.log(e))
 

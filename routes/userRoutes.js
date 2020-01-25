@@ -27,17 +27,22 @@ module.exports = app => {
             .catch(e => console.log(e))
 
     })
-    // update user  also add to company or board if needed
-    app.put('/users/:id', (req, res) => {
-        User.updateOne({ _id: req.params.id }, { $set: req.body })
-        .then(({ _id }) => {
-            Board.updateOne({ _id: req.body.board }, { $push: { user: _id } })
-            Company.updateOne({ _id: req.body.company }, { $push: { user: _id } })
-            .then(user => res.json(user))
-            .catch(e => console.log(e))
-    })})
+        // update one user
+        app.put('/users/:id', (req, res) => {
+            User.updateOne({ _id: req.params.id }, { $set: req.body })
+            Board.updateOne({ _id: req.body.board }, { $push: { user: req.params.id } })
+            Company.updateOne({ _id: req.body.company }, { $push: { user: req.params.id } })
+                .then(user => res.json(user))
+                .catch(e => console.log(e))
+        })
+
+
     // remove user
     app.delete('/users/:id', (req, res) => {
+        console.log(req.params)
+        console.log(req.body)
+        Board.updateOne({ _id: req.body.board }, { $pull: { user: req.params.id } })
+        Company.updateOne({ _id: req.body.company }, { $pull: { user: req.params.id } })
         User.deleteOne({ _id: req.params.id })
             .then(user => res.json(user))
             .catch(e => console.log(e))
