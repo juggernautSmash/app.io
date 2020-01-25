@@ -11,5 +11,4 @@ app.use(express.json())
 
 require('./routes')(app)
 
-
 app.listen(process.env.PORT || 3001)

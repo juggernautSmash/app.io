@@ -8,6 +8,5 @@ module.exports = (model, Schema) => {
     company: [{ type: Schema.Types.ObjectId, ref: 'Company' }],
     user: [{ type: Schema.Types.ObjectId, ref: 'User' }]
   }, { timestamps: { createdAt: 'birthday', updatedAt: 'User Change' }})
-
   return model('Board', Board)
 }
