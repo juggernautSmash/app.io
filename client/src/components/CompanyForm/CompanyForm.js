@@ -7,39 +7,39 @@ const CompanyForm = _ => {
     return (
         <form id="CFS">
             <h2>Company Sign-Up</h2>
-            <p>
+            <div>
                 <FormControl>
-                    <InputLabel htmlFor="my-input">Company Name</InputLabel>
-                    <Input id="my-input" aria-describedby="my-helper-text" />
-                    <FormHelperText id="my-helper-text"></FormHelperText>
+                    <InputLabel htmlFor="name">Company Name</InputLabel>
+                    <Input id="name" aria-describedby="name-helper-text" />
+                    <FormHelperText id="name-helper-text"></FormHelperText>
                 </FormControl>
-            </p>
-            <p>
+            </div>
+            <div>
                 <FormControl>
-                    <InputLabel htmlFor="my-input">Address</InputLabel>
-                    <Input id="my-input" aria-describedby="my-helper-text" />
-                    <FormHelperText id="my-helper-text"></FormHelperText>
+                    <InputLabel htmlFor="address">Address</InputLabel>
+                    <Input id="address" aria-describedby="address-helper-text" />
+                    <FormHelperText id="address-helper-text"></FormHelperText>
                 </FormControl>
-            </p>
-            <p>
+            </div>
+            <div>
                 <FormControl>
-                    <InputLabel htmlFor="my-input">Company Contact</InputLabel>
-                    <Input id="my-input" aria-describedby="my-helper-text" />
-                    <FormHelperText id="my-helper-text">Email</FormHelperText>
+                    <InputLabel htmlFor="contact">Company Contact</InputLabel>
+                    <Input id="contact" aria-describedby="contact-helper-text" />
+                    <FormHelperText id="contact-helper-text">Email</FormHelperText>
                 </FormControl>
-            </p>
-            <p>
+            </div>
+            <div>
                 <FormControl>
-                    <InputLabel htmlFor="my-input">Employee Emails</InputLabel>
-                    <Input id="my-input" aria-describedby="my-helper-text" />
-                    <FormHelperText id="my-helper-text"></FormHelperText>
+                    <InputLabel htmlFor="employess">Employees</InputLabel>
+                    <Input id="employess" aria-describedby="employess-helper-text" />
+                    <FormHelperText id="employess-helper-text"></FormHelperText>
                 </FormControl>
-            </p>
-            <p>
+            </div>
+            <div>
                 <Button>
                     Submit
                 </Button>
-            </p>
+            </div>
         </form>
     )
 }

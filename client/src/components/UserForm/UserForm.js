@@ -1,91 +1,69 @@
 import React from 'react'
 import './UserForm.css'
-import { FormControl, InputLabel, Input, FormHelperText, Button } from '@material-ui/core'
+import { FormControl, InputLabel, Input, FormHelperText, Button, Paper } from '@material-ui/core'
 
-<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
-
-<script>
-
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyBApRnJ1RfuBN8T7xLi2jeDF19v3VDfkEY",
-    authDomain: "app-io-f6252.firebaseapp.com",
-    databaseURL: "https://app-io-f6252.firebaseio.com",
-    projectId: "app-io-f6252",
-    storageBucket: "app-io-f6252.appspot.com",
-    messagingSenderId: "436155669423",
-    appId: "1:436155669423:web:c92be876535e3eb73d2d5a",
-    measurementId: "G-PEVS3L4YPC"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-
-</script>
-
-
-const CompanyForm = _ => {
+const UserForm = _ => {
     return (
+    <Paper>
         <form id="UFS">
-            <h2>Company Sign-Up</h2>
-            <p>
+            <h2>User Sign-Up</h2>
+            <div>
                 <FormControl>
-                    <InputLabel htmlFor="my-input">User Email</InputLabel>
-                    <Input id="my-input" aria-describedby="my-helper-text" />
-                    <FormHelperText id="my-helper-text"></FormHelperText>
+                    <InputLabel htmlFor="email">Email</InputLabel>
+                    <Input id="email" aria-describedby="email-helper-text" />
+                    <FormHelperText id="email-helper-text"></FormHelperText>
                 </FormControl>
-            </p>
-            <p>
+            </div>
+            <div>
                 <FormControl>
-                    <InputLabel htmlFor="my-input">Name</InputLabel>
-                    <Input id="my-input" aria-describedby="my-helper-text" />
-                    <FormHelperText id="my-helper-text"></FormHelperText>
+                    <InputLabel htmlFor="name">Name</InputLabel>
+                    <Input id="name" aria-describedby="name-helper-text" />
+                    <FormHelperText id="name-helper-text"></FormHelperText>
                 </FormControl>
-            </p>
-            <p>
+            </div>
+            <div>
                 <FormControl>
-                    <InputLabel htmlFor="my-input">Position</InputLabel>
-                    <Input id="my-input" aria-describedby="my-helper-text" />
-                    <FormHelperText id="my-helper-text"></FormHelperText>
+                    <InputLabel htmlFor="position">Position</InputLabel>
+                    <Input id="position" aria-describedby="position-helper-text" />
+                    <FormHelperText id="position-helper-text"></FormHelperText>
                 </FormControl>
-            </p>
-            <p>
+            </div>
+            <div>
                 <FormControl>
-                    <InputLabel htmlFor="my-input">Password</InputLabel>
-                    <Input id="my-input" aria-describedby="my-helper-text" />
-                    <FormHelperText id="my-helper-text"></FormHelperText>
+                    <InputLabel htmlFor="password">Password</InputLabel>
+                    <Input id="password" aria-describedby="password-helper-text" />
+                    <FormHelperText id="password-helper-text"></FormHelperText>
                 </FormControl>
-            </p>
-            <p>
+            </div>
+            <div>
                 <FormControl>
-                    <InputLabel htmlFor="my-input">Phone</InputLabel>
-                    <Input id="my-input" aria-describedby="my-helper-text" />
-                    <FormHelperText id="my-helper-text"></FormHelperText>
+                    <InputLabel htmlFor="phone">Phone</InputLabel>
+                    <Input id="phone" aria-describedby="phone-helper-text" />
+                    <FormHelperText id="phone-helper-text"></FormHelperText>
                 </FormControl>
-            </p>
-            <p>
+            </div>
+            <div>
                 <FormControl>
-                    <InputLabel htmlFor="my-input">Location</InputLabel>
-                    <Input id="my-input" aria-describedby="my-helper-text" />
-                    <FormHelperText id="my-helper-text"></FormHelperText>
+                    <InputLabel htmlFor="location">Location</InputLabel>
+                    <Input id="location" aria-describedby="location-helper-text" />
+                    <FormHelperText id="location-helper-text"></FormHelperText>
                 </FormControl>
-            </p>
-            <p>
+            </div>
+            <div>
                 <FormControl>
-                    <InputLabel htmlFor="my-input">Timezone</InputLabel>
-                    <Input id="my-input" aria-describedby="my-helper-text" />
-                    <FormHelperText id="my-helper-text"></FormHelperText>
+                    <InputLabel htmlFor="timezone">Timezone</InputLabel>
+                    <Input id="timezone" aria-describedby="timezone-helper-text" />
+                    <FormHelperText id="timezone-helper-text"></FormHelperText>
                 </FormControl>
-            </p>
-            <p>
+            </div>
+            <div>
                 <Button>
                     Submit
                 </Button>
-            </p>
+            </div>
         </form>
+    </Paper>
     )
 }
 
-export default CompanyForm
+export default UserForm

@@ -1,8 +1,8 @@
 import React from 'react'
-import { AppBar, Toolbar } from '@material-ui/core'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
+import { AppBar, Toolbar, Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+
+import { Link } from 'react-router-dom'
 
 // Icons
 import MenuIcon from '@material-ui/icons/Menu'
@@ -33,8 +33,8 @@ const NavBar = () => {
           <Typography variant="h6" className={classes.title}>
             app.io
           </Typography>
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">Sign Up</Button>
+          <Button><Link to="/login">Login</Link></Button>
+          <Button><Link to="/signup">Sign Up</Link></Button>
         </Toolbar>
       </AppBar>
     </div>
