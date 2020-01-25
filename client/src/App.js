@@ -1,6 +1,7 @@
 import React from 'react'
 import NavBar from './components/NavBar'
 import FooterBar from './components/FooterBar'
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase'
 
 function App() {
@@ -24,6 +25,18 @@ function App() {
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.auth.FacebookAuthProvider.PROVIDER_ID
     ]
+  }
+
+  class SignInScreen extends React.Component {
+    render() {
+      return (
+        <div>
+          <h1>My App</h1>
+          <p>Please sign-in:</p>
+          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+        </div>
+      );
+    }
   }
 
 
