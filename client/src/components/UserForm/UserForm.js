@@ -25,7 +25,7 @@ const CompanyForm = _ => {
                 <FormControl>
                     <InputLabel htmlFor="my-input">Position</InputLabel>
                     <Input id="my-input" aria-describedby="my-helper-text" />
-                    <FormHelperText id="my-helper-text">Email</FormHelperText>
+                    <FormHelperText id="my-helper-text"></FormHelperText>
                 </FormControl>
             </p>
             <p>
