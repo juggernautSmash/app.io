@@ -1,16 +1,21 @@
 module.exports = (model, Schema) => {
-
   const Table = new Schema({
-
     title: {
       type: String,
       uppercase: true,
     },
-    description: String,
-    Owner: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
-    assignedTo: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
-    Company: [{ type: Schema.Types.ObjectId, ref: 'Company' }],
-    Users: [{ type: Schema.Types.ObjectId, ref: 'Users' }]
+    owner: { type: Schema.Types.ObjectId, ref: 'User' },
+    task: Array,
+    assigned: Array ,
+    dueDate: String,
+    priority: String,
+    status: String,
+    text: String,
+    timeline: String,
+    date: Date,
+    numbers: Number,
+    board: [{ type: Schema.Types.ObjectId, ref: 'Board' }],
+    user: [{ type: Schema.Types.ObjectId, ref: 'User' }]
   }, { timestamps: { createdAt: 'birthday', updatedAt: 'User Change' } })
 
   return model('Table', Table)
