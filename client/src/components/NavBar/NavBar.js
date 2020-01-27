@@ -1,8 +1,8 @@
 import React from 'react'
-import { AppBar, Toolbar } from '@material-ui/core'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
+import { AppBar, Toolbar, Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+
+import { Link } from 'react-router-dom'
 
 // Icons
 import MenuIcon from '@material-ui/icons/Menu'
@@ -25,7 +25,7 @@ const NavBar = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed" color="primary">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
@@ -33,8 +33,8 @@ const NavBar = () => {
           <Typography variant="h6" className={classes.title}>
             app.io
           </Typography>
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">Sign Up</Button>
+          <Link to="/login"><Button>Login</Button></Link>
+          <Link to="/signup"><Button>Sign Up</Button></Link>
         </Toolbar>
       </AppBar>
     </div>

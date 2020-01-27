@@ -2,7 +2,7 @@ const { User, Board, Table, Company } = require('../models')
 
 module.exports = app => {
     // retrieve all boards
-    app.get('/boards', (req, res) => {
+    app.get('/api/boards', (req, res) => {
         Board.find()
             .populate('user')
             .populate('table')
@@ -11,7 +11,7 @@ module.exports = app => {
             .catch(e => console.log(e))
     })
     // retrieve one board
-    app.get('/boards/:id', (req, res) => {
+    app.get('/api/boards/:id', (req, res) => {
         Board.findOne({ _id: req.params.id })
             .populate('user')
             .populate('table')
@@ -20,7 +20,7 @@ module.exports = app => {
             .catch(e => console.log(e))
     })
     // add a board 
-    app.post('/boards', (req, res) => {
+    app.post('/api/boards', (req, res) => {
         Board.create(req.body)
             .then(({ _id }) => {
                 User.updateOne({ _id: req.body.user }, { $push: { board: _id } })
@@ -35,7 +35,7 @@ module.exports = app => {
 
     })
     // update one board
-    app.put('/boards/:id', (req, res) => {
+    app.put('/api/boards/:id', (req, res) => {
         Board.updateOne({ _id: req.params.id }, { $set: req.body })
         User.updateOne({ _id: req.body.user }, { $push: { board: req.params.id } })
         Company.updateOne({ _id: req.body.company }, { $push: { board: req.params.id } })

@@ -5,7 +5,8 @@ module.exports = (model, Schema) => {
     name: String,
     charts: Array,
     address: String,
-    contact: String,
+    phone: String,
+    email: String,
     user: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     board: [{ type: Schema.Types.ObjectId, ref: 'Board' }]
   }, { timestamps: { createdAt: 'birthday', updatedAt: 'Company Change' } })
