@@ -4,6 +4,7 @@ import FooterBar from './components/FooterBar'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase'
 
+import LandingPage from './components/LandingPage'
 import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
 
@@ -50,8 +51,8 @@ function App() {
     <BrowserRouter>
       <NavBarPage />
         <Switch>
-        <Route exact path="/login" render={_ => <LoginPage />}>
-        </Route>
+        <Route exact path="/" render={_ => <LandingPage />} />
+        <Route exact path="/login" render={_ => <LoginPage />} />
         <Route exact path="/signup" render={_ => <SignUpPage/> } />
       </Switch>
       <FooterBar />
