@@ -34,13 +34,9 @@ function App() {
     <BrowserRouter>
       <NavBarPage />
         <Switch>
-        <Route exact path="/" render={_ => <LandingPage />} />
-        <Route exact path="/login" render={_ => <LoginPage />} />
-        <Route exact path="/signup" render={_ => <SignUpPage/> } />
-        <Route path="/signup/company" render={ _=> <CompanySignUpPage /> } />
-        <Route path="/signup/employee" render={ _=> <UserSignUpPage /> } />
-        <Route path="/login/company" render={ _=> <CompanyLogin/> } />
-        <Route path="/login/employee" render={ _=>  <UserLoginPage /> } />
+        <Route exact path="/" render={ _ => <LandingPage />} />
+        <Route exact path="/login" render={ _ => <LoginPage />} />
+        <Route exact path="/signup" render={ _ => <SignUpPage/> } />
       </Switch>
       <FooterBar />
     </BrowserRouter>
