@@ -25,6 +25,10 @@ const SignUpPage = _ => {
         <Link to ="/signup/employee">
           <Button>Employee Sign Up</Button>
         </Link>
+        <Switch>
+          <Route path="/signup/company" render={ _=> <CompanySignUpPage /> } />
+          <Route path="/signup/employee" render={ _=> <UserSignUpPage /> } />
+        </Switch>
       </BrowserRouter>
     </Paper> 
   )
