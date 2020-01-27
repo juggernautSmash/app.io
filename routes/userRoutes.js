@@ -1,22 +1,29 @@
 const { User, Company, Board } = require('../models')
 
 module.exports = app => {
+    //add one user
+    app.post('/api/user', (req, res) => {
+        User.create(req.body)
+        .then( user => res.json(user) )
+        .catch( e => console.error(e))
+    })
+
     // retrieve all users
-    app.get('/users', (req, res) => {
+    app.get('/api/users', (req, res) => {
         User.find()
             .populate('board')
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })
     // retrieve one user
-    app.get('/users/:id', (req, res) => {
+    app.get('/api/users/:id', (req, res) => {
         User.findOne({ _id: req.params.id })
             .populate('board')
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })
     // add a user also add to company
-    app.post('/users', (req, res) => {
+    app.post('/api/users', (req, res) => {
         User.create(req.body)
             .then(({ _id }) => {
                 Board.updateOne({ _id: req.body.board }, { $push: { user: _id } })
@@ -28,7 +35,7 @@ module.exports = app => {
 
     })
         // update one user
-        app.put('/users/:id', (req, res) => {
+        app.put('/api/users/:id', (req, res) => {
             User.updateOne({ _id: req.params.id }, { $set: req.body })
             Board.updateOne({ _id: req.body.board }, { $push: { user: req.params.id } })
             Company.updateOne({ _id: req.body.company }, { $push: { user: req.params.id } })
@@ -38,7 +45,7 @@ module.exports = app => {
 
 
     // remove user
-    app.delete('/users/:id', (req, res) => {
+    app.delete('/api/users/:id', (req, res) => {
         console.log(req.params)
         console.log(req.body)
         Board.updateOne({ _id: req.body.board }, { $pull: { user: req.params.id } })

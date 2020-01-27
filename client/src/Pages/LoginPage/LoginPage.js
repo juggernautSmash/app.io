@@ -1,23 +1,30 @@
 import React from 'react'
 import { Paper, Button } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 import UserLogin from '../../components/UserLogin'
 import CompanyLogin from '../../components/CompanyLogin'
 
+const useStyles = makeStyles({
+  root: {
+    marginTop: "70px",
+  },
+})
+
 const LoginPage = _ => {
 
+  const styles = useStyles()
+
   return (  
-    <Paper variant="outlined" justify="center">
+    <Paper variant="outlined" justify="center" className={styles.root}>
       <BrowserRouter>
-        <Button onClick={() => console.log('Company login')}>
-          <Link to ="/login/company">Company Login</Link>
-        </Button>
+          <Link to ="/login/company">
+            <Button>Company Login</Button>
+          </Link>
         <br></br>
-        <Link to ="/login/employee" onClick={() => console.log('Employee login')}>Employee Login</Link>
-        <Switch>
-          <Route path="/login/company" render={ _=> <CompanyLogin/> } />
-          <Route path="/login/employee" render={ _=>  <UserLogin /> } />
-        </Switch>
+        <Link to ="/login/employee">
+          <Button>Employee Login</Button>
+        </Link>
       </BrowserRouter>
     </Paper>
   ) 

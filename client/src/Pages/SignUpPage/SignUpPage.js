@@ -1,23 +1,30 @@
 import React from 'react'
 import { Paper, Button } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
-import UserForm from '../../components/UserForm'
-import CompanyForm from '../../components/CompanyForm'
+import UserSignUpPage from '../UserSignUpPage'
+import CompanySignUpPage from '../CompanySignUpPage'
+
+const useStyles = makeStyles({
+  root: {
+    marginTop: "70px",
+  },
+})
 
 const SignUpPage = _ => {
 
+  const styles = useStyles()
+
   return (
-    <Paper variant="outlined" justify="center">
+    <Paper variant="outlined" justify="center" className={styles.root}>
       <BrowserRouter>
-        <Button onClick={() => console.log('Company clicked')}>
-        <Link to ="/signup/company">Company Sign Up</Link>
-        </Button>
+        <Link to ="/signup/company">
+        <Button>Company Sign Up</Button>
+        </Link>
         <br></br>
-        <Link to ="/signup/employee" onClick={() => console.log('Employee clicked')}>Employee Sign Up</Link>
-        <Switch>
-          <Route path="/signup/company" render={ _=> <CompanyForm /> } />
-          <Route path="/signup/employee" render={ _=> <UserForm /> } />
-        </Switch>
+        <Link to ="/signup/employee">
+          <Button>Employee Sign Up</Button>
+        </Link>
       </BrowserRouter>
     </Paper> 
   )

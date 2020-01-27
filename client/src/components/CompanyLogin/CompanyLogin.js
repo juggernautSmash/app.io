@@ -3,7 +3,6 @@ import { FormControl, InputLabel, Input, FormHelperText, Button } from '@materia
 
 const CompanyLogin = _ => {
   
-
   return (
     <form>
     <div>
