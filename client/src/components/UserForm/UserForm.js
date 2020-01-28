@@ -1,10 +1,11 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { green } from '@material-ui/core/colors'
+import { green, red } from '@material-ui/core/colors'
 import SignUpContext from '../../utils/SignUpContext'
 import { FormControl, Input, InputLabel, FormHelperText, Button,
     InputAdornment, IconButton, CircularProgress } from '@material-ui/core'
 import { Visibility, VisibilityOff } from '@material-ui/icons'
+import MuiAlert from '@material-ui/lab/Alert';
 import './UserForm.css'
 
 const useStyles = makeStyles(theme => ({    
@@ -51,25 +52,29 @@ const UserForm = _ => {
                         value={email}
                         variant="outlined"
                         error={
-                            errors.some( e => e.message.toLowerCase().includes('email') ? true : false )
+                            errors.some( e => (e.message.toLowerCase().includes('email') || e.message.toLowerCase().includes('all'))  ? true : false )
                         }
                     />
                     <FormHelperText id="email-helper-text">
                         {
-                            errors.some( e => e.message.toLowerCase().includes('email') ? 'error' : '' )
+                            errors.some( e => 
+                                (e.message.toLowerCase().includes('email') || e.message.toLowerCase().includes('all')) ? <span>{e.message}</span> : '')
                         }
                     </FormHelperText>
                 </FormControl>
             </div>
             <div>
                 <FormControl>
-                    <InputLabel htmlFor="firstName">First Name:  (required)</InputLabel>
+                    <InputLabel htmlFor="firstName">First Name: (required)</InputLabel>
                     <Input 
                         id="firstName" 
                         name="firstName"
                         aria-describedby="firstName-helper-text" 
                         onChange={handleInputChange}
                         value={firstName}
+                        error={
+                            errors.some( e =>  e.message.toLowerCase().includes('all') ? true : false )
+                        }
                     />
                     <FormHelperText id="firstName-helper-text"></FormHelperText>
                 </FormControl>
@@ -83,6 +88,9 @@ const UserForm = _ => {
                         aria-describedby="lastName-helper-text" 
                         onChange={handleInputChange}
                         value={lastName}
+                        error={
+                            errors.some( e =>  e.message.toLowerCase().includes('all') ? true : false )
+                        }
                     />
                     <FormHelperText id="lastName-helper-text"></FormHelperText>
                 </FormControl>
@@ -162,7 +170,7 @@ const UserForm = _ => {
                             </InputAdornment>
                           }
                         error={
-                            errors.some( e => e.message.toLowerCase().includes('password') ? true : false )
+                            errors.some( e => (e.message.toLowerCase().includes('password') || e.message.toLowerCase().includes('all')) ? true : false )
                         }
                     />
                     <FormHelperText id="password-helper-text">
@@ -194,7 +202,7 @@ const UserForm = _ => {
                             </InputAdornment>
                           }
                         error={
-                            errors.some( e => e.message.toLowerCase().includes('password') ? true : false )
+                            errors.some( e => (e.message.toLowerCase().includes('password') || e.message.toLowerCase().includes('all')) ? true : false )
                         }
                     />
                     <FormHelperText id="verifyPassword-helper-text">
@@ -203,6 +211,23 @@ const UserForm = _ => {
                         }
                     </FormHelperText>
                 </FormControl>
+            </div>
+            <div>
+                {
+                    errors.length > 0 && (
+                        <MuiAlert severity="error" variant="filled">
+                            <h3>Error</h3>
+                            <p>
+                                { errors.some( e => e.message.toLowerCase().includes('all')  ? e.message : '' )}
+                                { errors.some( e => e.message.toLowerCase().includes('email')  ? e.message : '' )}
+                                { errors.some( e => e.message.toLowerCase().includes('first name')  ? e.message : '' )}
+                                { errors.some( e => e.message.toLowerCase().includes('last name')  ? e.message : '' )}
+                                { errors.some( e => e.message.toLowerCase().includes('password')  ? e.message : '' )}
+                                { errors.some( e => e.message.toLowerCase().includes('verify password') ? e.message : '' )}
+                            </p>
+                        </MuiAlert>
+                    )
+                }
             </div>
             <div className={styles.wrapper}>
                 <Button 
