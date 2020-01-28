@@ -4,7 +4,8 @@
   "description": "Project 3: A more complicated to-do list",
   "main": "server.js",
   "engines": {
-    "node": "12.x"
+    "node": "12.x",
+    "npm": "6.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,6 +14,7 @@
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "client": "cd client && npm run start",
     "build": "cd client && npm run build",
+    "install": "cd client && npm install",
     "heroku-postbuild": "npm run build"
   },
   "repository": {

@@ -23,8 +23,6 @@ const UserSignUpPage = () => {
   })
 
   signUpState.isFormEmpty = ({email, firstName, lastName, password, verifyPassword}) => {
-    console.log(`
-    ${email.length}`)
     return !email.length || !firstName.length || !lastName.length || !password.length || !verifyPassword.length 
   }
 
@@ -39,17 +37,17 @@ const UserSignUpPage = () => {
   }
 
   signUpState.isSignUpValid = () => {
-    let error;
+    let errors =  JSON.parse(JSON.stringify(signUpState.errors))
     if(signUpState.isFormEmpty(signUpState)){
       // error if the form is empty
-      error = { message: "Please fill in all required fields"}
-      setSignUpState({ ...signUpState, errors: error})
+      errors.push({ message: "Please fill in all required fields"})
+      setSignUpState({ ...signUpState, errors})
       return false
 
     } else if (!signUpState.isPasswordValid(signUpState)){
       // error if password is not valid
-      error = { message: "Password is invalid"}
-      setSignUpState({ ...signUpState, errors: error})
+      errors.push({ message: "Password is invalid" })
+      setSignUpState({ ...signUpState, errors})
     } else {
       // form is valid
       return true 
@@ -63,6 +61,7 @@ const UserSignUpPage = () => {
   signUpState.handleInputChange = e => setSignUpState({ ...signUpState, [e.target.name]: e.target.value })
   
   signUpState.handleSubmitButton = e => {
+    console.log('Submit button pressed')
     e.preventDefault()
     if(signUpState.isSignUpValid()){
       setSignUpState({ ...signUpState, errors: [], isLoading: true})
@@ -90,7 +89,6 @@ const UserSignUpPage = () => {
       })
       .catch( e => console.error(e))
     }
-    console.log('Submit button pressed')
   }
 
   return (
