@@ -58,6 +58,10 @@ const UserSignUpPage = () => {
     }
   }
 
+  signUpState.addLocalStorage = user => {
+    console.log('add local storage loggin real good')
+  }
+
   signUpState.handleShowPassword = e => setSignUpState({ ...signUpState, showPassword: !signUpState.showPassword})
 
   signUpState.handleMouseDownPassword = e => e.preventDefault()
@@ -74,6 +78,7 @@ const UserSignUpPage = () => {
         .then( createdUser => {
           console.log('successfully created user in firebase')
           console.log(createdUser)
+          signUpState.addLocalStorage(createdUser)
           setSignUpState({ ...signUpState, loading: false})
           axios.post('/api/user', {
             title: signUpState.title,
