@@ -41,11 +41,6 @@ const UserForm = _ => {
                 password, verifyPassword } = React.useContext(SignUpContext)
 
     return (
-<<<<<<< HEAD
-        <form id="UFS">
-            <h2>User Sign-Up</h2>
-            <p>
-=======
         <form id="UFS" >
             <h2 id="user-modal-title">User Sign-Up</h2>
             <div>
@@ -82,7 +77,6 @@ const UserForm = _ => {
                 </FormControl>
             </div>
             <div>
->>>>>>> 8e9c9cfdc093516a3ed7bc5a19ea168653fe5963
                 <FormControl>
                     <InputLabel htmlFor="lastName">Last Name:  (required)</InputLabel>
                     <Input 
