@@ -17,6 +17,13 @@ module.exports = app => {
             .catch(e => console.log(e))
     })
     // get one company
+
+    app.get('/api/companies/:name', (req, res) => {
+        Company.findOne({ name: req.params.name })
+            .then(company => res.json(company))
+            .catch(e => console.log(e))
+    })
+
     app.get('/api/companies/:id', (req, res) => {
         Company.findOne({ _id: req.params.id })
             .populate('users')
