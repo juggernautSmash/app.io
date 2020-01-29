@@ -20,42 +20,31 @@ const CompanySignUp = () => {
 
   signUpState.isFormEmpty = ({email, companyName, password, verifyPassword}) => {
     if(!email.length){
-        signUpState.logError('Please enter the company email')
+        signUpState.logError({ message: 'Please enter the company email' })
         return true
     } else if(!companyName.length){
-        signUpState.logError('Please enter the company name')
+        signUpState.logError({ message: 'Please enter the company name' })
         return true
     } else if(!password.length || !verifyPassword.length){
-        signUpState.logError('Please enter a password')
+        signUpState.logError({ message: 'Please enter a password' })
         return true
     } else {
         return false
     }
 
   }
-
-  signUpState.isPasswordValid = ({password, verifyPassword}) => {
-    if(password.length < 8 || verifyPassword < 8){
-      return false
-    } else if(password !== verifyPassword){
-      return false
-    } else {
-      return true
-    }
-  }
-
   signUpState.logError = errorMessage => {
     let errors =  JSON.parse(JSON.stringify(signUpState.errors))
-    errors.push({message: errorMessage})
+    errors.push(errorMessage)
     setSignUpState({ ...signUpState, errors})
   }
 
   signUpState.isPasswordValid = ({password, verifyPassword}) => {
     if(password.length < 8 || verifyPassword < 8){
-      signUpState.logError('Password must contain 8 characters')
+      signUpState.logError({ message: 'Password must contain 8 characters'})
       return false
     } else if(password !== verifyPassword){
-      signUpState.logError('Passwords do not match')
+      signUpState.logError({ message: 'Passwords do not match'})
       return false
     } else {
       return true
@@ -65,11 +54,10 @@ const CompanySignUp = () => {
   signUpState.isSignUpValid = () => {
     if(signUpState.isFormEmpty(signUpState)){
       // error if the form is empty
-      signUpState.logError('Please fill in all required fields')
+      signUpState.logError({ message: 'Please fill in all required fields' })
       return false
     } else if (!signUpState.isPasswordValid(signUpState)){
       // error if password is not valid
-      signUpState.logError('Password is invalid')
       return false
     } else {
       // form is valid
@@ -93,6 +81,7 @@ const CompanySignUp = () => {
       firebase.auth()
         .createUserWithEmailAndPassword(signUpState.email, signUpState.password)
         .then( createdUser => {
+          console.log('firebase successful creating a comapny')
           console.log(createdUser)
           setSignUpState({ ...signUpState, loading: false})
           axios.post('/api/company', {
@@ -105,9 +94,15 @@ const CompanySignUp = () => {
             console.log(mongoCompany)
           }).catch( e => console.log(e)) // catch from axios.post
         }).catch( e => { //catch from firebase
+          console.log('catch from firebase')
           console.log(e)
-          setSignUpState({ ...signUpState, errors: e, isLoading: false})
-        })
+          signUpState.logError(e)
+          setSignUpState({ ...signUpState, isLoading: false})
+        }) // end catch from firebase
+    } // end if statement
+    else {
+      console.log('Error signing up')
+      console.log(signUpState.errors)
     }
   }
 
