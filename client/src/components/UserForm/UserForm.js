@@ -170,7 +170,7 @@ const UserForm = _ => {
                             errors.some( e => (e.message.toLowerCase().includes('password') || e.message.toLowerCase().includes('all')) ? true : false )
                         }
                     />
-                    <FormHelperText id="password-helper-text"></FormHelperText>
+                    <FormHelperText id="password-helper-text">Required</FormHelperText>
                 </FormControl>
             </div>
             <div>
@@ -199,7 +199,7 @@ const UserForm = _ => {
                             errors.some( e => (e.message.toLowerCase().includes('password') || e.message.toLowerCase().includes('all')) ? true : false )
                         }
                     />
-                    <FormHelperText id="verifyPassword-helper-text"></FormHelperText>
+                    <FormHelperText id="verifyPassword-helper-text">Required</FormHelperText>
                 </FormControl>
             </div>
             <div>
