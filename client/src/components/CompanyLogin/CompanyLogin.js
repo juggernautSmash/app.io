@@ -3,6 +3,7 @@ import { FormControl, InputLabel, Input, FormHelperText, Button,
   InputAdornment,  IconButton} from '@material-ui/core'
 import { Visibility, VisibilityOff } from '@material-ui/icons'
 import LoginContext from '../../utils/LoginContext'
+import './CompanyLogin.css'
 
 const CompanyLogin = _ => {
 
@@ -10,7 +11,7 @@ const CompanyLogin = _ => {
     handleInputChange, handleSubmitButton, handleShowPassword, handleMouseDownPassword } = React.useContext(LoginContext)
   
   return (
-    <form>
+    <form id="CL">
       <div>
         <h1>Login to app.io</h1>
         <FormControl>
