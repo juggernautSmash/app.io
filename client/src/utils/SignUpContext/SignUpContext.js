@@ -1,6 +1,7 @@
 import React from 'react'
 
 const SignUpContext = React.createContext({
+  uid: '',
   title: '',
   photo: '',
   name: '',

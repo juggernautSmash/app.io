@@ -1,6 +1,7 @@
 import React from 'react'
 
 const LoginContext = React.createContext({
+  uid:'',
   email: '',
   password: '',
   showPassword: '',
@@ -9,7 +10,8 @@ const LoginContext = React.createContext({
   handleSubmitButton: () => {},
   handleShowPassword: () => {},
   handleMouseDownPassword: () => {},
-  isLoginValid: () => {}
+  isLoginValid: () => {},
+  addLocalStorage: () => {}
 })
 
 export default LoginContext
