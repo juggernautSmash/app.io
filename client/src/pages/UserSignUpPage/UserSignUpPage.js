@@ -14,7 +14,7 @@ const UserSignUpPage = () => {
     email: '',
     phone: '',
     location: '',
-    companyName: '',
+    company: '',
     password: '',
     verifyPassword: '',
     errors: [],
@@ -89,7 +89,7 @@ const UserSignUpPage = () => {
             email: signUpState.email,
             phone: signUpState.phone,
             location: signUpState.location,
-            companyName: signUpState.companyName
+            company: signUpState.companyName
           }
 
           signUpState.addLocalStorage("fUser", createdUser.user)
@@ -113,7 +113,6 @@ const UserSignUpPage = () => {
     else {
       console.log('Error signing up')
       console.log(signUpState.errors)
-      setSignUpState({ ...signUpState, isLoading: false })
     }
   }
 

@@ -6,14 +6,15 @@ const ProfileContext = React.createContext({
   photo: '',
   firstName: '',
   lastName: '',
-  companyName: '',
+  company: '',
   email: '',
   phone: '',
   location: '',
   timezone: '',
-  companyName: '',
   address: '',
-  contact: ''
+  contact: '',
+  employees: [],
+  getEmployees: () => {}
 })
 
 export default ProfileContext

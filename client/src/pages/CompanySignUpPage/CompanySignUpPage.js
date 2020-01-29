@@ -10,7 +10,7 @@ const CompanySignUp = () => {
     email: '',
     phone: '',
     address: '',
-    companyName: '',
+    company: '',
     password: '',
     verifyPassword: '',
     errors: [],
@@ -91,7 +91,7 @@ const CompanySignUp = () => {
 
           let company = {
             uid: createdUser.user.uid,
-            name: signUpState.name,
+            name: signUpState.company,
             email: signUpState.email,
             phone: signUpState.phone,
             address: signUpState.address

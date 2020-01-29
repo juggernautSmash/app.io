@@ -46,6 +46,7 @@ const UserLoginPage = _ => {
             .then(data => {
               console.log(`here dat unique user ID:`)
               console.log(data)
+              // Store data from mongoDb to localStorage
               loginState.addLocalStorage( 'mUser', data)
             }).catch(e => console.log(e)) // axios catch
 

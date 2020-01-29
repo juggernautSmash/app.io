@@ -7,7 +7,8 @@ import Dashboard from './components/Dashboard'
 import NavBarPage from './pages/NavBarPage'
 import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
-import ProfileDisplay from './components/ProfileDisplay'
+import ProfileDisplayPage from './pages/ProfileDisplayPage'
+import CompanyDisplayPage from './pages/CompanyDisplayPage/CompanyDisplayPage'
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
@@ -21,7 +22,8 @@ function App() {
           <Route exact path="/login" render={ _ => <LoginPage />} />
           <Route exact path="/signup" render={ _ => <SignUpPage /> } />
           <Route exact path="/dashboard" render={ _ => <Dashboard /> } />
-          <Route exact path="/userprofile" render={ _ => <ProfileDisplay />} />
+          <Route exact path="/userprofile" render={ _ => <ProfileDisplayPage />} />
+          <Route exact path="/companyprofile" render={ _ => <CompanyDisplayPage />} />
       </Switch>
       <FooterBar />
     </BrowserRouter>

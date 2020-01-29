@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 
-import './ProfileDisplay.css'
 import ProfileContext from '../../utils/ProfileContext'
 
 const useStyles = makeStyles(theme => ({
@@ -32,11 +31,11 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const ProfileDisplay = () => {
-  
+const CompanyDisplay = _ => {
+
   const classes = useStyles()
 
-  const { firstName, lastName, title, email, phone, location, timezone } = React.useContext(ProfileContext)
+  const { company, email, phone, address, employees } = React.useContext(ProfileContext)
 
   return (
     <Card className="card">
@@ -44,37 +43,33 @@ const ProfileDisplay = () => {
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           {/* add photo here */}
-          userPic
+          Company Picture
         </Avatar>
       </div>
       <div className = {classes.form}>
         <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <Typography color="textSecondary" variant="h5" className={classes.attr}>Name</Typography>
-            <Typography color="textSecondary" variant="h5" className={classes.attr}>Title</Typography>
-            <Typography color="textSecondary" variant="h5" className={classes.attr}>Email</Typography>
-            <Typography color="textSecondary" variant="h5" className={classes.attr}>Phone</Typography>
-            <Typography color="textSecondary" variant="h5" className={classes.attr}>Location</Typography>
-            <Typography color="textSecondary" variant="h5" className={classes.attr}>TimeZone</Typography>
+          <Grid item xs={4}>
+            <Typography color="textSecondary" variant="h5" className={classes.attr}>Company</Typography>
+            <Typography color="textSecondary" variant="h5" className={classes.attr}>Address</Typography>
+            <Typography color="textSecondary" variant="h5" className={classes.attr}>Contact</Typography>
+            <Typography color="textSecondary" variant="h5" className={classes.attr}>Employees</Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <Typography variant="h5" className={classes.attr}>
-              {firstName + ' ' + lastName}
+              {company}
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              {title}
+              {address}
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              {email}
+              <p>{email}</p>
+              <p>{phone}</p>
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              {phone}
-            </Typography>
-            <Typography variant="h5" className={classes.attr}>
-              {location}
-            </Typography>
-            <Typography variant="h5" className={classes.attr}>
-              {timezone}
+              {employees ? employees.map( (employee, i) => 
+                <p key={i}>{employee.name} : {employee.email}</p>
+                ) : null
+                }
             </Typography>
             </Grid>
           </Grid>
@@ -82,14 +77,5 @@ const ProfileDisplay = () => {
     </Card>
   )
 }
-// const SignUpForm = () => {
-//   return (
-//     <div>
-//       THis is the signUpForm
-//     </div>
-//   )
-// }
 
-
-
-export default ProfileDisplay
+export default CompanyDisplay
