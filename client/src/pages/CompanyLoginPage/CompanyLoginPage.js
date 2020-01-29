@@ -18,8 +18,9 @@ const CompanyLoginPage = _ => {
 
   loginState.handleInputChange = e => setLoginState({ ...loginState, [e.target.name]: e.target.value })
 
-  loginState.addLocalStorage = company => {
-    localStorage.setItem("company", JSON.stringify(company))
+  loginState.addLocalStorage = (key, value) => {
+    console.log('add local storage loggin real good')
+    localStorage.setItem(key, JSON.stringify(value))
   }
 
   loginState.handleSubmitButton = e => {
@@ -30,11 +31,12 @@ const CompanyLoginPage = _ => {
         .signInWithEmailAndPassword(loginState.email, loginState.password)
         .then(signedInUser => {
           console.log(signedInUser)
-          loginState.addLocalStorage(signedInUser.user)
+          loginState.addLocalStorage( 'fUser', signedInUser.user)
           axios.get(`/api/company/${signedInUser.user.uid}`)
             .then(data => {
               console.log(`here dat unique company ID:`)
               console.log(data)
+              loginState.addLocalStorage( 'mUser', data)
             }).catch(e => console.log(e))
         })
         .catch(e => console.error(e))

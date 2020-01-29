@@ -34,7 +34,7 @@ const CompanyForm = _ => {
 
     const styles = useStyles()
     
-    const { companyName, email, address, phone, handleInputChange, handleSubmitButton, showPassword, handleShowPassword,
+    const { company, email, address, phone, handleInputChange, handleSubmitButton, showPassword, handleShowPassword,
          handleMouseDownPassword, errors, isLoading, password, verifyPassword  } = React.useContext(SignUpContext)
 
     return (
@@ -48,7 +48,7 @@ const CompanyForm = _ => {
                         name="companyName"
                         aria-describedby="companyName-helper-text"
                         onChange={handleInputChange}
-                        value={companyName}
+                        value={company}
                         error={
                             errors.some( e => (e.message.toLowerCase().includes('name') || e.message.toLowerCase().includes('all'))  ? true : false )
                         }

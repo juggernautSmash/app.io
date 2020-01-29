@@ -1,13 +1,39 @@
 import React from 'react'
 import './UserLogin.css'
 import { FormControl, InputLabel, Input, FormHelperText, Button,
-  InputAdornment,  IconButton} from '@material-ui/core'
+  InputAdornment,  IconButton, CircularProgress } from '@material-ui/core'
 import { Visibility, VisibilityOff } from '@material-ui/icons'
+import { makeStyles } from '@material-ui/core/styles'
+import { green, red } from '@material-ui/core/colors'
+
 import LoginContext from '../../utils/LoginContext'
+
+const useStyles = makeStyles(theme => ({    
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  }
+}))
 
 const UserLogin = _ => {
 
-  const { email, password, showPassword, errors,
+  const styles = useStyles()
+
+  const { email, password, showPassword, errors, isLoading,
     handleInputChange, handleSubmitButton, handleShowPassword, handleMouseDownPassword } = React.useContext(LoginContext)
 
   return (
@@ -51,8 +77,14 @@ const UserLogin = _ => {
           <FormHelperText id="password-helper-text"></FormHelperText>
         </FormControl>
       </div>
-      <div>
-        <Button onClick={handleSubmitButton}>Submit</Button>
+      <div className={styles.wrapper}>
+        <Button 
+            disabled={isLoading}
+            onClick={handleSubmitButton}
+        >
+            Submit
+        </Button>
+        {isLoading && <CircularProgress size={24} className={styles.buttonProgress} />}
       </div>
     </form>
   )

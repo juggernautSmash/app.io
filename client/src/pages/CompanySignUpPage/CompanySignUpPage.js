@@ -10,7 +10,7 @@ const CompanySignUp = () => {
     email: '',
     phone: '',
     address: '',
-    companyName: '',
+    company: '',
     password: '',
     verifyPassword: '',
     errors: [],
@@ -31,8 +31,8 @@ const CompanySignUp = () => {
     } else {
       return false
     }
-
   }
+
   signUpState.logError = errorMessage => {
     let errors = JSON.parse(JSON.stringify(signUpState.errors))
     errors.push(errorMessage)
@@ -65,9 +65,9 @@ const CompanySignUp = () => {
     }
   }
 
-  signUpState.addLocalStorage = company => {
+  signUpState.addLocalStorage = (key, value) => {
     console.log('add local storage loggin real good')
-    localStorage.setItem("company", JSON.stringify(company))
+    localStorage.setItem(key, JSON.stringify(value))
   }
 
   signUpState.handleInputChange = e => setSignUpState({ ...signUpState, [e.target.name]: e.target.value })
@@ -88,18 +88,28 @@ const CompanySignUp = () => {
         .then(createdUser => {
           console.log('firebase successful creating a comapny')
           console.log(createdUser)
-          signUpState.addLocalStorage(createdUser.user)
-          setSignUpState({ ...signUpState, loading: false })
-          axios.post('/api/company', {
+
+          let company = {
             uid: createdUser.user.uid,
-            name: signUpState.name,
+            name: signUpState.company,
             email: signUpState.email,
             phone: signUpState.phone,
             address: signUpState.address
-          }).then(mongoCompany => {
+          }
+
+          signUpState.addLocalStorage( 'fCompany', createdUser.user)
+          
+          axios.post('/api/company', company)
+          .then(mongoCompany => {
             console.log('company created in mongoDb')
             console.log(mongoCompany)
+
+            signUpState.addLocalStorage( 'mCompany', mongoCompany)
+
           }).catch(e => console.log(e)) // catch from axios.post
+
+          setSignUpState({ ...signUpState, loading: false })
+
         }).catch(e => { //catch from firebase
           console.log('catch from firebase')
           console.log(e)

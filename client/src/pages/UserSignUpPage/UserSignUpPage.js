@@ -14,7 +14,7 @@ const UserSignUpPage = () => {
     email: '',
     phone: '',
     location: '',
-    companyName: '',
+    company: '',
     password: '',
     verifyPassword: '',
     errors: [],
@@ -58,9 +58,9 @@ const UserSignUpPage = () => {
     }
   }
 
-  signUpState.addLocalStorage = user => {
+  signUpState.addLocalStorage = (key, value) => {
     console.log('add local storage loggin real good')
-    localStorage.setItem("user", JSON.stringify(user))
+    localStorage.setItem(key, JSON.stringify(value))
   }
 
   signUpState.handleShowPassword = e => setSignUpState({ ...signUpState, showPassword: !signUpState.showPassword })
@@ -80,9 +80,8 @@ const UserSignUpPage = () => {
           console.log('firebase successful creating a user')
           console.log('successfully created user in firebase')
           console.log(createdUser)
-          signUpState.addLocalStorage(createdUser.user)
-          setSignUpState({ ...signUpState, loading: false })
-          axios.post('/api/user', {
+
+          let user = {
             uid: createdUser.user.uid,
             title: signUpState.title,
             firstName: signUpState.firstName,
@@ -90,11 +89,20 @@ const UserSignUpPage = () => {
             email: signUpState.email,
             phone: signUpState.phone,
             location: signUpState.location,
-            companyName: signUpState.companyName
-          }).then(user => { // then from axios post
+            company: signUpState.companyName
+          }
+
+          signUpState.addLocalStorage("fUser", createdUser.user)
+
+          axios.post('/api/user', user)
+          .then( ({data}) => { // then from axios post
             console.log('user created in mongoDb')
-            console.log(user)
+            console.log(data)
+            signUpState.addLocalStorage('mUser', data)
           }).catch(e => console.error(e)) //catch from axios.post
+
+          setSignUpState({ ...signUpState, loading: false })
+
         }).catch(e => { // catch from firebase
           console.log('catch from firebase')
           console.log(e)

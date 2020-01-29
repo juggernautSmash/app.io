@@ -1,18 +1,20 @@
 import React from 'react'
 
 const ProfileContext = React.createContext({
+  uid: '',
   title: '',
   photo: '',
   firstName: '',
   lastName: '',
-  companyName: '',
+  company: '',
   email: '',
   phone: '',
   location: '',
   timezone: '',
-  companyName: '',
   address: '',
-  contact: ''
+  contact: '',
+  employees: [],
+  getEmployees: () => {}
 })
 
 export default ProfileContext
