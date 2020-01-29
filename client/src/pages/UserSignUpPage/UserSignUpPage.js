@@ -72,6 +72,7 @@ const UserSignUpPage = () => {
       firebase.auth()
         .createUserWithEmailAndPassword(signUpState.email, signUpState.password)
         .then( createdUser => {
+          console.log('firebase successful creating a user')
           console.log('successfully created user in firebase')
           console.log(createdUser)
           setSignUpState({ ...signUpState, loading: false})
@@ -88,6 +89,7 @@ const UserSignUpPage = () => {
             console.log(user)
           }).catch( e => console.error(e)) //catch from axios.post
         }).catch( e => { // catch from firebase
+          console.log('catch from firebase')
           console.log(e)
           signUpState.logError(e)
           setSignUpState({ ...signUpState, isLoading: false})
