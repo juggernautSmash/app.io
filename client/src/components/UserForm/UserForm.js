@@ -57,12 +57,7 @@ const UserForm = _ => {
                             errors.some( e => (e.message.toLowerCase().includes('email') || e.message.toLowerCase().includes('all'))  ? true : false )
                         }
                     />
-                    <FormHelperText id="email-helper-text">
-                        {
-                            errors.some( e => 
-                                (e.message.toLowerCase().includes('email') || e.message.toLowerCase().includes('all')) ? <span>{e.message}</span> : '')
-                        }
-                    </FormHelperText>
+                    <FormHelperText id="email-helper-text"></FormHelperText>
                 </FormControl>
             </div>
             <div>
@@ -175,11 +170,7 @@ const UserForm = _ => {
                             errors.some( e => (e.message.toLowerCase().includes('password') || e.message.toLowerCase().includes('all')) ? true : false )
                         }
                     />
-                    <FormHelperText id="password-helper-text">
-                        {
-                            errors.some( e => e.message.toLowerCase().includes('password') ? e.message : '' )
-                        }
-                    </FormHelperText>
+                    <FormHelperText id="password-helper-text"></FormHelperText>
                 </FormControl>
             </div>
             <div>
@@ -208,11 +199,7 @@ const UserForm = _ => {
                             errors.some( e => (e.message.toLowerCase().includes('password') || e.message.toLowerCase().includes('all')) ? true : false )
                         }
                     />
-                    <FormHelperText id="verifyPassword-helper-text">
-                        {
-                            errors.some( e => e.message.toLowerCase().includes('password') ? e.message : '' )
-                        }
-                    </FormHelperText>
+                    <FormHelperText id="verifyPassword-helper-text"></FormHelperText>
                 </FormControl>
             </div>
             <div>
