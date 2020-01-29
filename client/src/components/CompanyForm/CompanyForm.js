@@ -42,7 +42,7 @@ const CompanyForm = _ => {
             <h2 id="company-modal-title">Company Sign-Up</h2>
             <div>
                 <FormControl>
-                    <InputLabel htmlFor="companyName">Company Name (required)</InputLabel>
+                    <InputLabel htmlFor="companyName">Company Name</InputLabel>
                     <Input
                         id="companyName"
                         name="companyName"
@@ -53,12 +53,12 @@ const CompanyForm = _ => {
                             errors.some( e => (e.message.toLowerCase().includes('name') || e.message.toLowerCase().includes('all'))  ? true : false )
                         }
                     />
-                    <FormHelperText id="companyName-helper-text"></FormHelperText>
+                    <FormHelperText id="companyName-helper-text">Required</FormHelperText>
                 </FormControl>
             </div>
             <div>
                 <FormControl>
-                    <InputLabel htmlFor="email">Company Email (required)</InputLabel>
+                    <InputLabel htmlFor="email">Company Email</InputLabel>
                     <Input
                         id="email"
                         name="email"
@@ -69,7 +69,7 @@ const CompanyForm = _ => {
                             errors.some( e => (e.message.toLowerCase().includes('email') || e.message.toLowerCase().includes('all'))  ? true : false )
                         }
                     />
-                    <FormHelperText id="email-helper-text"></FormHelperText>
+                    <FormHelperText id="email-helper-text">Required</FormHelperText>
                 </FormControl>
             </div>
             <div>
@@ -100,7 +100,7 @@ const CompanyForm = _ => {
             </div>
             <div>
                 <FormControl>
-                    <InputLabel htmlFor="password">Password  (required)</InputLabel>
+                    <InputLabel htmlFor="password">Password</InputLabel>
                     <Input 
                         id="password" 
                         name="password"
@@ -124,7 +124,7 @@ const CompanyForm = _ => {
                             errors.some( e => (e.message.toLowerCase().includes('password') || e.message.toLowerCase().includes('all')) ? true : false )
                         }
                     />
-                    <FormHelperText id="password-helper-text">
+                    <FormHelperText id="password-helper-text">Required
                         {
                             errors.some( e => e.message.toLowerCase().includes('password') ? e.message : '' )
                         }
@@ -133,7 +133,7 @@ const CompanyForm = _ => {
             </div>
             <div>
                 <FormControl>
-                    <InputLabel htmlFor="verifyPassword">Verify Password (required)</InputLabel>
+                    <InputLabel htmlFor="verifyPassword">Verify Password</InputLabel>
                     <Input 
                         id="verifyPassword"
                         name="verifyPassword"
@@ -157,7 +157,7 @@ const CompanyForm = _ => {
                             errors.some( e => (e.message.toLowerCase().includes('password') || e.message.toLowerCase().includes('all')) ? true : false )
                         }
                     />
-                    <FormHelperText id="verifyPassword-helper-text">
+                    <FormHelperText id="verifyPassword-helper-text">Required
                         {
                             errors.some( e => e.message.toLowerCase().includes('password') ? e.message : '' )
                         }

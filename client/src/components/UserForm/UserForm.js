@@ -45,7 +45,7 @@ const UserForm = _ => {
             <h2 id="user-modal-title">User Sign-Up</h2>
             <div>
                 <FormControl>
-                    <InputLabel htmlFor="email">Email: (required)</InputLabel>
+                    <InputLabel htmlFor="email">Email</InputLabel>
                     <Input 
                         id="email"
                         name="email"
@@ -57,12 +57,12 @@ const UserForm = _ => {
                             errors.some( e => (e.message.toLowerCase().includes('email') || e.message.toLowerCase().includes('all'))  ? true : false )
                         }
                     />
-                    <FormHelperText id="email-helper-text"></FormHelperText>
+                    <FormHelperText id="email-helper-text">Required</FormHelperText>
                 </FormControl>
             </div>
             <div>
                 <FormControl>
-                    <InputLabel htmlFor="firstName">First Name: (required)</InputLabel>
+                    <InputLabel htmlFor="firstName">First Name</InputLabel>
                     <Input 
                         id="firstName" 
                         name="firstName"
@@ -73,12 +73,12 @@ const UserForm = _ => {
                             errors.some( e =>  e.message.toLowerCase().includes('all') ? true : false )
                         }
                     />
-                    <FormHelperText id="firstName-helper-text"></FormHelperText>
+                    <FormHelperText id="firstName-helper-text">Required</FormHelperText>
                 </FormControl>
             </div>
             <div>
                 <FormControl>
-                    <InputLabel htmlFor="lastName">Last Name:  (required)</InputLabel>
+                    <InputLabel htmlFor="lastName">Last Name</InputLabel>
                     <Input 
                         id="lastName" 
                         name="lastName"
@@ -89,7 +89,7 @@ const UserForm = _ => {
                             errors.some( e =>  e.message.toLowerCase().includes('all') ? true : false )
                         }
                     />
-                    <FormHelperText id="lastName-helper-text"></FormHelperText>
+                    <FormHelperText id="lastName-helper-text">Required</FormHelperText>
                 </FormControl>
             </div>
             <div>
@@ -146,7 +146,7 @@ const UserForm = _ => {
             </div>
             <div>
                 <FormControl>
-                    <InputLabel htmlFor="password">Password  (required)</InputLabel>
+                    <InputLabel htmlFor="password">Password</InputLabel>
                     <Input 
                         id="password" 
                         name="password"
@@ -170,12 +170,12 @@ const UserForm = _ => {
                             errors.some( e => (e.message.toLowerCase().includes('password') || e.message.toLowerCase().includes('all')) ? true : false )
                         }
                     />
-                    <FormHelperText id="password-helper-text"></FormHelperText>
+                    <FormHelperText id="password-helper-text">Required</FormHelperText>
                 </FormControl>
             </div>
             <div>
                 <FormControl>
-                    <InputLabel htmlFor="verifyPassword">Verify Password (required)</InputLabel>
+                    <InputLabel htmlFor="verifyPassword">Verify Password</InputLabel>
                     <Input 
                         id="verifyPassword"
                         name="verifyPassword"
@@ -199,7 +199,7 @@ const UserForm = _ => {
                             errors.some( e => (e.message.toLowerCase().includes('password') || e.message.toLowerCase().includes('all')) ? true : false )
                         }
                     />
-                    <FormHelperText id="verifyPassword-helper-text"></FormHelperText>
+                    <FormHelperText id="verifyPassword-helper-text">Required</FormHelperText>
                 </FormControl>
             </div>
             <div>
