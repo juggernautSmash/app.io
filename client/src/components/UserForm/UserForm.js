@@ -57,7 +57,7 @@ const UserForm = _ => {
                             errors.some( e => (e.message.toLowerCase().includes('email') || e.message.toLowerCase().includes('all'))  ? true : false )
                         }
                     />
-                    <FormHelperText id="email-helper-text"></FormHelperText>
+                    <FormHelperText id="email-helper-text">Required</FormHelperText>
                 </FormControl>
             </div>
             <div>
