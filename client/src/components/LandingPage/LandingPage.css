@@ -1,13 +1,7 @@
-#inline {
-    display: inline-flex;
-    margin: 40px;
-    margin-top: 70px;
-    margin-bottom: 100px;
-}
-
 #slide {
-    margin-top: 10vh;
-    height: 80vh;
+    padding-top: 10vh;
+    height: 93vh;
+    background-color: rgb(53, 53, 53);
 }
 
 #picture {
@@ -19,5 +13,6 @@
 }
 
 #para {
-    
+    padding-left: 5%;
+    padding-right: 5%;
 }
