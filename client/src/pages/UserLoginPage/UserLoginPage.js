@@ -9,17 +9,27 @@ const UserLoginPage = _ => {
   const [loginState, setLoginState] = React.useState({
     email: '',
     password: '',
+    errors: [],
     loading: false,
-    showPassword: false,
-    errors: []
+    showPassword: false
   })
 
-  loginState.isLoginValid = ({ email, password }) => email && password
+  loginState.logError = errorMessage => {
+    console.log('running logError')
+    console.log(errorMessage)
+    let errors = JSON.parse(JSON.stringify(loginState.errors))
+    errors.push(errorMessage)
+    setLoginState({ ...loginState, errors })
+    console.log(loginState.errors)
+  }
+
+  loginState.isLoginValid = ({ email, password }) =>  (email && password) ? true : loginState.logError({ message: 'Please enter email and/or password'})
 
   loginState.handleInputChange = e => setLoginState({ ...loginState, [e.target.name]: e.target.value })
 
-  loginState.addLocalStorage = user => {
-    localStorage.setItem("user", JSON.stringify(user))
+  loginState.addLocalStorage = (key, value) => {
+    console.log('add local storage loggin real good')
+    localStorage.setItem(key, JSON.stringify(value))
   }
 
   loginState.handleSubmitButton = e => {
@@ -29,15 +39,27 @@ const UserLoginPage = _ => {
       firebase.auth()
         .signInWithEmailAndPassword(loginState.email, loginState.password)
         .then(signedInUser => {
+          console.log('sign in successful!')
           console.log(signedInUser)
-          loginState.addLocalStorage(signedInUser.user)
+          loginState.addLocalStorage( 'fUser', signedInUser.user)
           axios.get(`/api/user/${signedInUser.user.uid}`)
             .then(data => {
               console.log(`here dat unique user ID:`)
               console.log(data)
-            }).catch(e => console.log(e))
-        })
-        .catch(e => console.error(e))
+              loginState.addLocalStorage( 'mUser', data)
+            }).catch(e => console.log(e)) // axios catch
+
+        }) // end firebase .then
+        .catch(e => { // firebase .catch
+          console.log('Error logging in')
+          console.error(e)
+          loginState.logError(e)
+        }) // end firebase .catch
+    } // end if
+    else {
+      console.log('Error logging in')
+      loginState.logError({ message: 'Error logging in' })
+      console.log(loginState.errors)
     }
   }
 

@@ -11,6 +11,7 @@ const LoginContext = React.createContext({
   handleShowPassword: () => {},
   handleMouseDownPassword: () => {},
   isLoginValid: () => {},
+  logErrors: () => {},
   addLocalStorage: () => {}
 })
 

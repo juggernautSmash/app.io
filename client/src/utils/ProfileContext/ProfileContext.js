@@ -1,6 +1,7 @@
 import React from 'react'
 
 const ProfileContext = React.createContext({
+  uid: '',
   title: '',
   photo: '',
   firstName: '',
