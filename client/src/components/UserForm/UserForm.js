@@ -5,7 +5,7 @@ import { FormControl, InputLabel, Input, FormHelperText, Button } from '@materia
 const CompanyForm = _ => {
     return (
         <form id="UFS">
-            <h2>Company Sign-Up</h2>
+            <h2>User Sign-Up</h2>
             <p>
                 <FormControl>
                     <InputLabel htmlFor="my-input">User Email</InputLabel>
@@ -64,4 +64,4 @@ const CompanyForm = _ => {
     )
 }
 
-export default CompanyForm
+export default UserForm
