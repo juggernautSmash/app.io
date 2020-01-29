@@ -77,6 +77,10 @@ const CompanySignUp = () => {
     }
   }
 
+  signUpState.addLocalStorage = company => {
+    console.log('add local storage loggin real good')
+  }
+
   signUpState.handleInputChange = e => setSignUpState({ ...signUpState, [e.target.name]: e.target.value })
 
   signUpState.handleShowPassword = e => setSignUpState({ ...signUpState, showPassword: !signUpState.showPassword})
@@ -94,6 +98,7 @@ const CompanySignUp = () => {
         .createUserWithEmailAndPassword(signUpState.email, signUpState.password)
         .then( createdUser => {
           console.log(createdUser)
+          signUpState.addLocalStorage(createdUser)
           setSignUpState({ ...signUpState, loading: false})
           axios.post('/api/company', {
             name: signUpState.name,

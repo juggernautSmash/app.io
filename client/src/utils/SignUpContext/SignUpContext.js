@@ -23,7 +23,8 @@ const SignUpContext = React.createContext({
   isSignUpValid: () => {},
   isFormEmpty: () => {},
   isPasswordValid: () => {},
-  logError: () => {}
+  logError: () => {},
+  addLocalStorage: () => {}
 })
 
 export default SignUpContext
