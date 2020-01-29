@@ -8,7 +8,7 @@ const SignUpContext = React.createContext({
   phone: '',
   location: '',
   timezone: '',
-  name: '',
+  companyName: '',
   address: '',
   contact: '',
   showPassword: '',
@@ -22,7 +22,8 @@ const SignUpContext = React.createContext({
   handleMouseDownPassword: () => {},
   isSignUpValid: () => {},
   isFormEmpty: () => {},
-  isPasswordValid: () => {}
+  isPasswordValid: () => {},
+  logError: () => {}
 })
 
 export default SignUpContext

@@ -5,7 +5,9 @@ import SignUpContext from '../../utils/SignUpContext'
 import { FormControl, Input, InputLabel, FormHelperText, Button,
     InputAdornment, IconButton, CircularProgress } from '@material-ui/core'
 import { Visibility, VisibilityOff } from '@material-ui/icons'
-import MuiAlert from '@material-ui/lab/Alert';
+import Alert from '@material-ui/lab/Alert'
+import AlertTitle from '@material-ui/lab/AlertTitle'
+
 import './UserForm.css'
 
 const useStyles = makeStyles(theme => ({    
@@ -45,7 +47,7 @@ const UserForm = _ => {
                 <FormControl>
                     <InputLabel htmlFor="email">Email: (required)</InputLabel>
                     <Input 
-                        id="email" 
+                        id="email"
                         name="email"
                         aria-describedby="email-helper-text" 
                         onChange={handleInputChange}
@@ -182,11 +184,12 @@ const UserForm = _ => {
             </div>
             <div>
                 <FormControl>
-                    <InputLabel htmlFor="verifyPassword">Verify Password  (required)</InputLabel>
+                    <InputLabel htmlFor="verifyPassword">Verify Password (required)</InputLabel>
                     <Input 
                         id="verifyPassword"
                         name="verifyPassword"
                         aria-describedby="verifyPassword-helper-text" 
+                        type={showPassword ? 'text' : 'password'} 
                         onChange={handleInputChange}
                         value={verifyPassword}
                         endAdornment={
@@ -215,17 +218,18 @@ const UserForm = _ => {
             <div>
                 {
                     errors.length > 0 && (
-                        <MuiAlert severity="error" variant="filled">
-                            <h3>Error</h3>
-                            <p>
+                        <Alert severity="error">
+                            <AlertTitle>Error</AlertTitle>
+                            {console.log(errors)
+                            /* <p>
                                 { errors.some( e => e.message.toLowerCase().includes('all')  ? e.message : '' )}
                                 { errors.some( e => e.message.toLowerCase().includes('email')  ? e.message : '' )}
                                 { errors.some( e => e.message.toLowerCase().includes('first name')  ? e.message : '' )}
                                 { errors.some( e => e.message.toLowerCase().includes('last name')  ? e.message : '' )}
                                 { errors.some( e => e.message.toLowerCase().includes('password')  ? e.message : '' )}
                                 { errors.some( e => e.message.toLowerCase().includes('verify password') ? e.message : '' )}
-                            </p>
-                        </MuiAlert>
+                            </p> */}
+                        </Alert>
                     )
                 }
             </div>
