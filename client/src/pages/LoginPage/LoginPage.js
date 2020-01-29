@@ -3,7 +3,7 @@ import { Paper, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 import UserLoginPage from '../UserLoginPage'
-import CompanyLogin from '../../components/CompanyLogin'
+import CompanyLoginPage from '../CompanyLoginPage'
 
 const useStyles = makeStyles({
   root: {
@@ -26,7 +26,7 @@ const LoginPage = _ => {
           <Button>Employee Login</Button>
         </Link>
         <Switch>
-          <Route path="/login/company" render={ _=> <CompanyLogin/> } />
+          <Route path="/login/company" render={ _=> <CompanyLoginPage/> } />
           <Route path="/login/employee" render={ _=>  <UserLoginPage /> } />
         </Switch>
       </BrowserRouter>
