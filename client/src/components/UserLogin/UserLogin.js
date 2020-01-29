@@ -11,7 +11,7 @@ const UserLogin = _ => {
     handleInputChange, handleSubmitButton, handleShowPassword, handleMouseDownPassword } = React.useContext(LoginContext)
 
   return (
-    <form>
+    <form id="CL">
       <div>
         <h1>Login to app.io</h1>
         <FormControl>
