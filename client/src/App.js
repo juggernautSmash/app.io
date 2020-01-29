@@ -1,52 +1,31 @@
 import React from 'react'
-import NavBar from './components/NavBar'
+
 import FooterBar from './components/FooterBar'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import firebase from 'firebase'
+import LandingPage from './components/LandingPage'
+import Dashboard from './components/Dashboard'
+
+import NavBarPage from './pages/NavBarPage'
+import SignUpPage from './pages/SignUpPage'
+import LoginPage from './pages/LoginPage'
+import ProfileDisplay from './components/ProfileDisplay'
+
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 function App() {
-  firebase.initializeApp({
-    apiKey: "AIzaSyBApRnJ1RfuBN8T7xLi2jeDF19v3VDfkEY",
-    authDomain: "app-io-f6252.firebaseapp.com",
-    databaseURL: "https://app-io-f6252.firebaseio.com",
-    projectId: "app-io-f6252",
-    storageBucket: "app-io-f6252.appspot.com",
-    messagingSenderId: "436155669423",
-    appId: "1:436155669423:web:c92be876535e3eb73d2d5a",
-    measurementId: "G-PEVS3L4YPC"
-  })
-  const uiConfig = {
-    // Popup signin flow rather than redirect flow.
-    signInFlow: 'popup',
-    // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-    signInSuccessUrl: '/signedIn',
-    // We will display Google and Facebook as auth providers.
-    signInOptions: [
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID
-    ]
-  }
-
-  class SignInScreen extends React.Component {
-    render() {
-      return (
-        <div>
-          <h1>My App</h1>
-          <p>Please sign-in:</p>
-          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-        </div>
-      );
-    }
-  }
-
-
 
   return (
-    <div>
-      <NavBar />
+    <BrowserRouter>
+      <NavBarPage />
+        <Switch>
+          <Route exact path="/" render={ _ => <LandingPage />} />
+          <Route exact path="/login" render={ _ => <LoginPage />} />
+          <Route exact path="/signup" render={ _ => <SignUpPage /> } />
+          <Route exact path="/dashboard" render={ _ => <Dashboard /> } />
+          <Route exact path="/userprofile" render={ _ => <ProfileDisplay />} />
+      </Switch>
       <FooterBar />
-    </div>
-  );
+    </BrowserRouter>
+  )
 }
 
 export default App

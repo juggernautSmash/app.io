@@ -1,42 +1,58 @@
-const { User, Company } = require('../models')
+const { User, Company, Board } = require('../models')
 
 module.exports = app => {
-    app.get('/users', (req, res) => {
+    //add one user
+    app.post('/api/user', (req, res) => {
+        User.create(req.body)
+        .then( user => res.json(user) )
+        .catch( e => console.error(e))
+    })
+
+    // retrieve all users
+    app.get('/api/users', (req, res) => {
         User.find()
             .populate('board')
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })
-
-    app.post('/users', (req, res) => {
+    // retrieve one user
+    app.get('/api/users/:id', (req, res) => {
+        User.findOne({ _id: req.params.id })
+            .populate('board')
+            .then(user => res.json(user))
+            .catch(e => console.log(e))
+    })
+    // add a user also add to company
+    app.post('/api/users', (req, res) => {
         User.create(req.body)
             .then(({ _id }) => {
-                Company.updateOne({
-                    _id: req.body.board
-                }, {
-                    $push: {
-                        user: _id
-                    }
-                })
-                    .then(user => { res.json(user) })
+                Board.updateOne({ _id: req.body.board }, { $push: { user: _id } })
+                Company.updateOne({ _id: req.body.company }, { $push: { user: _id } })
+                    .then(user => res.json(user))
                     .catch(e => console.log(e))
             })
             .catch(e => console.log(e))
 
     })
+        // update one user
+        app.put('/api/users/:id', (req, res) => {
+            User.updateOne({ _id: req.params.id }, { $set: req.body })
+            Board.updateOne({ _id: req.body.board }, { $push: { user: req.params.id } })
+            Company.updateOne({ _id: req.body.company }, { $push: { user: req.params.id } })
+                .then(user => res.json(user))
+                .catch(e => console.log(e))
+        })
 
-    app.put('users/:id', (req, res) => {
-        User.findByIdAndUpdate(req.params.id, { $set: req.body })
-            .then(user => { res.json(user) })
+
+    // remove user
+    app.delete('/api/users/:id', (req, res) => {
+        console.log(req.params)
+        console.log(req.body)
+        Board.updateOne({ _id: req.body.board }, { $pull: { user: req.params.id } })
+        Company.updateOne({ _id: req.body.company }, { $pull: { user: req.params.id } })
+        User.deleteOne({ _id: req.params.id })
+            .then(user => res.json(user))
             .catch(e => console.log(e))
-
     })
-
-    app.delete('users/:id', (req, res) => {
-        User.findByIdAndRemove(req.params.id)
-            .then(user => { res.json(user) })
-            .catch(e => console.log(e))
-
-    })
-
 }
+

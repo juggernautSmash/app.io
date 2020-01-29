@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { AppBar, Toolbar } from '@material-ui/core'
-import {IconButton, ButtonGroup, Fab, Grid} from '@material-ui/core'
+//import { BottomNavigation , BottomNavigationAction, Fab } from '@material-ui/core'
+import { AppBar, Toolbar, Grid, IconButton, Fab} from '@material-ui/core'
 
 // Icons
 import AddIcon from '@material-ui/icons/Add'
@@ -30,10 +30,25 @@ const useStyles = makeStyles(theme => ({
 
 const FooterBar = () => {
 
-  const classes = useStyles();
+  const classes = useStyles()
+  // const [value, setValue] = React.useState(0)
 
   return (
     <>
+      {/* <BottomNavigation
+      value={value}
+      onChange={(event, newValue) => {
+        setValue(newValue);
+      }}
+      position="static"
+      showLabels
+      className={classes.bottomBar}
+    >
+      <BottomNavigationAction label="My Team" icon={<GroupIcon/>} />
+      <BottomNavigationAction label="Chat" icon={<ChatIcon/>} />
+      <BottomNavigationAction label="Charts" icon={<PieChartIcon/>} />
+      <BottomNavigationAction label="Settings" icon={<SettingsIcon/>} />
+    </BottomNavigation> */}
       <AppBar position="fixed" color="primary" className={classes.bottomBar}>
           <Toolbar>
             <Grid>
