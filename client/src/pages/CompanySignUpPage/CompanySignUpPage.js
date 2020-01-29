@@ -6,7 +6,7 @@ import firebase from '../../firebase.js'
 
 const CompanySignUp = () => {
 
-  const [ signUpState, setSignUpState ] = React.useState({
+  const [signUpState, setSignUpState] = React.useState({
     email: '',
     phone: '',
     address: '',
@@ -18,33 +18,33 @@ const CompanySignUp = () => {
     isLoading: false
   })
 
-  signUpState.isFormEmpty = ({email, companyName, password, verifyPassword}) => {
-    if(!email.length){
-        signUpState.logError({ message: 'Please enter the company email' })
-        return true
-    } else if(!companyName.length){
-        signUpState.logError({ message: 'Please enter the company name' })
-        return true
-    } else if(!password.length || !verifyPassword.length){
-        signUpState.logError({ message: 'Please enter a password' })
-        return true
+  signUpState.isFormEmpty = ({ email, companyName, password, verifyPassword }) => {
+    if (!email.length) {
+      signUpState.logError({ message: 'Please enter the company email' })
+      return true
+    } else if (!companyName.length) {
+      signUpState.logError({ message: 'Please enter the company name' })
+      return true
+    } else if (!password.length || !verifyPassword.length) {
+      signUpState.logError({ message: 'Please enter a password' })
+      return true
     } else {
-        return false
+      return false
     }
 
   }
   signUpState.logError = errorMessage => {
-    let errors =  JSON.parse(JSON.stringify(signUpState.errors))
+    let errors = JSON.parse(JSON.stringify(signUpState.errors))
     errors.push(errorMessage)
-    setSignUpState({ ...signUpState, errors})
+    setSignUpState({ ...signUpState, errors })
   }
 
-  signUpState.isPasswordValid = ({password, verifyPassword}) => {
-    if(password.length < 8 || verifyPassword < 8){
-      signUpState.logError({ message: 'Password must contain 8 characters'})
+  signUpState.isPasswordValid = ({ password, verifyPassword }) => {
+    if (password.length < 8 || verifyPassword < 8) {
+      signUpState.logError({ message: 'Password must contain 8 characters' })
       return false
-    } else if(password !== verifyPassword){
-      signUpState.logError({ message: 'Passwords do not match'})
+    } else if (password !== verifyPassword) {
+      signUpState.logError({ message: 'Passwords do not match' })
       return false
     } else {
       return true
@@ -52,22 +52,27 @@ const CompanySignUp = () => {
   }
 
   signUpState.isSignUpValid = () => {
-    if(signUpState.isFormEmpty(signUpState)){
+    if (signUpState.isFormEmpty(signUpState)) {
       // error if the form is empty
       signUpState.logError({ message: 'Please fill in all required fields' })
       return false
-    } else if (!signUpState.isPasswordValid(signUpState)){
+    } else if (!signUpState.isPasswordValid(signUpState)) {
       // error if password is not valid
       return false
     } else {
       // form is valid
-      return true 
+      return true
     }
+  }
+
+  signUpState.addLocalStorage = company => {
+    console.log('add local storage loggin real good')
+    localStorage.setItem("company", JSON.stringify(company))
   }
 
   signUpState.handleInputChange = e => setSignUpState({ ...signUpState, [e.target.name]: e.target.value })
 
-  signUpState.handleShowPassword = e => setSignUpState({ ...signUpState, showPassword: !signUpState.showPassword})
+  signUpState.handleShowPassword = e => setSignUpState({ ...signUpState, showPassword: !signUpState.showPassword })
 
   signUpState.handleMouseDownPassword = e => e.preventDefault()
 
@@ -76,28 +81,30 @@ const CompanySignUp = () => {
   signUpState.handleSubmitButton = e => {
     console.log('Submit button pressed')
     e.preventDefault()
-    if(signUpState.isSignUpValid()){
-      setSignUpState({ ...signUpState, errors: [], isLoading: true})
+    if (signUpState.isSignUpValid()) {
+      setSignUpState({ ...signUpState, errors: [], isLoading: true })
       firebase.auth()
         .createUserWithEmailAndPassword(signUpState.email, signUpState.password)
-        .then( createdUser => {
+        .then(createdUser => {
           console.log('firebase successful creating a comapny')
           console.log(createdUser)
-          setSignUpState({ ...signUpState, loading: false})
+          signUpState.addLocalStorage(createdUser.user)
+          setSignUpState({ ...signUpState, loading: false })
           axios.post('/api/company', {
+            uid: createdUser.user.uid,
             name: signUpState.name,
             email: signUpState.email,
             phone: signUpState.phone,
             address: signUpState.address
-          }).then( mongoCompany => {
+          }).then(mongoCompany => {
             console.log('company created in mongoDb')
             console.log(mongoCompany)
-          }).catch( e => console.log(e)) // catch from axios.post
-        }).catch( e => { //catch from firebase
+          }).catch(e => console.log(e)) // catch from axios.post
+        }).catch(e => { //catch from firebase
           console.log('catch from firebase')
           console.log(e)
           signUpState.logError(e)
-          setSignUpState({ ...signUpState, isLoading: false})
+          setSignUpState({ ...signUpState, isLoading: false })
         }) // end catch from firebase
     } // end if statement
     else {

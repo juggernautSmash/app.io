@@ -1,6 +1,7 @@
 import React from 'react'
 
 const SignUpContext = React.createContext({
+  uid: '',
   title: '',
   photo: '',
   name: '',
@@ -23,7 +24,8 @@ const SignUpContext = React.createContext({
   isSignUpValid: () => {},
   isFormEmpty: () => {},
   isPasswordValid: () => {},
-  logError: () => {}
+  logError: () => {},
+  addLocalStorage: () => {}
 })
 
 export default SignUpContext
