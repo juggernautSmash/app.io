@@ -11,7 +11,8 @@ const UserLoginPage = _ => {
     password: '',
     errors: [],
     loading: false,
-    showPassword: false
+    showPassword: false,
+    isLoggedIn: false
   })
 
   loginState.logError = errorMessage => {
@@ -41,6 +42,8 @@ const UserLoginPage = _ => {
         .then(signedInUser => {
           console.log('sign in successful!')
           console.log(signedInUser)
+          console.log('setting isLoggedIn to true')
+          setLoginState({ ...loginState, isLoggedIn: true })
           loginState.addLocalStorage( 'fUser', signedInUser.user)
           axios.get(`/api/user/${signedInUser.user.uid}`)
             .then(data => {

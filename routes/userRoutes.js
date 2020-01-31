@@ -17,7 +17,7 @@ module.exports = app => {
     })
     // retrieve one user
     app.get('/api/users/:id', (req, res) => {
-        User.findOne({ _id: req.params.id })
+        User.findOne({ uid: req.params.id })
             .populate('board')
             .then(user => res.json(user))
             .catch(e => console.log(e))
