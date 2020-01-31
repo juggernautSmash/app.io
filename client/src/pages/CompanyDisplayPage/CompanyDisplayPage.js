@@ -17,7 +17,7 @@ const CompanyDisplayPage = _ => {
     
     let mUser =  JSON.parse(localStorage.getItem('mUser'))
 
-    setProfileState({ 
+    setProfileState({  
       ...profileState, 
       photo: mUser.photo,
       company: mUser.name,
