@@ -6,6 +6,7 @@ const LoginContext = React.createContext({
   password: '',
   showPassword: '',
   errors: [],
+  isLoggedIn: '',
   handleInputChange: () => {},
   handleSubmitButton: () => {},
   handleShowPassword: () => {},

@@ -1,12 +1,12 @@
 import React from 'react'
-import { AppBar, Toolbar, Typography, Button } from '@material-ui/core'
+import { Link } from 'react-router-dom'
+import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { Link } from 'react-router-dom'
-
 // Icons
-import MenuIcon from '@material-ui/icons/Menu'
-import IconButton from '@material-ui/core/IconButton'
+import { Menu, ExitToApp } from '@material-ui/icons'
+
+import LoginContext from '../../utils/LoginContext'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,20 +21,22 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const NavBar = () => {
-  const classes = useStyles();
+  const styles = useStyles()
+
+  const { isLoggedIn } = React.useContext(LoginContext)
 
   return (
-    <div className={classes.root}>
+    <div className={styles.root}>
       <AppBar position="fixed" color="primary">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+          <IconButton edge="start" className={ styles.menuButton}  color="inherit" aria-label="menu">
+            <Menu />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={ styles.title }>
             app.io
           </Typography>
-          <Link to="/login"><Button>Login</Button></Link>
-          <Link to="/signup"><Button>Sign Up</Button></Link>
+          { isLoggedIn ? <Link to="/"><Button><IconButton><ExitToApp/></IconButton></Button></Link> : <Link to="/login"><Button>Login</Button></Link> }
+          { isLoggedIn ? null : <Link to="/signup"><Button>Sign Up</Button></Link> }
         </Toolbar>
       </AppBar>
     </div>

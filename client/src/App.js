@@ -9,6 +9,7 @@ import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
 import ProfileDisplayPage from './pages/ProfileDisplayPage'
 import CompanyDisplayPage from './pages/CompanyDisplayPage/CompanyDisplayPage'
+import BoardsPage from './pages/BoardsPage/BoardsPage'
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
@@ -24,6 +25,7 @@ function App() {
           <Route exact path="/dashboard" render={ _ => <Dashboard /> } />
           <Route exact path="/userprofile" render={ _ => <ProfileDisplayPage />} />
           <Route exact path="/companyprofile" render={ _ => <CompanyDisplayPage />} />
+          <Route exact path="/boards" render={ _ => <BoardsPage />} />
       </Switch>
       <FooterBar />
     </BrowserRouter>
