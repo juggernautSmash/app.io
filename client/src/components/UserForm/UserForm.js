@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { green, red } from '@material-ui/core/colors'
+import { green } from '@material-ui/core/colors'
 import SignUpContext from '../../utils/SignUpContext'
 import { FormControl, Input, InputLabel, FormHelperText, Button,
     InputAdornment, IconButton, CircularProgress } from '@material-ui/core'

@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import firebase from '../../firebase'
+import firebase from '../../utils/Auth'
 import LoginContext from '../../utils/LoginContext'
 import CompanyLogin from '../../components/CompanyLogin'
 

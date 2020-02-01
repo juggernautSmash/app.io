@@ -8,6 +8,13 @@ module.exports = app => {
         .catch( e => console.error(e) )
     })
 
+    // get one company for company login
+    app.get('/api/company/:id', (req, res) => {
+        Company.findOne({ uid: req.params.id })
+            .then(company => res.json(company))
+            .catch(e => console.log(e))
+    })
+
     // get all the companies
     app.get('/api/companies', (req, res) => {
         Company.find()
@@ -16,8 +23,8 @@ module.exports = app => {
             .then(company => res.json(company))
             .catch(e => console.log(e))
     })
-    // get one company
 
+    // get one company from the DB
     app.get('/api/companies/:name', (req, res) => {
         Company.findOne({ name: req.params.name })
             .then(company => res.json(company))

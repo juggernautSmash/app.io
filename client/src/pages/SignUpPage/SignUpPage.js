@@ -1,9 +1,7 @@
 import React from 'react'
 import { Paper, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
-import UserSignUpPage from '../UserSignUpPage'
-import CompanySignUpPage from '../CompanySignUpPage'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles({
   root: {
@@ -17,7 +15,6 @@ const SignUpPage = _ => {
 
   return (
     <Paper variant="outlined" justify="center" className={styles.root}>
-      <BrowserRouter>
         <Link to ="/signup/company">
         <Button>Company Sign Up</Button>
         </Link>
@@ -25,11 +22,6 @@ const SignUpPage = _ => {
         <Link to ="/signup/employee">
           <Button>Employee Sign Up</Button>
         </Link>
-        <Switch>
-          <Route path="/signup/company" render={ _=> <CompanySignUpPage /> } />
-          <Route path="/signup/employee" render={ _=> <UserSignUpPage /> } />
-        </Switch>
-      </BrowserRouter>
     </Paper> 
   )
 }
