@@ -5,14 +5,16 @@ import { Link, NavLink } from 'react-router-dom'
 import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
-
-// Icons
+// Material Icons
 import { Menu, ExitToApp } from '@material-ui/icons'
 
-import LoginContext from '../../utils/LoginContext'
+// App components
+import LoginModal from '../LoginModal'
+import SignupModal from '../SignupModal'
 
 // Context
 import { FirebaseContext } from '../../utils/Auth'
+import LoginContext from '../../utils/LoginContext'
 
 const styles = makeStyles(theme => ({
   root: {
@@ -39,10 +41,9 @@ const NavBar = () => {
           </IconButton>
           <Typography variant="h6" className={ styles.title }>
             app.io
-          </Typography >
-          { user ? null : (<Link to="/login"><Button>Login</Button></Link>) }
-          { user ? null : (<Link to="/signup"><Button>Sign Up</Button></Link>) }
-          { user ? <Button>Logout</Button> : null }
+          </Typography>
+          <LoginModal/>
+          <SignupModal/>
         </Toolbar>
       </AppBar>
     </div>
