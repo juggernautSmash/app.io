@@ -2,6 +2,7 @@ module.exports = (model, Schema) => {
 
   const User = new Schema({
 
+    uid: String,
     title: {
       type: String,
       uppercase: true,

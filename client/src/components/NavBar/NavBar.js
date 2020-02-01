@@ -1,12 +1,17 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
+// Material components
 import { AppBar, Toolbar, Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { Link } from 'react-router-dom'
 
 // Icons
 import MenuIcon from '@material-ui/icons/Menu'
 import IconButton from '@material-ui/core/IconButton'
+
+// Context
+import { FirebaseContext } from '../../utils/Auth'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,7 +26,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const NavBar = () => {
-  const classes = useStyles();
+  const classes = useStyles()
+
+  const { user } = React.useContext(FirebaseContext)
 
   return (
     <div className={classes.root}>
@@ -33,8 +40,9 @@ const NavBar = () => {
           <Typography variant="h6" className={classes.title}>
             app.io
           </Typography>
-          <Link to="/login"><Button>Login</Button></Link>
-          <Link to="/signup"><Button>Sign Up</Button></Link>
+          { user ? null : (<Link to="/login"><Button>Login</Button></Link>) }
+          { user ? null : (<Link to="/signup"><Button>Sign Up</Button></Link>) }
+          { user ? <Button>Logout</Button> : null }
         </Toolbar>
       </AppBar>
     </div>

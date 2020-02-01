@@ -1,10 +1,10 @@
 import React from 'react'
 import axios from 'axios'
-import firebase from '../../firebase'
+import firebase from '../../utils/Auth'
 import LoginContext from '../../utils/LoginContext'
 import UserLogin from '../../components/UserLogin'
 
-const UserLoginPage = _ => {
+const UserLoginPage = props => {
 
   const [loginState, setLoginState] = React.useState({
     email: '',
@@ -43,7 +43,7 @@ const UserLoginPage = _ => {
           console.log(signedInUser)
           loginState.addLocalStorage( 'fUser', signedInUser.user)
           axios.get(`/api/user/${signedInUser.user.uid}`)
-            .then(data => {
+            .then(({data}) => {
               console.log(`here dat unique user ID:`)
               console.log(data)
               // Store data from mongoDb to localStorage
@@ -56,6 +56,9 @@ const UserLoginPage = _ => {
           console.error(e)
           loginState.logError(e)
         }) // end firebase .catch
+
+        
+        props.history.push('/userprofile')
     } // end if
     else {
       console.log('Error logging in')

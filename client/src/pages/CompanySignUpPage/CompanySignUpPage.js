@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import CompanyForm from '../../components/CompanyForm'
 import SignUpContext from '../../utils/SignUpContext'
-import firebase from '../../firebase.js'
+import firebase from '../../utils/Auth'
 
 const CompanySignUp = () => {
 

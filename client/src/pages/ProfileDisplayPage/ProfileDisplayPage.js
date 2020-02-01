@@ -13,7 +13,8 @@ const ProfilePageDisplay = _ => {
     email: '',
     phone: '',
     location: '',
-    timezone: ''
+    timezone: '',
+    isLoading: false
   })
 
   profileState.getLocalStorage = ( key ) => {
@@ -22,6 +23,7 @@ const ProfilePageDisplay = _ => {
 
   React.useEffect( () => {
 
+    
     let mUser = JSON.parse(localStorage.getItem('mUser'))
 
     setProfileState({
