@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu'
 import IconButton from '@material-ui/core/IconButton'
 
+import LoginModal from '../LoginModal'
+import SignupModal from '../SignupModal'
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -33,8 +36,8 @@ const NavBar = () => {
           <Typography variant="h6" className={classes.title}>
             app.io
           </Typography>
-          <Link to="/login"><Button>Login</Button></Link>
-          <Link to="/signup"><Button>Sign Up</Button></Link>
+          <LoginModal/>
+          <SignupModal/>
         </Toolbar>
       </AppBar>
     </div>
