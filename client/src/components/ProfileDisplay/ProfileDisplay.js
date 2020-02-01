@@ -1,10 +1,7 @@
 import React from 'react'
-import Avatar from '@material-ui/core/Avatar'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Typography from '@material-ui/core/Typography'
+import {Avatar, Typography, Grid, Card, CircularProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
-import Card from '@material-ui/core/Card'
+import { red } from '@material-ui/core/colors'
 
 import './ProfileDisplay.css'
 import ProfileContext from '../../utils/ProfileContext'
@@ -30,17 +27,25 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
     fontSize: 16
   },
+  buttonProgress: {
+    color: red[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  }
 }))
 
 const ProfileDisplay = () => {
   
   const classes = useStyles()
 
-  const { firstName, lastName, title, email, phone, location, timezone } = React.useContext(ProfileContext)
+  const { firstName, lastName, title, email, phone, location, timezone, isLoading } = React.useContext(ProfileContext)
 
-  return (
+  return (    
     <Card className="card">
-      <CssBaseline />
+      {isLoading && <CircularProgress size={24} className={classes.buttonProgress} />}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           {/* add photo here */}
@@ -59,22 +64,22 @@ const ProfileDisplay = () => {
           </Grid>
           <Grid item xs={6}>
             <Typography variant="h5" className={classes.attr}>
-              {firstName + ' ' + lastName}
+              { isLoading ? <CircularProgress size={24} className={classes.buttonProgress} /> : firstName + ' ' + lastName }
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              {title}
+              { isLoading ? <CircularProgress size={24} className={classes.buttonProgress} /> : title}
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              {email}
+              { isLoading ? <CircularProgress size={24} className={classes.buttonProgress} /> : email}
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              {phone}
+              { isLoading ? <CircularProgress size={24} className={classes.buttonProgress} /> : phone}
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              {location}
+              { isLoading ? <CircularProgress size={24} className={classes.buttonProgress} /> : location}
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              {timezone}
+              { isLoading ? <CircularProgress size={24} className={classes.buttonProgress} /> : timezone}
             </Typography>
             </Grid>
           </Grid>

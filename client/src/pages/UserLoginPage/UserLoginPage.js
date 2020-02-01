@@ -11,7 +11,8 @@ const UserLoginPage = props => {
     password: '',
     errors: [],
     loading: false,
-    showPassword: false
+    showPassword: false,
+    isLoggedIn: false
   })
 
   loginState.logError = errorMessage => {
@@ -41,7 +42,9 @@ const UserLoginPage = props => {
         .then(signedInUser => {
           console.log('sign in successful!')
           console.log(signedInUser)
-          loginState.addLocalStorage( 'fUser', signedInUser.user)
+          console.log('setting isLoggedIn to true')
+          setLoginState({ ...loginState, isLoggedIn: true })
+          loginState.addLocalStorage( 'uid', signedInUser.user.uid)
           axios.get(`/api/user/${signedInUser.user.uid}`)
             .then(({data}) => {
               console.log(`here dat unique user ID:`)
@@ -57,8 +60,9 @@ const UserLoginPage = props => {
           loginState.logError(e)
         }) // end firebase .catch
 
-        
-        props.history.push('/userprofile')
+      // After login, redirect to the profile page
+      props.history.push('/userprofile')
+
     } // end if
     else {
       console.log('Error logging in')

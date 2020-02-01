@@ -1,19 +1,20 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 // Material components
-import { AppBar, Toolbar, Typography, Button } from '@material-ui/core'
+import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 
 // Icons
-import MenuIcon from '@material-ui/icons/Menu'
-import IconButton from '@material-ui/core/IconButton'
+import { Menu, ExitToApp } from '@material-ui/icons'
+
+import LoginContext from '../../utils/LoginContext'
 
 // Context
 import { FirebaseContext } from '../../utils/Auth'
 
-const useStyles = makeStyles(theme => ({
+const styles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   },
@@ -26,20 +27,19 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const NavBar = () => {
-  const classes = useStyles()
 
   const { user } = React.useContext(FirebaseContext)
 
   return (
-    <div className={classes.root}>
+    <div className={styles.root}>
       <AppBar position="fixed" color="primary">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+          <IconButton edge="start" className={ styles.menuButton}  color="inherit" aria-label="menu">
+            <Menu />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={ styles.title }>
             app.io
-          </Typography>
+          </Typography >
           { user ? null : (<Link to="/login"><Button>Login</Button></Link>) }
           { user ? null : (<Link to="/signup"><Button>Sign Up</Button></Link>) }
           { user ? <Button>Logout</Button> : null }

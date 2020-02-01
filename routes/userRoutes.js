@@ -10,11 +10,10 @@ module.exports = app => {
 
     // get one user
     app.get('/api/user/:id', (req, res) => {
-        Company.findOne({ uid: req.params.id })
+        User.findOne({ uid: req.params.id })
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })
-
 
     // retrieve all users
     app.get('/api/users', (req, res) => {

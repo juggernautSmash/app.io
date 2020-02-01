@@ -16,6 +16,7 @@ import CompanyLoginPage from './pages/CompanyLoginPage'
 import UserLoginPage from './pages/UserLoginPage'
 import ProfileDisplayPage from './pages/ProfileDisplayPage'
 import CompanyDisplayPage from './pages/CompanyDisplayPage/CompanyDisplayPage'
+import BoardsPage from './pages/BoardsPage/BoardsPage'
 
 import firebase, { useAuth, FirebaseContext } from './utils/Auth'
 
@@ -38,6 +39,7 @@ function App() {
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/userprofile" component={ProfileDisplayPage} />
           <Route exact path="/companyprofile" component={CompanyDisplayPage} />
+          <Route exact path="/boards" component={BoardsPage} />
         </Switch>
         <FooterBar />
       </FirebaseContext.Provider>

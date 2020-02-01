@@ -69,7 +69,7 @@ const UserSignUpPage = (props) => {
 
   signUpState.handleInputChange = e => setSignUpState({ ...signUpState, [e.target.name]: e.target.value })
 
-  signUpState.handleSubmitButton = e => {
+  signUpState.handleSubmitButton = async e => {
     console.log('Submit button pressed')
     console.log(e)
     e.preventDefault()
@@ -88,7 +88,7 @@ const UserSignUpPage = (props) => {
           // set all the user input on the form to an object for easier usage
           let user = {
             uid: createdUser.user.uid,
-            title: signUpState.title ? signUpState.title : '',
+            title: signUpState.title ? signUpState.title.toLocaleUpperCase() : '',
             firstName: signUpState.firstName,
             lastName: signUpState.lastName,
             email: signUpState.email,
@@ -98,7 +98,7 @@ const UserSignUpPage = (props) => {
           }
 
           // push firebase user info to the local storage
-          signUpState.addLocalStorage("fUser", createdUser.user)
+          signUpState.addLocalStorage("uid", createdUser.user.uid)
 
           axios.post('/api/user', user)
           .then( ({data}) => { // then from axios post
@@ -116,15 +116,10 @@ const UserSignUpPage = (props) => {
           console.log('catch from firebase')
           console.log(e)
           signUpState.logError(e)
-
-          //make the submit button clickable again
-          setSignUpState({ ...signUpState, isLoading: false })
         }) // end catch from firebase
 
         // After signing up, redirect to user profile
-        while(!localStorage.getItem('mUser')){
-          console.log('processing localStorage')
-        }
+
         props.history.push('/userprofile')
 
     } // end if statement
