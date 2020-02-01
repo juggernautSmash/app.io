@@ -8,6 +8,13 @@ module.exports = app => {
         .catch( e => console.error(e))
     })
 
+    // get one user
+    app.get('/api/user/:id', (req, res) => {
+        User.findOne({ uid: req.params.id })
+            .then(user => res.json(user))
+            .catch(e => console.log(e))
+    })
+
     // retrieve all users
     app.get('/api/users', (req, res) => {
         User.find()
@@ -17,7 +24,7 @@ module.exports = app => {
     })
     // retrieve one user
     app.get('/api/users/:id', (req, res) => {
-        User.findOne({ _id: req.params.id })
+        User.findOne({ uid: req.params.id })
             .populate('board')
             .then(user => res.json(user))
             .catch(e => console.log(e))

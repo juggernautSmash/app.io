@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import firebase from '../../firebase'
+import firebase from '../../utils/Auth'
 import LoginContext from '../../utils/LoginContext'
 import CompanyLogin from '../../components/CompanyLogin'
 
@@ -9,9 +9,10 @@ const CompanyLoginPage = _ => {
   const [loginState, setLoginState] = React.useState({
     email: '',
     password: '',
+    errors: [],
     loading: false,
     showPassword: false,
-    errors: []
+    isLoggedIn: false
   })
 
   loginState.isLoginValid = ({ email, password }) => email && password
@@ -31,6 +32,7 @@ const CompanyLoginPage = _ => {
         .signInWithEmailAndPassword(loginState.email, loginState.password)
         .then(signedInUser => {
           console.log(signedInUser)
+          setLoginState({ ...loginState, isLoggedIn: true })
           loginState.addLocalStorage( 'fUser', signedInUser.user)
           axios.get(`/api/company/${signedInUser.user.uid}`)
             .then(data => {

@@ -4,7 +4,7 @@ import { FormControl, InputLabel, Input, FormHelperText, Button,
   InputAdornment,  IconButton, CircularProgress } from '@material-ui/core'
 import { Visibility, VisibilityOff } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
-import { green, red } from '@material-ui/core/colors'
+import { green } from '@material-ui/core/colors'
 
 import LoginContext from '../../utils/LoginContext'
 

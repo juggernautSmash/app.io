@@ -2,6 +2,7 @@ module.exports = (model, Schema) => {
 
   const Company = new Schema({
 
+    uid: String, 
     name: String,
     charts: Array,
     address: String,
