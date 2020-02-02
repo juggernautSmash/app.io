@@ -1,17 +1,38 @@
-import firebase from 'firebase/app'
+import app from 'firebase/app'
 import 'firebase/auth'
-import 'firebase/storage'
-import 'firebase/database'
 
-firebase.initializeApp({
-  apiKey: "AIzaSyBApRnJ1RfuBN8T7xLi2jeDF19v3VDfkEY",
-  authDomain: "app-io-f6252.firebaseapp.com",
-  databaseURL: "https://app-io-f6252.firebaseio.com",
-  projectId: "app-io-f6252",
-  storageBucket: "app-io-f6252.appspot.com",
-  messagingSenderId: "436155669423",
-  appId: "1:436155669423:web:c92be876535e3eb73d2d5a",
-  measurementId: "G-PEVS3L4YPC"
-})
+import firebaseConfig from './config'
+
+class Firebase { // create a class called firebase
+  constructor() {
+    app.initializeApp(firebaseConfig) // initialize firebase
+    this.auth = app.auth()
+  }
+
+  async register( email, password) {
+    // create new user with email and password
+    const newUser = await this.auth.createUserWithEmailAndPassword(
+      email,
+      password
+    )
+    // return the uid because that is all we need
+    return newUser.user.uid
+  }
+
+  async login(email, password) {
+    // login using firebase.
+    const loggedUser = await this.auth.signInWithEmailAndPassword(email, password)
+    // return the uid because that is all we need
+    return loggedUser.user.uid
+  }
+
+  async logout() {
+    // logout user
+    await this.auth.signOut();
+  }
+}
+
+// create new instance of firebase
+const firebase = new Firebase()
 
 export default firebase

@@ -1,14 +1,51 @@
 import React from 'react'
 import { FormControl, InputLabel, Input, FormHelperText, Button,
-  InputAdornment,  IconButton} from '@material-ui/core'
+  InputAdornment,  IconButton, CircularProgress } from '@material-ui/core'
 import { Visibility, VisibilityOff } from '@material-ui/icons'
-import LoginContext from '../../utils/LoginContext'
+import { makeStyles } from '@material-ui/core/styles'
+import { green } from '@material-ui/core/colors'
+
+import Context from '../../utils/Context'
 import './CompanyLogin.css'
+
+const useStyles = makeStyles(theme => ({    
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  }
+}))
 
 const CompanyLogin = _ => {
 
-  const { email, password, showPassword, errors,
-    handleInputChange, handleSubmitButton, handleShowPassword, handleMouseDownPassword } = React.useContext(LoginContext)
+  const styles = useStyles()
+
+  const { 
+    email, 
+    password, 
+    errors, 
+    showPassword, 
+    isLoading,
+    clearErrors,
+    handleBlur,
+    handleInputChange, 
+    handleSubmitLogin, 
+    handleShowPassword, 
+    handleMouseDownPassword,
+    displayError } = React.useContext(Context)
   
   return (
     <form id="CL">
@@ -21,8 +58,17 @@ const CompanyLogin = _ => {
             name="email"
             aria-describedby="email-helper-text"
             onChange={handleInputChange}
+            onBlur={handleBlur}
+            onClick={clearErrors}
+            error={
+              errors.some(e => (e.message.toLowerCase().includes('email')) ? true : false)
+            }
             value={email} />
-          <FormHelperText id="email-helper-text"></FormHelperText>
+          <FormHelperText id="email-helper-text">
+            {
+                errors.some(e => (e.message.toLowerCase().includes('email'))) ? displayError(errors) : ''
+            }
+          </FormHelperText>
         </FormControl>
       </div>
       <div>
@@ -33,8 +79,13 @@ const CompanyLogin = _ => {
             name="password" 
             aria-describedby="password-helper-text"
             onChange={handleInputChange}
+            onBlur={handleBlur}
+            onClick={clearErrors}
             value={password}
             type={showPassword ? 'text' : 'password'}
+            error={
+              errors.some(e => (e.message.toLowerCase().includes('password')) ? true : false)
+            }
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -48,13 +99,23 @@ const CompanyLogin = _ => {
               </InputAdornment>
             }
           />
-          <FormHelperText id="password-helper-text"></FormHelperText>
+          <FormHelperText id="password-helper-text">
+            {
+                errors.some(e => (e.message.toLowerCase().includes('password'))) ? displayError(errors) : ''
+            }
+          </FormHelperText>
         </FormControl>
       </div>
-      <div>
-        <Button onClick={handleSubmitButton}>Submit</Button>
+      <div className={styles.wrapper}>
+        <Button 
+            disabled={isLoading}
+            onClick={handleSubmitLogin}
+        >
+            Submit
+        </Button>
+        {isLoading && <CircularProgress size={24} className={styles.buttonProgress} />}
       </div>
-  </form>
+    </form>
   )
 }
 

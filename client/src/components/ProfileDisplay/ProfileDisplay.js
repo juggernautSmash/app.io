@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { red } from '@material-ui/core/colors'
 
 import './ProfileDisplay.css'
-import ProfileContext from '../../utils/ProfileContext'
+import Context from '../../utils/Context'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -41,7 +41,16 @@ const ProfileDisplay = () => {
   
   const classes = useStyles()
 
-  const { firstName, lastName, title, email, phone, location, timezone, isLoading } = React.useContext(ProfileContext)
+  const { 
+    firstName, 
+    lastName, 
+    title, 
+    email, 
+    phone, 
+    location, 
+    timezone, 
+    isLoading
+   } = React.useContext(Context)
 
   return (    
     <Card className="card">
@@ -60,26 +69,26 @@ const ProfileDisplay = () => {
             <Typography color="textSecondary" variant="h5" className={classes.attr}>Email</Typography>
             <Typography color="textSecondary" variant="h5" className={classes.attr}>Phone</Typography>
             <Typography color="textSecondary" variant="h5" className={classes.attr}>Location</Typography>
-            <Typography color="textSecondary" variant="h5" className={classes.attr}>TimeZone</Typography>
+            <Typography color="textSecondary" variant="h5" className={classes.attr}>Time Zone</Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography variant="h5" className={classes.attr}>
-              { isLoading ? <CircularProgress size={24} className={classes.buttonProgress} /> : firstName + ' ' + lastName }
+              { firstName + ' ' + lastName }
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              { isLoading ? <CircularProgress size={24} className={classes.buttonProgress} /> : title}
+              { title }
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              { isLoading ? <CircularProgress size={24} className={classes.buttonProgress} /> : email}
+              { email }
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              { isLoading ? <CircularProgress size={24} className={classes.buttonProgress} /> : phone}
+              { phone }
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              { isLoading ? <CircularProgress size={24} className={classes.buttonProgress} /> : location}
+              { location }
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              { isLoading ? <CircularProgress size={24} className={classes.buttonProgress} /> : timezone}
+              { timezone }
             </Typography>
             </Grid>
           </Grid>
@@ -87,14 +96,5 @@ const ProfileDisplay = () => {
     </Card>
   )
 }
-// const SignUpForm = () => {
-//   return (
-//     <div>
-//       THis is the signUpForm
-//     </div>
-//   )
-// }
-
-
 
 export default ProfileDisplay
