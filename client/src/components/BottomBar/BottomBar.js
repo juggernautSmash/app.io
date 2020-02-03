@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { AppBar, Toolbar, Grid, IconButton, Fab} from '@material-ui/core'
-
 import { makeStyles } from '@material-ui/core/styles'
 
 // Icons
@@ -10,6 +9,9 @@ import GroupIcon from '@material-ui/icons/Group'
 import PieChartIcon from '@material-ui/icons/PieChart'
 import SettingsIcon from '@material-ui/icons/Settings'
 import ChatIcon from '@material-ui/icons/Chat'
+
+// Buttons
+import AddButton from '../AddButton'
 
 const useStyles = makeStyles(theme => ({
   bottomBar: {
@@ -29,9 +31,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const BottomBar = _ => {
+const BottomBar = props => {
 
   const classes = useStyles()
+
+  console.log('Bottom bar props is...', props)
 
   return (
   <AppBar position="fixed" color="primary" className={classes.bottomBar}>
@@ -53,7 +57,7 @@ const BottomBar = _ => {
           </Grid>
         </Grid>
         <Fab color="secondary" aria-label="add" className={classes.fabButton}>
-          <AddIcon />
+          <AddButton />
         </Fab>
       </Toolbar>
     </AppBar>
