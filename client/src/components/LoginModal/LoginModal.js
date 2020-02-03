@@ -3,10 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-
-import './LoginModal.css'
+import Button from '@material-ui/core/Button'
 
 import LoginTab from '../LoginTab'
+import './LoginModal.css'
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -36,9 +36,9 @@ export default function LoginModal() {
 
   return (
     <div>
-      <button id="modalButton" type="button" onClick={handleOpen}>
+      <Button id="modalButton" type="button" onClick={handleOpen}>
         Login
-      </button>
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

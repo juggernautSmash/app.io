@@ -1,11 +1,11 @@
 import React from 'react'
 import axios from 'axios'
 import ProfileDisplay from '../../components/ProfileDisplay'
-import ProfileContext from '../../utils/ProfileContext'
+import Context from '../../utils/Context'
 
-const ProfilePageDisplay = _ => {
+const ProfileDisplayPage = _ => {
 
-  const [ profileState, setProfileState ] = React.useState({
+  const [ state, setState ] = React.useState({
     title: '',
     photo: '',
     firstName: '',
@@ -18,17 +18,18 @@ const ProfilePageDisplay = _ => {
     isLoading: false
   })
 
-  profileState.getLocalStorage = ( key ) => {
-    return localStorage.getItem(key)
-  }
+  // get user info
+  state.getProfile = _ => {
 
-  profileState.getProfile = _ => {
-    let uid = JSON.parse(localStorage.getItem('uid'))
-    axios.get(`/api/user/${uid}`)
+    // set isLoading to true so we can generate a loading page.
+    setState({ ...state, isLoading: true})
+
+    // get user info from DB
+    axios.get(`/api/user/${localStorage.getItem('uid')}`)
       .then( ({data: user}) => {
         console.log('axios.get hit')
-        setProfileState({ // set the parameters in the page to data from mongoDb
-          ...profileState,
+        setState({ // set the parameters in the page to data from mongoDb
+          ...state,
           title: user.title,
           // photo: mUser.photo,
           firstName: user.firstName,
@@ -38,23 +39,23 @@ const ProfilePageDisplay = _ => {
           phone: user.phone,
           location: user.location,
           timezone: user.timezone
-        }) // end setProfileState
-      }) // end axios get
+        }) // end setState
+      }) // end axios .then
+      .catch( error => console.log(error) )
   } // end getProfile
 
   React.useEffect( () => {
 
-    profileState.isLoading ? setTimeout( ()=> {console.log('3 second timeout')}, 3000 ) : profileState.getProfile()
-
-    // Get user profile from mongoDb
+    // on page load, get the profile
+     state.getProfile()
    
   }, [])
 
   return (
-    <ProfileContext.Provider value={profileState}>
+    <Context.Provider value={state}>
       <ProfileDisplay />
-    </ProfileContext.Provider>
+    </Context.Provider>
   )
 }
 
-export default ProfilePageDisplay
+export default ProfileDisplayPage

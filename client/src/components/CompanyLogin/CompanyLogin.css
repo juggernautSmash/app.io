@@ -1,3 +1,7 @@
 #CL {
     text-align: center;
 }
+
+#email-helper-text, #password-helper-text {
+  color: red
+}
