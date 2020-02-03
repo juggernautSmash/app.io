@@ -8,7 +8,7 @@ import './LandingPage.css'
 
 const LandingPage = _ => {
     return (
-        <Carousel>
+        <Carousel showThumbs={false}>
             <div id="slide">
                 <img id="picture" src={timeSheet} alt='placeholder'/>
                 <h1 id="title">Schedule</h1>

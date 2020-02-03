@@ -18,6 +18,7 @@ const ProfileDisplayPage = _ => {
     isLoading: false
   })
 
+  // get user info
   state.getProfile = _ => {
 
     // set isLoading to true so we can generate a loading page.

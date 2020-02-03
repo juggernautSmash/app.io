@@ -22,9 +22,10 @@ const NavPage = props => {
     isLoading: false // so we can display some loading animations
   })
 
-  // when you type something in the form it should get displayed
+  // when you type something in the form it should get displayed  and stored in the state
   state.handleInputChange = e => setState({ ...state, [e.target.name]: e.target.value})
 
+  // display or hide password
   state.handleShowPassword = e => setState({ ...state, showPassword: !state.showPassword })
 
   // when you left/right click on the button
@@ -49,6 +50,7 @@ const NavPage = props => {
   // empty the state.errors array
   state.clearErrors = _ => setState({ ...state, errors: []})
 
+  // check for if the entries for email and password are valid fr signing up
   state.validateForm = ({email, password, verifyPassword}) => {  
     // This function is used for the validating the data in the sign up form
     if (!email) {
@@ -77,6 +79,7 @@ const NavPage = props => {
     } // end else
   } // end validateForm
 
+  // check for if the entries for email and password are valid for login
   state.validateLogin = ({ email, password }) => {
     // This function is used for validating the data in the login form
     if (!email) {
@@ -101,6 +104,7 @@ const NavPage = props => {
     } // end else
   } // end validateLogin
 
+  // handler for the submit button in the signup page
   state.handleSubmitSignUp = e => {
     e.preventDefault()
     if (state.validateForm(state)){
@@ -143,6 +147,7 @@ const NavPage = props => {
     }
   } // handleSubmitSignUp
 
+    // handler for the submit button in the login page
   state.handleSubmitLogin = e => {
     console.log('submit login pressed')
     e.preventDefault()
@@ -179,6 +184,7 @@ const NavPage = props => {
     }
   } //handleSubmitLogin
 
+  // handler for logout button to logout and clear the local storage
   state.logout = _ => {
     console.log('logging out')
     localStorage.removeItem('uid') // remove uid from localStorage
