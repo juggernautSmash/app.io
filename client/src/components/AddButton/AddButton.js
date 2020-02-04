@@ -1,17 +1,11 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import DraftsIcon from '@material-ui/icons/Drafts'
-import SendIcon from '@material-ui/icons/Send'
 import AddIcon from '@material-ui/icons/Add'
-import ListItem from '@material-ui/core/ListItem'
 
-import ButtonContext from '../../utils/ButtonContext'
+import AddBoardModal from '../AddBoardModal'
 
 const StyledMenu = withStyles({
   paper: {
@@ -36,7 +30,7 @@ const StyledMenu = withStyles({
 const StyledMenuItem = withStyles(theme => ({
   root: {
     '&:focus': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.info.dark,
       '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
         color: theme.palette.common.white,
       },
@@ -47,12 +41,9 @@ const StyledMenuItem = withStyles(theme => ({
 export default function AddButton(props) {
   const [anchorEl, setAnchorEl] = React.useState(null)
 
-
   const handleClick = event => setAnchorEl(event.currentTarget)
 
   const handleClose = () => setAnchorEl(null)
-
-  console.log('page is ', props.location)
 
   return (
     <div>
@@ -60,9 +51,7 @@ export default function AddButton(props) {
         aria-controls="customized-menu"
         aria-haspopup="true"
         onClick={handleClick}
-      >
-        Open Menu
-      </AddIcon>
+      />
       <StyledMenu
         id="customized-menu"
         anchorEl={anchorEl}
@@ -71,16 +60,10 @@ export default function AddButton(props) {
         onClose={handleClose}
       >
         <StyledMenuItem>
-          {/* <ListItem>
-            
-          </ListItem> */}
-          <ListItemText primary='add something' />
+          <AddBoardModal />
         </StyledMenuItem>
         <StyledMenuItem>
-          <ListItemIcon>
-            <DraftsIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Drafts" />
+          <ListItemText primary="Add Table" />
         </StyledMenuItem>
       </StyledMenu>
     </div>

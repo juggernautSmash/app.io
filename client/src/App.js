@@ -19,13 +19,13 @@ function App(props) {
     <Container>
       <BrowserRouter>
         <FirebaseContext.Provider value={{ user, firebase }} >
-          <NavPage {...props} />
+          <NavPage />
           <Switch>
             <Route exact path="/" component={LandingPage} {...props} />
             <Route exact path="/user" component={ProfileDisplayPage} {...props} />
             <Route exact path="/boards" component={BoardsPage} {...props} />
           </Switch>
-          <BottomBarPage {...props} />
+          <BottomBarPage />
         </FirebaseContext.Provider>
       </BrowserRouter>
     </Container>

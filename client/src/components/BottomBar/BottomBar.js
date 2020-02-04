@@ -31,11 +31,9 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const BottomBar = props => {
+const BottomBar = _ => {
 
   const classes = useStyles()
-
-  console.log('Bottom bar props is...', props)
 
   return (
   <AppBar position="fixed" color="primary" className={classes.bottomBar}>

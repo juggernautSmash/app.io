@@ -1,12 +1,8 @@
 import React from 'react'
 import BoardDisplay from '../../components/BoardDisplay'
 import BoardContext from '../../utils/BoardContext'
-import ButtonContext from '../../utils/ButtonContext'
 
-const BoardsPage = props => {
-
-  {console.log('props in the boards page is...', props)}
-  {console.log('the path is ', props.location)}
+const BoardsPage = _ => {
 
   const [ buttonState, setButtonState ] = React.useState({
     page: ''
