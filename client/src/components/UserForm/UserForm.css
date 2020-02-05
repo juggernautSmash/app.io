@@ -1,11 +1,10 @@
 #UFS {
     text-align: center;
-    padding-top: 15px;
+    padding-top: 5px;
     padding-left: 30px;
     padding-right: 30px;
     background-color: rgb(53, 53, 53);
-    padding-bottom: 30%;
-    margin-top: 70px;
+    padding-bottom: 5px;
 }
 
 #email-helper-text, #password-helper-text, #verifyPassword-helper-text {
