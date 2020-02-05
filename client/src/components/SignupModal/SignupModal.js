@@ -11,9 +11,15 @@ import SignupTab from '../SignupTab'
 
 const useStyles = makeStyles(theme => ({
   modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // display: 'flex',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // overflow: 'scroll',
+    position:'absolute',
+    overflow:'scroll',
+    height:'100vh',
+    display:'flex',
+    width: '100%',
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
