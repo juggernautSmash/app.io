@@ -10,7 +10,7 @@ module.exports = (model, Schema) => {
     email: String,
     user: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     board: [{ type: Schema.Types.ObjectId, ref: 'Board' }]
-  }, { timestamps: { createdAt: 'birthday', updatedAt: 'Company Change' } })
+  }, { timestamps: { createdAt: 'birthday', updatedAt: 'lastUpdated' } })
 
   return model('Company', Company)
 }
