@@ -23,7 +23,10 @@ module.exports = app => {
     app.post('/api/boards', (req, res) => {
         Board.create(req.body)
             .then(({ _id }) => {
+                //updating the User
                 User.updateOne({ _id: req.body.user }, { $push: { board: _id } })
+                    .then( r => console.log('boards post route updating user', r))
+                    .catch( e => console.log('boards post route failed updating user', e))
                 Company.updateOne({ _id: req.body.user }, { $push: { board: _id } })
                 Table.updateOne({ _id: req.body.table }, {
                     $push: { board: _id }

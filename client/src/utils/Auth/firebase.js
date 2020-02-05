@@ -11,20 +11,17 @@ class Firebase { // create a class called firebase
 
   async register( email, password) {
     // create new user with email and password
-    const newUser = await this.auth.createUserWithEmailAndPassword(
-      email,
-      password
-    )
+    const newUser = await this.auth.createUserWithEmailAndPassword( email, password )
     // return the uid because that is all we need
     return newUser.user.uid
   }
 
   async login(email, password) {
     // login using firebase.
-    const loggedUser = await this.auth.signInWithEmailAndPassword(email, password)
+    const loggedUser = await this.auth.signInWithEmailAndPassword( email, password )
     // return the uid because that is all we need
     return loggedUser.user.uid
-  }
+  }  
 
   async logout() {
     // logout user

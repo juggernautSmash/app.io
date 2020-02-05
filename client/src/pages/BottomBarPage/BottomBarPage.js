@@ -3,7 +3,6 @@ import axios from 'axios'
 import BottomBar from '../../components/BottomBar'
 import { FirebaseContext } from '../../utils/Auth'
 import BottomBarContext from '../../utils/BottomBarContext'
-import Axios from 'axios'
 
 const BottomBarPage = props => {
 
@@ -45,11 +44,11 @@ const BottomBarPage = props => {
       setState({ ...state, isLoading: true}) // so we can disable the submit button after it is pressed once.
 
       // get the _id from the localStorage
-      const _id = JSON.parse(localStorage.getItem('user'))._id
+      const user = JSON.parse(localStorage.getItem('user'))._id
 
       // for cleaner code, set the req.body to a variable
       const payload = {
-        _id,
+        user,
         title: state.title,
         description: state.description
       }
