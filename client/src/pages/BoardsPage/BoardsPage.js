@@ -1,24 +1,31 @@
 import React from 'react'
+import axios from 'axios'
 import BoardDisplay from '../../components/BoardDisplay'
 import BoardContext from '../../utils/BoardContext'
 
 const BoardsPage = _ => {
-  const array = [
-    { title: 'testTitle1', description: 'testDesc1' },
-    { title: 'testTitle2', description: 'testDesc2' },
-    { title: 'testTitle3', description: 'testDesc3' }]
 
 const [boardState, setBoardState]=React.useState({
   boards:[]
 })
 
 boardState.getBoards = _ =>{
-  let boards = JSON.parse(JSON.stringify(boardState.boards))
-  boards = array
+  let boards_id = JSON.parse(localStorage.getItem('board'))
+  let boards = []
+
+  boards_id.forEach( board_id => {
+    axios.get(`/api/boards/${board_id}`)
+      .then( ({ data: { title, description, lastUpdated }}) => {
+        boards.push({title, description, lastUpdated})
+        console.log('boards are...', boards)
+      })
+      .catch( e => console.log(e))
+  })
   setBoardState({...boardState, boards})
 }
 
 React.useEffect( () => {
+  console.log('running useEffect. boards are... ', boardState.boards)
   boardState.getBoards()
 }, [])
 

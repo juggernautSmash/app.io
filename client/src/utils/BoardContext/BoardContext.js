@@ -1,7 +1,13 @@
 import React from 'react'
 
 const BoardContext = React.createContext({
-  boards:[]
+  title: '',
+  description: '',
+  isLoading: '',
+  boards:[],
+  handleInputChange: () => {},
+  handleSubmitBoard: () => {},
+  handleSubmitTable: () => {}
 })
 
 export default BoardContext
