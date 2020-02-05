@@ -18,7 +18,7 @@ const BoardDisplay = () => {
     <>
       {
         boards.length ? boards.map((board, i) =>
-          <Card className="card" variant="outlined" >
+          <Card key={i} className="card" variant="outlined" >
             <CardActionArea>
               <CardHeader
                 action={
@@ -27,7 +27,7 @@ const BoardDisplay = () => {
                   </IconButton>
                 }
                 title={board.title}
-                subheader="LastUpdated"
+                subheader={ 'Last Updated: ' + board.lastUpdated}
               />
               <CardContent>
                 <Typography variant="body1" color="textSecondary" component="p">

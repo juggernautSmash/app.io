@@ -132,6 +132,8 @@ const NavPage = props => {
             .then( ({data}) => {
                 console.log('data from axios is...', data)
                 state.addLocalStorage('user', data)
+                state.addLocalStorage('board', data.board)
+                state.addLocalStorage('company', data.company)
               })
             // if getting the user from DB fails log the error
             .catch( e => console.error('Error posting to DB', e))
@@ -167,6 +169,9 @@ const NavPage = props => {
           .then( ({ data }) => {
             console.log('data from axios is...', data)
             state.addLocalStorage('user', data)
+            state.addLocalStorage('user', data)
+            state.addLocalStorage('board', data.board)
+            state.addLocalStorage('company', data.company)
           })
           // if getting the user from DB fails log the error
           .catch( e => console.error('Error retrieving from DB', e))

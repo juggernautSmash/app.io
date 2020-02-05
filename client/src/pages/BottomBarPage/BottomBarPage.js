@@ -59,11 +59,6 @@ const BottomBarPage = props => {
           console.log('axios board post is hit', response)
         })
         .catch( e => console.error(e))
-
-      
-
-
-
     } else {
       state.logError({ message: 'Please enter a title'})
     }
