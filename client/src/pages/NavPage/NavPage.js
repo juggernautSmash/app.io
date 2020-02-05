@@ -4,7 +4,6 @@ import NavBar from '../../components/NavBar'
 import Context from '../../utils/Context'
 import firebase from '../../utils/Auth'
 
-
 const NavPage = props => {
 
   const [state, setState] = React.useState({
@@ -22,7 +21,7 @@ const NavPage = props => {
     isLoading: false // so we can display some loading animations
   })
 
-  // when you type something in the form it should get displayed  and stored in the state
+  // when you type something in the form it should get displayed and stored in the state
   state.handleInputChange = e => setState({ ...state, [e.target.name]: e.target.value})
 
   // display or hide password

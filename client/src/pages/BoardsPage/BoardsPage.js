@@ -3,6 +3,11 @@ import BoardDisplay from '../../components/BoardDisplay'
 import BoardContext from '../../utils/BoardContext'
 
 const BoardsPage = _ => {
+
+  const [ buttonState, setButtonState ] = React.useState({
+    page: ''
+  })
+
   const array = [
     { title: 'testTitle1', description: 'testDesc1' },
     { title: 'testTitle2', description: 'testDesc2' },
@@ -20,6 +25,7 @@ boardState.getBoards = _ =>{
 
 React.useEffect( () => {
   boardState.getBoards()
+  setButtonState({ ...buttonState, page: 'boards'})
 }, [])
 
   return (

@@ -3,7 +3,9 @@ import axios from 'axios'
 import ProfileDisplay from '../../components/ProfileDisplay'
 import Context from '../../utils/Context'
 
-const ProfileDisplayPage = _ => {
+const ProfileDisplayPage = props => {
+
+  console.log('Profile display page props...', props)
 
   const [ state, setState ] = React.useState({
     title: '',
@@ -27,7 +29,7 @@ const ProfileDisplayPage = _ => {
     // get user info from DB
     axios.get(`/api/user/${localStorage.getItem('uid')}`)
       .then( ({data: user}) => {
-        console.log('axios.get hit')
+        console.log('axios.get hit', user)
         setState({ // set the parameters in the page to data from mongoDb
           ...state,
           title: user.title,
