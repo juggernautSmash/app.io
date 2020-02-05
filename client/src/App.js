@@ -1,35 +1,37 @@
 import React from 'react'
-
-import FooterBar from './components/FooterBar'
-import LandingPage from './components/LandingPage'
-import Dashboard from './components/Dashboard'
-
-import NavBarPage from './pages/NavBarPage'
-import SignUpPage from './pages/SignUpPage'
-import LoginPage from './pages/LoginPage'
-import ProfileDisplayPage from './pages/ProfileDisplayPage'
-import CompanyDisplayPage from './pages/CompanyDisplayPage/CompanyDisplayPage'
-import BoardsPage from './pages/BoardsPage/BoardsPage'
-
+import { Container } from '@material-ui/core'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+
+import firebase, { useAuth, FirebaseContext } from './utils/Auth'
+
+// components
+import NavPage from './pages/NavPage'
+import BottomBarPage from './pages/BottomBarPage'
+import ProfileDisplayPage from './pages/ProfileDisplayPage'
+import BoardsPage from './pages/BoardsPage'
+import LandingPage from './components/LandingPage'
 
 function App() {
 
+  const user = useAuth()
+
   return (
-    <BrowserRouter>
-      <NavBarPage />
-        <Switch>
-          <Route exact path="/" render={ _ => <LandingPage />} />
-          <Route exact path="/login" render={ _ => <LoginPage />} />
-          <Route exact path="/signup" render={ _ => <SignUpPage /> } />
-          <Route exact path="/dashboard" render={ _ => <Dashboard /> } />
-          <Route exact path="/userprofile" render={ _ => <ProfileDisplayPage />} />
-          <Route exact path="/companyprofile" render={ _ => <CompanyDisplayPage />} />
-          <Route exact path="/boards" render={ _ => <BoardsPage />} />
-      </Switch>
-      <FooterBar />
-    </BrowserRouter>
+    <Container>
+      <BrowserRouter>
+        <FirebaseContext.Provider value={{ user, firebase }}>
+          <NavPage />
+          <Switch>
+          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/user" component={ProfileDisplayPage} />
+          <Route exact path="/boards" component={BoardsPage} />
+          </Switch>
+          <BottomBarPage />
+        </FirebaseContext.Provider>
+      </BrowserRouter>
+    </Container>
   )
+
+  
 }
 
 export default App

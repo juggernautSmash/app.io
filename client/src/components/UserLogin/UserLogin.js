@@ -4,9 +4,9 @@ import { FormControl, InputLabel, Input, FormHelperText, Button,
   InputAdornment,  IconButton, CircularProgress } from '@material-ui/core'
 import { Visibility, VisibilityOff } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
-import { green, red } from '@material-ui/core/colors'
+import { green } from '@material-ui/core/colors'
 
-import LoginContext from '../../utils/LoginContext'
+import Context from '../../utils/Context'
 
 const useStyles = makeStyles(theme => ({    
   wrapper: {
@@ -33,8 +33,19 @@ const UserLogin = _ => {
 
   const styles = useStyles()
 
-  const { email, password, showPassword, errors, isLoading,
-    handleInputChange, handleSubmitButton, handleShowPassword, handleMouseDownPassword } = React.useContext(LoginContext)
+  const { 
+    email, 
+    password, 
+    errors, 
+    showPassword, 
+    isLoading,
+    clearErrors,
+    handleBlur,
+    handleInputChange, 
+    handleSubmitLogin, 
+    handleShowPassword, 
+    handleMouseDownPassword,
+    displayError } = React.useContext(Context)
 
   return (
     <form id="CL">
@@ -47,8 +58,17 @@ const UserLogin = _ => {
             name="email"
             aria-describedby="email-helper-text"
             onChange={handleInputChange}
+            onBlur={handleBlur}
+            onClick={clearErrors}
+            error={
+              errors.some(e => (e.message.toLowerCase().includes('email')) ? true : false)
+            }
             value={email} />
-          <FormHelperText id="email-helper-text"></FormHelperText>
+          <FormHelperText id="email-helper-text">
+            {
+                errors.some(e => (e.message.toLowerCase().includes('email'))) ? displayError(errors) : ''
+            }
+          </FormHelperText>
         </FormControl>
       </div>
       <div>
@@ -59,8 +79,13 @@ const UserLogin = _ => {
             name="password" 
             aria-describedby="password-helper-text"
             onChange={handleInputChange}
+            onBlur={handleBlur}
+            onClick={clearErrors}
             value={password}
             type={showPassword ? 'text' : 'password'}
+            error={
+              errors.some(e => (e.message.toLowerCase().includes('password')) ? true : false)
+            }
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -74,13 +99,17 @@ const UserLogin = _ => {
               </InputAdornment>
             }
           />
-          <FormHelperText id="password-helper-text"></FormHelperText>
+          <FormHelperText id="password-helper-text">
+            {
+                errors.some(e => (e.message.toLowerCase().includes('password'))) ? displayError(errors) : ''
+            }
+          </FormHelperText>
         </FormControl>
       </div>
       <div className={styles.wrapper}>
         <Button 
             disabled={isLoading}
-            onClick={handleSubmitButton}
+            onClick={handleSubmitLogin}
         >
             Submit
         </Button>

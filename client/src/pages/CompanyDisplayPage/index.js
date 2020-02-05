@@ -1,1 +1,1 @@
-export { default } from './CompanyDisplayPage.js'
+export { default } from './CompanyDisplayPage'

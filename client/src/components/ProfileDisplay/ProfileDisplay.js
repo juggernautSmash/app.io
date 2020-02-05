@@ -1,13 +1,10 @@
 import React from 'react'
-import Avatar from '@material-ui/core/Avatar'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Typography from '@material-ui/core/Typography'
+import {Avatar, Typography, Grid, Card, CircularProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
-import Card from '@material-ui/core/Card'
+import { red } from '@material-ui/core/colors'
 
 import './ProfileDisplay.css'
-import ProfileContext from '../../utils/ProfileContext'
+import Context from '../../utils/Context'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -30,17 +27,34 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
     fontSize: 16
   },
+  buttonProgress: {
+    color: red[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  }
 }))
 
 const ProfileDisplay = () => {
   
   const classes = useStyles()
 
-  const { firstName, lastName, title, email, phone, location, timezone } = React.useContext(ProfileContext)
+  const { 
+    firstName, 
+    lastName, 
+    title, 
+    email, 
+    phone, 
+    location, 
+    timezone, 
+    isLoading
+   } = React.useContext(Context)
 
-  return (
+  return (    
     <Card className="card">
-      <CssBaseline />
+      {isLoading && <CircularProgress size={24} className={classes.buttonProgress} />}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           {/* add photo here */}
@@ -55,26 +69,26 @@ const ProfileDisplay = () => {
             <Typography color="textSecondary" variant="h5" className={classes.attr}>Email</Typography>
             <Typography color="textSecondary" variant="h5" className={classes.attr}>Phone</Typography>
             <Typography color="textSecondary" variant="h5" className={classes.attr}>Location</Typography>
-            <Typography color="textSecondary" variant="h5" className={classes.attr}>TimeZone</Typography>
+            <Typography color="textSecondary" variant="h5" className={classes.attr}>Time Zone</Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography variant="h5" className={classes.attr}>
-              {firstName + ' ' + lastName}
+              { firstName + ' ' + lastName }
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              {title}
+              { title }
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              {email}
+              { email }
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              {phone}
+              { phone }
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              {location}
+              { location }
             </Typography>
             <Typography variant="h5" className={classes.attr}>
-              {timezone}
+              { timezone }
             </Typography>
             </Grid>
           </Grid>
@@ -82,14 +96,5 @@ const ProfileDisplay = () => {
     </Card>
   )
 }
-// const SignUpForm = () => {
-//   return (
-//     <div>
-//       THis is the signUpForm
-//     </div>
-//   )
-// }
-
-
 
 export default ProfileDisplay

@@ -1,14 +1,21 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+
+// Material components
 import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
-// Icons
-import { Menu, ExitToApp } from '@material-ui/icons'
+// Material Icons
+import { Menu, ExitToApp, Home } from '@material-ui/icons'
 
-import LoginContext from '../../utils/LoginContext'
+// App components
+import LoginModal from '../LoginModal'
+import SignupModal from '../SignupModal'
 
-const useStyles = makeStyles(theme => ({
+// Context
+import { FirebaseContext } from '../../utils/Auth'
+import Context from '../../utils/Context'
+
+const styles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   },
@@ -21,22 +28,38 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const NavBar = () => {
-  const styles = useStyles()
 
-  const { isLoggedIn } = React.useContext(LoginContext)
+  const { user } = React.useContext(FirebaseContext)
+  const { logout } = React.useContext(Context)
 
   return (
     <div className={styles.root}>
       <AppBar position="fixed" color="primary">
         <Toolbar>
-          <IconButton edge="start" className={ styles.menuButton}  color="inherit" aria-label="menu">
-            <Menu />
-          </IconButton>
+          { user ? (
+            <IconButton edge="start" className={ styles.menuButton }  color="inherit" aria-label="menu">
+              <Menu />
+            </IconButton>
+          ) : (
+            <IconButton edge="start" className={ styles.menuButton }  color="inherit" aria-label="menu">
+              <Home />
+            </IconButton>
+          )
+          }
           <Typography variant="h6" className={ styles.title }>
             app.io
           </Typography>
-          { isLoggedIn ? <Link to="/"><Button><IconButton><ExitToApp/></IconButton></Button></Link> : <Link to="/login"><Button>Login</Button></Link> }
-          { isLoggedIn ? null : <Link to="/signup"><Button>Sign Up</Button></Link> }
+          { user ? (
+            <IconButton edge="end" className={ styles.menuButton }  color="inherit" aria-label="menu"  onClick={logout}>
+              <ExitToApp/>
+            </IconButton>
+          ) : (
+            <>
+              <Button><LoginModal/></Button>
+              <Button><SignupModal/></Button>
+            </>
+          )
+        }
         </Toolbar>
       </AppBar>
     </div>

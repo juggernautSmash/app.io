@@ -1,44 +1,61 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { green, red } from '@material-ui/core/colors'
-import SignUpContext from '../../utils/SignUpContext'
-import { FormControl, Input, InputLabel, FormHelperText, Button,
-    InputAdornment, IconButton, CircularProgress } from '@material-ui/core'
+import { green } from '@material-ui/core/colors'
+import {
+    FormControl, Input, InputLabel, FormHelperText, Button,
+    InputAdornment, IconButton, CircularProgress
+} from '@material-ui/core'
 import { Visibility, VisibilityOff } from '@material-ui/icons'
-import Alert from '@material-ui/lab/Alert'
-import AlertTitle from '@material-ui/lab/AlertTitle'
 
 import './UserForm.css'
+import Context from '../../utils/Context'
 
-const useStyles = makeStyles(theme => ({    
+const useStyles = makeStyles(theme => ({
     wrapper: {
-      margin: theme.spacing(1),
-      position: 'relative',
+        margin: theme.spacing(1),
+        position: 'relative',
     },
     buttonSuccess: {
-      backgroundColor: green[500],
-      '&:hover': {
-        backgroundColor: green[700],
-      },
+        backgroundColor: green[500],
+        '&:hover': {
+            backgroundColor: green[700],
+        },
     },
     buttonProgress: {
-      color: green[500],
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      marginTop: -12,
-      marginLeft: -12,
+        color: green[500],
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
     }
-  }))
+}))
 
 const UserForm = _ => {
 
     const styles = useStyles()
 
-    const {  title, firstName, lastName, email, phone, location,
-         timezone, handleInputChange, handleSubmitButton, showPassword, 
-            handleShowPassword, handleMouseDownPassword, errors, isLoading, 
-                password, verifyPassword } = React.useContext(SignUpContext)
+    const { 
+        title, 
+        firstName, 
+        lastName, 
+        email, 
+        phone, 
+        location,
+        timezone, 
+        showPassword,
+        password, 
+        verifyPassword, 
+        errors, 
+        isLoading,
+        handleBlur,
+        handleInputChange, 
+        handleShowPassword, 
+        handleMouseDownPassword,
+        handleSubmitSignUp,
+        displayError,
+        clearErrors
+    } = React.useContext(Context)
 
     return (
         <form id="UFS" >
@@ -46,59 +63,60 @@ const UserForm = _ => {
             <div>
                 <FormControl>
                     <InputLabel htmlFor="email">Email</InputLabel>
-                    <Input 
+                    <Input
                         id="email"
                         name="email"
-                        aria-describedby="email-helper-text" 
+                        aria-describedby="email-helper-text"
                         onChange={handleInputChange}
+                        onClick={clearErrors}
                         value={email}
+                        onBlur={handleBlur}
                         variant="outlined"
+                        required={true}
                         error={
-                            errors.some( e => (e.message.toLowerCase().includes('email') || e.message.toLowerCase().includes('all'))  ? true : false )
+                            errors.some(e => (e.message.toLowerCase().includes('email')) ? true : false)
                         }
                     />
-                    <FormHelperText id="email-helper-text">Required</FormHelperText>
+                    <FormHelperText id="email-helper-text">
+                        {
+                            errors.some(e => (e.message.toLowerCase().includes('email'))) ? displayError(errors) : ''
+                        }
+                    </FormHelperText>
                 </FormControl>
             </div>
             <div>
                 <FormControl>
                     <InputLabel htmlFor="firstName">First Name</InputLabel>
-                    <Input 
-                        id="firstName" 
+                    <Input
+                        id="firstName"
                         name="firstName"
-                        aria-describedby="firstName-helper-text" 
+                        aria-describedby="firstName-helper-text"
                         onChange={handleInputChange}
                         value={firstName}
-                        error={
-                            errors.some( e =>  e.message.toLowerCase().includes('all') ? true : false )
-                        }
                     />
-                    <FormHelperText id="firstName-helper-text">Required</FormHelperText>
+                    <FormHelperText id="firstName-helper-text"></FormHelperText>
                 </FormControl>
             </div>
             <div>
                 <FormControl>
                     <InputLabel htmlFor="lastName">Last Name</InputLabel>
-                    <Input 
-                        id="lastName" 
+                    <Input
+                        id="lastName"
                         name="lastName"
-                        aria-describedby="lastName-helper-text" 
+                        aria-describedby="lastName-helper-text"
                         onChange={handleInputChange}
                         value={lastName}
-                        error={
-                            errors.some( e =>  e.message.toLowerCase().includes('all') ? true : false )
-                        }
                     />
-                    <FormHelperText id="lastName-helper-text">Required</FormHelperText>
+                    <FormHelperText id="lastName-helper-text"></FormHelperText>
                 </FormControl>
             </div>
             <div>
                 <FormControl>
                     <InputLabel htmlFor="title">Title</InputLabel>
-                    <Input 
-                        id="title" 
+                    <Input
+                        id="title"
                         name="title"
-                        aria-describedby="title-helper-text" 
+                        aria-describedby="title-helper-text"
                         onChange={handleInputChange}
                         value={title}
                     />
@@ -108,10 +126,10 @@ const UserForm = _ => {
             <div>
                 <FormControl>
                     <InputLabel htmlFor="phone">Phone #</InputLabel>
-                    <Input 
-                        id="phone" 
+                    <Input
+                        id="phone"
                         name="phone"
-                        aria-describedby="phone-helper-text" 
+                        aria-describedby="phone-helper-text"
                         onChange={handleInputChange}
                         value={phone}
                     />
@@ -121,10 +139,10 @@ const UserForm = _ => {
             <div>
                 <FormControl>
                     <InputLabel htmlFor="location">Location</InputLabel>
-                    <Input 
-                        id="location" 
+                    <Input
+                        id="location"
                         name="location"
-                        aria-describedby="location-helper-text" 
+                        aria-describedby="location-helper-text"
                         onChange={handleInputChange}
                         value={location}
                     />
@@ -134,10 +152,10 @@ const UserForm = _ => {
             <div>
                 <FormControl>
                     <InputLabel htmlFor="timezone">Timezone</InputLabel>
-                    <Input 
-                        id="timezone" 
+                    <Input
+                        id="timezone"
                         name="timezone"
-                        aria-describedby="timezone-helper-text" 
+                        aria-describedby="timezone-helper-text"
                         onChange={handleInputChange}
                         value={timezone}
                     />
@@ -147,83 +165,77 @@ const UserForm = _ => {
             <div>
                 <FormControl>
                     <InputLabel htmlFor="password">Password</InputLabel>
-                    <Input 
-                        id="password" 
+                    <Input
+                        id="password"
                         name="password"
                         aria-describedby="password-helper-text"
-                        type={showPassword ? 'text' : 'password'} 
+                        type={showPassword ? 'text' : 'password'}
                         onChange={handleInputChange}
+                        onBlur={handleBlur}
+                        onClick={clearErrors}
                         value={password}
                         endAdornment={
                             <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                              >
-                                {showPassword ? <Visibility /> : <VisibilityOff />}
-                              </IconButton>
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
                             </InputAdornment>
-                          }
+                        }
                         error={
-                            errors.some( e => (e.message.toLowerCase().includes('password') || e.message.toLowerCase().includes('all')) ? true : false )
+                            errors.some(e => (e.message.toLowerCase().includes('password')) ? true : false)
                         }
                     />
-                    <FormHelperText id="password-helper-text">Required</FormHelperText>
+                    <FormHelperText id="password-helper-text">
+                        {
+                            errors.some(e => (e.message.toLowerCase().includes('password'))) ? displayError(errors) : ''
+                        }
+                    </FormHelperText>
                 </FormControl>
             </div>
             <div>
                 <FormControl>
                     <InputLabel htmlFor="verifyPassword">Verify Password</InputLabel>
-                    <Input 
+                    <Input
                         id="verifyPassword"
                         name="verifyPassword"
-                        aria-describedby="verifyPassword-helper-text" 
-                        type={showPassword ? 'text' : 'password'} 
+                        aria-describedby="verifyPassword-helper-text"
+                        type={showPassword ? 'text' : 'password'}
                         onChange={handleInputChange}
+                        onBlur={handleBlur}
+                        onClick={clearErrors}
                         value={verifyPassword}
                         endAdornment={
                             <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                              >
-                                {showPassword ? <Visibility /> : <VisibilityOff />}
-                              </IconButton>
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
                             </InputAdornment>
-                          }
+                        }
                         error={
-                            errors.some( e => (e.message.toLowerCase().includes('password') || e.message.toLowerCase().includes('all')) ? true : false )
+                            errors.some(e => (e.message.toLowerCase().includes('password')) ? true : false)
                         }
                     />
-                    <FormHelperText id="verifyPassword-helper-text">Required</FormHelperText>
+                    <FormHelperText id="verifyPassword-helper-text">
+                        {
+                            errors.some(e => (e.message.toLowerCase().includes('password'))) ? displayError(errors) : ''
+                        }
+                    </FormHelperText>
                 </FormControl>
             </div>
-            <div>
-                {
-                    errors.length > 0 && (
-                        <Alert severity="error">
-                            <AlertTitle>Error</AlertTitle>
-                            {console.log(errors)
-                            /* <p>
-                                { errors.some( e => e.message.toLowerCase().includes('all')  ? e.message : '' )}
-                                { errors.some( e => e.message.toLowerCase().includes('email')  ? e.message : '' )}
-                                { errors.some( e => e.message.toLowerCase().includes('first name')  ? e.message : '' )}
-                                { errors.some( e => e.message.toLowerCase().includes('last name')  ? e.message : '' )}
-                                { errors.some( e => e.message.toLowerCase().includes('password')  ? e.message : '' )}
-                                { errors.some( e => e.message.toLowerCase().includes('verify password') ? e.message : '' )}
-                            </p> */}
-                        </Alert>
-                    )
-                }
-            </div>
             <div className={styles.wrapper}>
-                <Button 
+                <Button
                     disabled={isLoading}
-                    onClick={handleSubmitButton}
+                    onClick={handleSubmitSignUp}
                 >
                     Submit
                 </Button>

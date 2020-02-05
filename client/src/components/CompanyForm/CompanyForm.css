@@ -6,3 +6,7 @@
     background-color: rgb(53, 53, 53);
     padding-bottom: 30%;
 }
+
+#email-helper-text, #password-helper-text, #verifyPassword-helper-text {
+    color: red
+}
