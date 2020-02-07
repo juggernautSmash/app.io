@@ -11,8 +11,6 @@ import SignupTab from '../SignupTab'
 
 const useStyles = makeStyles(theme => ({
   modal: {
-    // display: 'flex',
-    // alignItems: 'center',
     justifyContent: 'center',
     position:'absolute',
     overflow:'scroll',
@@ -47,6 +45,8 @@ export default function LoginModal() {
         Signup
       </Button>
       <Modal
+        id="js-focus-visible"
+        disableAutoFocus="true"
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}

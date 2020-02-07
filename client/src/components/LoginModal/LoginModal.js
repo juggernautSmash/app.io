@@ -40,6 +40,7 @@ export default function LoginModal() {
         Login
       </Button>
       <Modal
+        id="js-focus-visible"
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
