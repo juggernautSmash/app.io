@@ -4,10 +4,13 @@ const BoardContext = React.createContext({
   title: '',
   description: '',
   isLoading: '',
-  boards:[],
+  boards: [],
+  errors: [],
+  displayError: () => { },
   handleInputChange: () => {},
-  handleSubmitBoard: () => {},
-  handleSubmitTable: () => {}
+  handleInputChange: () => { },
+  handleSubmitBoard: () => { },
+  handleSubmitTable: () => { }
 })
 
 export default BoardContext

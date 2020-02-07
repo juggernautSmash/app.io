@@ -36,11 +36,17 @@ module.exports = app => {
     })
     // update one board
     app.put('/api/boards/:id', (req, res) => {
+      console.log("boards put route hit")
+      console.log(req);
+      
         Board.updateOne({ _id: req.params.id }, { $set: req.body })
-        User.updateOne({ _id: req.body.user }, { $push: { board: req.params.id } })
-        Company.updateOne({ _id: req.body.company }, { $push: { board: req.params.id } })
-            .then(board => res.json(board))
-            .catch(e => console.log(e))
+        .then( r => console.log(r))
+        .catch(e => console.log(e))
+
+        // User.updateOne({ _id: req.body.user }, { $push: { board: req.params.id } })
+        // Company.updateOne({ _id: req.body.company }, { $push: { board: req.params.id } })
+        //     .then(board => res.json(board))
+        //     .catch(e => console.log(e))
 
     })
     // remove one board
