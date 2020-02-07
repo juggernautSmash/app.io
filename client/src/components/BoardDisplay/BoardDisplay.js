@@ -5,9 +5,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import BoardContext from '../../utils/BoardContext'
+import EditBoardModal from '../../components/EditBoardModal'
 import './BoardDisplay.css'
 
 const BoardDisplay = () => {
@@ -23,7 +23,7 @@ const BoardDisplay = () => {
               <CardHeader
                 action={
                   <IconButton aria-label="settings">
-                    <MoreVertIcon />
+                    <EditBoardModal board={board} />
                   </IconButton>
                 }
                 title={board.title}
