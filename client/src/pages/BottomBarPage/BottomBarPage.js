@@ -13,11 +13,15 @@ const BottomBarPage = props => {
     title: '',
     description: '',
     errors: [],
-    isLoading: false
+    isLoading: false,
+    openModal: true, 
   })
 
   // when you type something in the form it should get displayed and stored in the state
   state.handleInputChange = e => setState({ ...state, [e.target.name]: e.target.value})
+
+  // store to localStorage
+  state.addLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value))
 
   // update the error state
   state.logError = errorMessage => {
@@ -43,7 +47,7 @@ const BottomBarPage = props => {
     if(state.title){ // if title has an entry let the push happen
       setState({ ...state, isLoading: true}) // so we can disable the submit button after it is pressed once.
 
-      // get the _id from the localStorage
+      // get the user _id from the localStorage
       const user = JSON.parse(localStorage.getItem('user'))._id
 
       // for cleaner code, set the req.body to a variable
@@ -55,8 +59,12 @@ const BottomBarPage = props => {
 
       // post the created board in mongo
       axios.post(`/api/boards`, payload)
-        .then( response => {
-          console.log('axios board post is hit', response)
+        .then( ({data}) => {
+          console.log('axios board post is hit', data)
+          let boardList = JSON.parse(localStorage.getItem('board'))
+          boardList.push(data._id)
+          state.addLocalStorage('board', boardList)
+          setState({ ...state, isLoading: false, openModal: false}) // so we can disable the submit button after it is pressed once.
         })
         .catch( e => console.error(e))
     } else {

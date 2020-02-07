@@ -1,4 +1,12 @@
 .card {
   max-width: 345;
-  margin-top: 70px
+  margin-top: 70px;
+}
+
+.linkText {
+  text-decoration: none;
+}
+
+#lastBoard {
+  margin-bottom: 100px;
 }
