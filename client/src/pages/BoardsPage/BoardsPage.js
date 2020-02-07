@@ -24,8 +24,8 @@ const BoardsPage = _ => {
 
       boards_id.forEach( board_id => {
         axios.get(`/api/boards/${board_id}`)
-          .then( ({ data: { title, description, lastUpdated }}) => {
-            boards.push({title, description, lastUpdated})
+          .then( ({ data: { _id, title, description, lastUpdated }}) => {
+            boards.push({ _id, title, description, lastUpdated})
             console.log('boards are...', boards)
             setBoardState({ ...boardState, boards })
           })
@@ -46,9 +46,6 @@ const BoardsPage = _ => {
     if (boardState.title) { // if title has an entry let the push happen
       setBoardState({ ...boardState, isLoading: true }) // so we can disable the submit button after it is pressed once.
 
-      // get the _id from the localStorage
-      const user = JSON.parse(localStorage.getItem('user'))._id
-
       // for cleaner code, set the req.body to a variable
       const payload = {
         title: boardState.title,
@@ -58,7 +55,7 @@ const BoardsPage = _ => {
       // post the created board in mongo
       axios.put(`/api/boards/${id}`, payload)
         .then(response => {
-          console.log('axios board put is hit', response)
+          // console.log('axios board put is hit', response)
         })
         .catch(e => console.error(e))
     } else {
@@ -77,7 +74,7 @@ const BoardsPage = _ => {
     }
   }
   React.useEffect( () => {
-  console.log('running useEffect. boards are... ', boardState.boards)
+  // console.log('running useEffect. boards are... ', boardState.boards)
   setBoardState({ ...boardState, isLoading: true })
   boardState.getBoards()
 }, [ boardState.boardSync() ])
