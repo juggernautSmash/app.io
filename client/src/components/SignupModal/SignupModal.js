@@ -14,11 +14,12 @@ const useStyles = makeStyles(theme => ({
     // display: 'flex',
     // alignItems: 'center',
     justifyContent: 'center',
-    // position:'absolute',
+    position:'absolute',
     overflow:'scroll',
-    height:'85vh',
+    height:'90vh',
     display:'flex',
     width: '100%',
+    marginTop: '5vh',
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -58,7 +59,7 @@ export default function LoginModal() {
         }}
       >
         <Fade in={open}>
-          <div className={classes.paper}>
+          <div id="modalBody" className={classes.paper}>
             <SignupTab/>
           </div>
         </Fade>
