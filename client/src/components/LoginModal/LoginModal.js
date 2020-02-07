@@ -55,6 +55,9 @@ export default function LoginModal() {
         <Fade in={open}>
           <div className={classes.paper}>
             <LoginTab/>
+            <button id="modalButton" type="button" onClick={handleClose}>
+              Close
+            </button>
           </div>
         </Fade>
       </Modal>
