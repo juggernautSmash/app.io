@@ -18,7 +18,7 @@ const BoardDisplay = () => {
     <>
       {
         boards.length ? boards.map((board, i) =>
-          <Card key={i} className="card" variant="outlined" >
+          <Card key={i} className="card" variant="outlined" id={ i === boards.length-1 ? 'lastBoard' : null }>
             <CardActionArea>
               <CardHeader
                 action={

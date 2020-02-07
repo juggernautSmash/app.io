@@ -51,7 +51,7 @@ const NavBar = () => {
           </Typography>
           { user ? (
             <IconButton edge="end" className={ styles.menuButton }  color="inherit" aria-label="menu"  onClick={logout}>
-              <ExitToApp/>
+              <ExitToApp/> 
             </IconButton>
           ) : (
             <>

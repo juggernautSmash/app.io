@@ -6,3 +6,7 @@
 .linkText {
   text-decoration: none;
 }
+
+#lastBoard {
+  margin-bottom: 100px;
+}

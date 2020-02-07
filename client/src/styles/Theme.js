@@ -9,6 +9,4 @@ const Theme = createMuiTheme({
   }
 })
 
-console.log(Theme)
-
 export default Theme
