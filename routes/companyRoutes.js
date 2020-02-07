@@ -56,8 +56,6 @@ module.exports = app => {
     // update one company
     app.put('/api/companies/:id', (req, res) => {
         Company.updateOne({ _id: req.params.id }, { $set: req.body })
-        User.updateOne({ _id: req.body.user }, { $push: { company: req.params.id } })
-        Board.updateOne({ _id: req.body.board }, { $push: { company: req.params.id } })
             .then(company => res.json(company))
             .catch(e => console.log(e))
 

@@ -22,6 +22,7 @@ module.exports = app => {
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })
+
     // retrieve one user
     app.get('/api/users/:id', (req, res) => {
         User.findOne({ uid: req.params.id })
@@ -29,6 +30,7 @@ module.exports = app => {
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })
+
     // add a user also add to company
     app.post('/api/users', (req, res) => {
         User.create(req.body)
@@ -44,12 +46,9 @@ module.exports = app => {
         // update one user
         app.put('/api/users/:id', (req, res) => {
             User.updateOne({ _id: req.params.id }, { $set: req.body })
-            Board.updateOne({ _id: req.body.board }, { $push: { user: req.params.id } })
-            Company.updateOne({ _id: req.body.company }, { $push: { user: req.params.id } })
                 .then(user => res.json(user))
                 .catch(e => console.log(e))
         })
-
 
     // remove user
     app.delete('/api/users/:id', (req, res) => {
