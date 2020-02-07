@@ -3,8 +3,12 @@ import axios from 'axios'
 import NavBar from '../../components/NavBar'
 import Context from '../../utils/Context'
 import firebase from '../../utils/Auth'
+import { useHistory } from 'react-router-dom'
+import Loading from '../../components/Loading'
 
-const NavPage = props => {
+const NavPage = () => {
+
+  const history = useHistory()
 
   const [state, setState] = React.useState({
     title: '',
@@ -44,7 +48,7 @@ const NavPage = props => {
   } // end logError
 
   // output a <p> per error
-  state.displayError = errors => errors.map((error, i) => <p key={i}>{error.message}</p>)
+  state.displayError = errors => errors.map((error, i) => <span key={i}>{error.message}</span>)
 
   // empty the state.errors array
   state.clearErrors = _ => setState({ ...state, errors: []})
@@ -128,6 +132,7 @@ const NavPage = props => {
             location: state.location,
             company: state.company
           })
+          
             //store user data from DB in localStorage
             .then( ({data}) => {
                 console.log('data from axios is...', data)
@@ -138,7 +143,18 @@ const NavPage = props => {
             // if getting the user from DB fails log the error
             .catch( e => console.error('Error posting to DB', e))
 
-        })
+            // after logging in, delay five seconds for everything to sync
+            setTimeout( ()=>{        
+              
+              // and set the state to false to exit the loading page
+              setState({ ...state, isLoading: false })
+
+               // redirect to the boards page
+               history.push('/boards')
+            
+            }, 5000 ) // end setTimeout
+
+        }) // end firebase.register.then
         // if firebase fails to sign up the user.
         .catch( error => state.logError(error))
     } // end if statement
@@ -167,19 +183,30 @@ const NavPage = props => {
         axios.get(`/api/user/${uid}`)
           // store user from DB to localStorage
           .then( ({ data }) => {
-            console.log('data from axios is...', data)
-            state.addLocalStorage('user', data)
+            // console.log('data from axios is...', data)
             state.addLocalStorage('user', data)
             state.addLocalStorage('board', data.board)
             state.addLocalStorage('company', data.company)
-          })
+          }) // end axios.get.then
           // if getting the user from DB fails log the error
-          .catch( e => console.error('Error retrieving from DB', e))
-        })
-        // if firebase fails to login the user.
-        .catch( error => state.logError(error))
+          .catch( e => console.error( 'Error retrieving from DB', e ) )
+        // end axios
 
-        setTimeout(()=>console.log('delay 5 secs'), 5000)
+        // after logging in, delay five seconds for everything to sync
+        setTimeout( ()=> {        
+          
+          // after five seconds, redirect to the boards page
+          history.push('/boards')
+
+          // and set the state to false to exit the loading page
+          setState({ ...state, isLoading: false })
+        
+        }, 5000 ) // end setTimeout
+
+        }) // end firebase.login.then
+        // if firebase fails to login the user.
+        .catch( error => state.logError( error ) )
+
     } // end if statement
     else {
       // if sign up form is not valid set isLoading so you can resumbit
@@ -190,15 +217,27 @@ const NavPage = props => {
 
   // handler for logout button to logout and clear the local storage
   state.logout = _ => {
+    setState({ ...state, isLoading: true })
     console.log('logging out')
     localStorage.removeItem('uid') // remove uid from localStorage
-    localStorage.removeItem('user') // remove user date from localStorage
+    localStorage.removeItem('user') // remove user data from localStorage
+    localStorage.removeItem('board') // remove board data form localStorage
+    localStorage.removeItem('company') // remove company data from localStorage
+    history.push('/') // redirect to landing page after logout
     firebase.logout()
+    setTimeout( () => setState({ ...state, isLoading: false }), 3000)
   }
+
+  React.useEffect( () => {
+    console.log('this is the history in navpage', history)
+  }, [])
   
   return (
     <Context.Provider value={state}>
       <NavBar />
+      { 
+        state.isLoading ? <Loading /> : null 
+      }
     </Context.Provider>
   )
 }

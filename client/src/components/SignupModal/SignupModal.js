@@ -11,14 +11,13 @@ import SignupTab from '../SignupTab'
 
 const useStyles = makeStyles(theme => ({
   modal: {
-    // display: 'flex',
-    // alignItems: 'center',
     justifyContent: 'center',
-    // position:'absolute',
-    overflow:'scroll',
-    height:'85vh',
-    display:'flex',
+    position: 'absolute',
+    overflow: 'scroll',
+    height: '90vh',
+    display: 'flex',
     width: '100%',
+    marginTop: '5vh',
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -46,6 +45,8 @@ export default function LoginModal() {
         Signup
       </Button>
       <Modal
+        id="js-focus-visible"
+        disableAutoFocus="true"
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
@@ -58,8 +59,11 @@ export default function LoginModal() {
         }}
       >
         <Fade in={open}>
-          <div className={classes.paper}>
-            <SignupTab/>
+          <div id="modalBody" className={classes.paper}>
+            <SignupTab />
+            <button id="modalButton" type="button" onClick={handleClose}>
+              Close
+            </button>
           </div>
         </Fade>
       </Modal>

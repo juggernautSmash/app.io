@@ -21,7 +21,7 @@ function App(props) {
         <FirebaseContext.Provider value={{ user, firebase }} >
           <NavPage />
           <Switch>
-            <Route exact path="/" component={LandingPage} {...props} />
+            <Route exact path="/" component={ user ? BoardsPage : LandingPage } {...props} />
             <Route exact path="/user" component={ProfileDisplayPage} {...props} />
             <Route exact path="/boards" component={BoardsPage} {...props} />
           </Switch>
