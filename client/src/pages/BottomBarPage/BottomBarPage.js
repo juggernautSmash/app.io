@@ -60,7 +60,7 @@ const BottomBarPage = props => {
       // post the created board in mongo
       axios.post(`/api/boards`, payload)
         .then( ({data}) => {
-          console.log('axios board post is hit', data)
+          // console.log('axios board post is hit', data)
           let boardList = JSON.parse(localStorage.getItem('board'))
           boardList.push(data._id)
           state.addLocalStorage('board', boardList)

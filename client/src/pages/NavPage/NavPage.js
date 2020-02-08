@@ -38,7 +38,17 @@ const NavPage = () => {
   state.handleBlur = e => state.validateForm(state)
 
   // store to localStorage
-  state.addLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value))
+  state.addLocalStorage = async function (key, value) {
+    console.log(`Putting ${key} with value ${value} in localStorage`)
+
+    let storedItem = await new Promise( (resolve, reject) => {
+      localStorage.setItem(key, JSON.stringify(value))
+      const item = JSON.parse(localStorage.getItem(key))
+      item ? resolve(item) : reject(new Error(`localStorage for ${key} does not exist`))
+    })
+
+    return storedItem
+  }
 
   // update the error state
   state.logError = errorMessage => {
@@ -108,7 +118,7 @@ const NavPage = () => {
   } // end validateLogin
 
   // handler for the submit button in the signup page
-  state.handleSubmitSignUp = e => {
+  state.handleSubmitSignUp = async function (e) {
     e.preventDefault()
     if (state.validateForm(state)){
       // Clear the errors and set the isLoading to true to prevent the user from double-clicking the submit button
@@ -119,8 +129,9 @@ const NavPage = () => {
         .then( uid => {
 
           // store uid in localStorage
-          localStorage.setItem('uid', uid)
-
+         state.addLocalStorage('uid', uid)
+          .then( userId => {
+            console.log('addLocalStorage promise is...', userId)
           // store sign up info in mongo
           axios.post(`/api/user`, {
             uid: uid,
@@ -132,16 +143,27 @@ const NavPage = () => {
             location: state.location,
             company: state.company
           })
-          
             //store user data from DB in localStorage
             .then( ({data}) => {
                 console.log('data from axios is...', data)
                 state.addLocalStorage('user', data)
+                  .then( r => console.log('user stored in localStorage is ', data))
+                  .catch( e => console.error(e))
                 state.addLocalStorage('board', data.board)
+                  .then( r => console.log('user stored in localStorage is ', data))
+                  .catch( e => console.error(e))
                 state.addLocalStorage('company', data.company)
+                  .then( r => console.log('user stored in localStorage is ', data))
+                  .catch( e => console.error(e))
+
+                // create boards
+                state.createBoards()
               })
             // if getting the user from DB fails log the error
             .catch( e => console.error('Error posting to DB', e))
+          }) // end addLocalStorage.then
+
+          // create default boards
 
             // after logging in, delay five seconds for everything to sync
             setTimeout( ()=>{        
@@ -149,8 +171,8 @@ const NavPage = () => {
               // and set the state to false to exit the loading page
               setState({ ...state, isLoading: false })
 
-               // redirect to the boards page
-               history.push('/boards')
+              // redirect to the boards page
+              history.push('/boards')
             
             }, 5000 ) // end setTimeout
 
@@ -228,9 +250,35 @@ const NavPage = () => {
     setTimeout( () => setState({ ...state, isLoading: false }), 3000)
   }
 
-  React.useEffect( () => {
-    console.log('this is the history in navpage', history)
-  }, [])
+  state.createBoards = _ => {
+
+    // get the user _id from the localStorage
+    const user = JSON.parse(localStorage.getItem('user'))._id
+
+    // create 3 boards after sign up
+    for( let i = 0; i<3 ; i++){
+      // for cleaner code, set the req.body to a variable
+      const payload = {
+        user,
+        title: `Board #${i+1}`
+      }
+      
+      axios.post(`/api/boards`, payload)
+      .then( ({data}) => {
+        console.log('axios board post is hit', data)
+        let boardList = JSON.parse(localStorage.getItem('board'))
+        boardList.push(data._id)
+        state.addLocalStorage('board', boardList)
+          .then( board => console.log('added board', board))
+      })
+      .catch( e => console.error(e))
+    } // end for loop
+
+  } // end createBoards
+
+  // React.useEffect( () => {
+  //   console.log('this is the history in navpage', history)
+  // }, [])
   
   return (
     <Context.Provider value={state}>

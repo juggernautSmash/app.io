@@ -30,8 +30,6 @@ module.exports = app => {
                 User.updateOne({ _id: req.body.user }, { $push: { board: response._id } })
                     .then( r => console.log('boards post route updating user', r))
                     .catch( e => console.log('boards post route failed updating user', e))
-                //Updating the company
-                Company.updateOne({ _id: req.body.user }, { $push: { board: response._id } })
             })
             .catch(e => console.log(e)) // catch for Board.create
 
