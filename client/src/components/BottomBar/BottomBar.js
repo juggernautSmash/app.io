@@ -4,7 +4,6 @@ import { AppBar, Toolbar, Grid, IconButton, Fab} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 // Icons
-import AddIcon from '@material-ui/icons/Add'
 import GroupIcon from '@material-ui/icons/Group'
 import PieChartIcon from '@material-ui/icons/PieChart'
 import SettingsIcon from '@material-ui/icons/Settings'

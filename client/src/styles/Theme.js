@@ -6,6 +6,9 @@ const Theme = createMuiTheme({
     primary: indigo,
     secondary: yellow,
     type: 'dark',
+  },
+  Modal: {
+    outline: 'none',
   }
 })
 

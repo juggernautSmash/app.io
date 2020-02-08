@@ -37,13 +37,10 @@ module.exports = app => {
     // update one table
     app.put('/api/tables/:id', (req, res) => {
         Table.updateOne({ _id: req.params.id }, { $set: req.body })
-        User.updateOne({ _id: req.body.user }, { $push: { table: req.params.id } })
-        Board.updateOne({ _id: req.body.board }, { $push: { table: req.params.id } })
             .then(table => res.json(table))
             .catch(e => console.log(e))
 
     })
-
 
     // remove table
     app.delete('/api/tables/:id', (req, res) => {

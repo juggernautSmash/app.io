@@ -40,6 +40,7 @@ export default function LoginModal() {
         Login
       </Button>
       <Modal
+        id="js-focus-visible"
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
@@ -54,6 +55,9 @@ export default function LoginModal() {
         <Fade in={open}>
           <div className={classes.paper}>
             <LoginTab/>
+            <button id="modalButton" type="button" onClick={handleClose}>
+              Close
+            </button>
           </div>
         </Fade>
       </Modal>
