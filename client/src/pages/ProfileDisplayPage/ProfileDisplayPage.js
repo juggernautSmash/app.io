@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import ProfileDisplay from '../../components/ProfileDisplay'
 import Context from '../../utils/Context'
+import firebase from '../../utils/Auth'
 
 const ProfileDisplayPage = props => {
 
@@ -9,7 +10,7 @@ const ProfileDisplayPage = props => {
 
   const [ state, setState ] = React.useState({
     title: '',
-    photo: '',
+    photoUrl: '',
     firstName: '',
     lastName: '',
     company: '',
@@ -33,7 +34,7 @@ const ProfileDisplayPage = props => {
         setState({ // set the parameters in the page to data from mongoDb
           ...state,
           title: user.title,
-          // photo: mUser.photo,
+          photoUrl: user.photoUrl,
           firstName: user.firstName,
           lastName: user.lastName,
           company: user.company,
@@ -45,6 +46,29 @@ const ProfileDisplayPage = props => {
       }) // end axios .then
       .catch( error => console.log(error) )
   } // end getProfile
+
+  state.handleFileUpload = _ => document.getElementById('imgInput').click()
+
+  state.handleImageUpload = e => {
+    console.log('handleUploadImage is running')
+    //e.preventDefault()
+    if(e.target.files[0]){
+      const image = e.target.files[0]
+
+      firebase.storage
+        .ref(`images/${image.name}`)
+        .put(image)
+        .then( data => {
+          data.ref.getDownloadURL()
+            .then( url => {
+              setState({ ...state, photoUrl: url})
+              let id = JSON.parse(localStorage.getItem('user'))._id
+              axios.put(`/api/users/${id}`, { photoUrl: url })
+                .then( r => console.log('profile axios hit. response... ', r ))
+            })
+        })
+    } //end if
+  }
 
   React.useEffect( () => {
 

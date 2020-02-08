@@ -7,7 +7,7 @@ module.exports = (model, Schema) => {
       type: String,
       uppercase: true,
     },
-    photo: String,
+    photoUrl: String,
     firstName: String,
     lastName: String,
     email: String,
