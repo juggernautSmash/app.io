@@ -55,8 +55,9 @@ const ProfileDisplayPage = props => {
             timezone: user.timezone
           }) // end setState
         }) // end axios .then
-        .catch( error => console.error(error) )
-      })
+        .catch( e => console.error(e) ) // axios catch
+      }) // end getLocalStorageItem.then
+      .catch( e => console.error(e) //getLocalStorageItem catch
   } // end getProfile
 
   state.handleFileUpload = _ => document.getElementById('imgInput').click()
