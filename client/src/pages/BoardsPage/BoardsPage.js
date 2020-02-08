@@ -17,33 +17,33 @@ const BoardsPage = _ => {
 
   boardState.getBoards = _ => {
 
-    setTimeout( () => {
+    setTimeout(() => {
 
       let boards_id = JSON.parse(localStorage.getItem('board'))
       let boards = []
 
-      boards_id.forEach( board_id => {
+      boards_id.forEach(board_id => {
         axios.get(`/api/boards/${board_id}`)
-          .then( ({ data: { _id, title, description, lastUpdated }}) => {
-            boards.push({ _id, title, description, lastUpdated})
+          .then(({ data: { _id, title, description, lastUpdated } }) => {
+            boards.push({ _id, title, description, lastUpdated })
             console.log('boards are...', boards)
             setBoardState({ ...boardState, boards })
           })
-          .catch( e => console.log(e))
+          .catch(e => console.log(e))
       }) // end forEach
 
-      setBoardState({...boardState, boards })
+      setBoardState({ ...boardState, boards })
 
     }, 5000)
 
-    setTimeout( () => setBoardState({ ...boardState, isLoading: false}), 5000)
+    setTimeout(() => setBoardState({ ...boardState, isLoading: false }), 5000)
 
     console.log('boardState.boards is now...', boardState.boards)
   }
 
   boardState.handleSubmitBoard = id => {
     console.log(id)
-    if (boardState.title) { // if title has an entry let the push happen
+    if (boardState.title && boardState.description) { // if title has an entry let the push happen
       setBoardState({ ...boardState, isLoading: true }) // so we can disable the submit button after it is pressed once.
 
       // for cleaner code, set the req.body to a variable
@@ -51,37 +51,63 @@ const BoardsPage = _ => {
         title: boardState.title,
         description: boardState.description
       }
-
       // post the created board in mongo
       axios.put(`/api/boards/${id}`, payload)
         .then(response => {
           // console.log('axios board put is hit', response)
         })
         .catch(e => console.error(e))
-    } else {
+    } else if (!boardState.title && boardState.description) {
+      setBoardState({ ...boardState, isLoading: true }) // so we can disable the submit button after it is pressed once.
+
+      // for cleaner code, set the req.body to a variable
+      const payload = {
+        description: boardState.description
+      }
+      // post the created board in mongo
+      axios.put(`/api/boards/${id}`, payload)
+        .then(response => {
+          // console.log('axios board put is hit', response)
+        })
+        .catch(e => console.error(e))
+    } else if (boardState.title && !boardState.description) {
+      setBoardState({ ...boardState, isLoading: true }) // so we can disable the submit button after it is pressed once.
+
+      // for cleaner code, set the req.body to a variable
+      const payload = {
+        title: boardState.title
+      }
+      // post the created board in mongo
+      axios.put(`/api/boards/${id}`, payload)
+        .then(response => {
+          // console.log('axios board put is hit', response)
+        })
+        .catch(e => console.error(e))
+    }
+    else {
       console.log(' error submitting boardState.title is...', boardState.title)
       // boardState.logError({ message: 'Please enter a title' })
     }
   }
-  
+
   boardState.boardSync = () => {
     const boardLength = JSON.parse(localStorage.getItem('board'))
 
-    if(boardState.boards.length === boardLength){
+    if (boardState.boards.length === boardLength) {
       return false
     } else {
       return true
     }
   }
-  React.useEffect( () => {
-  // console.log('running useEffect. boards are... ', boardState.boards)
-  setBoardState({ ...boardState, isLoading: true })
-  boardState.getBoards()
-}, [ boardState.boardSync() ])
-  
+  React.useEffect(() => {
+    // console.log('running useEffect. boards are... ', boardState.boards)
+    setBoardState({ ...boardState, isLoading: true })
+    boardState.getBoards()
+  }, [boardState.boardSync()])
+
   return (
     <BoardContext.Provider value={boardState}>
-      { boardState.isLoading && <Loading /> }
+      {boardState.isLoading && <Loading />}
       <BoardDisplay />
       {/* { boardState.isLoading ? <Loading /> : <BoardDisplay /> } */}
     </BoardContext.Provider>
