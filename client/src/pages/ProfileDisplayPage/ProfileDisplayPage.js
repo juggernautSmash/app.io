@@ -57,7 +57,7 @@ const ProfileDisplayPage = props => {
         }) // end axios .then
         .catch( e => console.error(e) ) // axios catch
       }) // end getLocalStorageItem.then
-      .catch( e => console.error(e) //getLocalStorageItem catch
+      .catch( e => console.error(e)) //getLocalStorageItem catch
   } // end getProfile
 
   state.handleFileUpload = _ => document.getElementById('imgInput').click()
