@@ -1,4 +1,5 @@
 import React from 'react'
+import Moment from 'moment'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -27,13 +28,17 @@ const BoardDisplay = () => {
                   </IconButton>
                 }
                 title={board.title}
-                subheader={ 'Last Updated: ' + board.lastUpdated}
+                subheader={ 'Updated: ' + Moment(board.lastUpdated).format('LLL')}
               />
-              <CardContent>
-                <Typography variant="body1" color="textSecondary" component="p">
-                    {board.description}
-                </Typography>
-              </CardContent>
+                <CardHeader
+                title= {
+                  <Typography variant="subtitle2" color="textSecondary" component="h1">
+                    Descritpion:
+                  </Typography>
+                }
+                subheader={board.description}
+                  />
+              
             </CardActionArea>
           </Card >
         ) : null
