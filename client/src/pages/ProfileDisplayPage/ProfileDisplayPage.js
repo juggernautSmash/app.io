@@ -19,17 +19,6 @@ const ProfileDisplayPage = props => {
     isLoading: false
   })
 
-  state.addLocalStorage = async function (key, value) {
-
-    let storedItem = await new Promise( (resolve, reject) => {
-      localStorage.setItem(key, JSON.stringify(value))
-      const item = JSON.parse(localStorage.getItem(key))
-      item ? resolve(item) : reject(new Error(`localStorage for ${key} does not exist`))
-    })
-
-    return storedItem
-  }
-
   state.getLocalStorageItem = async function (key) {
     let storedItem = await new Promise( (resolve, reject) => {
       const item = JSON.parse(localStorage.getItem(key))
