@@ -1,6 +1,6 @@
 .card {
   max-width: 345;
-  margin-top: 1vh;
+  margin-top: 1vh !important;
 }
 
 .linkText {
@@ -8,10 +8,9 @@
 }
 
 #lastBoard {
-  margin-bottom: 100px;
+  margin-bottom: 15vh !important;
 }
 
 #firstBoard {
-
-  margin-top: 10vh;
+  margin-top: 10vh !important;
 }
