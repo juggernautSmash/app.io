@@ -6,8 +6,6 @@ import firebase from '../../utils/Auth'
 
 const ProfileDisplayPage = props => {
 
-  console.log('Profile display page props...', props)
-
   const [ state, setState ] = React.useState({
     title: '',
     photoUrl: '',
@@ -21,6 +19,15 @@ const ProfileDisplayPage = props => {
     isLoading: false
   })
 
+  state.getLocalStorageItem = async function (key) {
+    let storedItem = await new Promise( (resolve, reject) => {
+      const item = JSON.parse(localStorage.getItem(key))
+      item ? resolve(item) : reject(new Error(`localStorage for ${key} does not exist`))
+    })
+
+    return storedItem
+  }
+
   // get user info
   state.getProfile = _ => {
 
@@ -28,23 +35,29 @@ const ProfileDisplayPage = props => {
     setState({ ...state, isLoading: true})
 
     // get user info from DB
-    axios.get(`/api/user/${localStorage.getItem('uid')}`)
-      .then( ({data: user}) => {
-        console.log('axios.get hit', user)
-        setState({ // set the parameters in the page to data from mongoDb
-          ...state,
-          title: user.title,
-          photoUrl: user.photoUrl,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          company: user.company,
-          email: user.email,
-          phone: user.phone,
-          location: user.location,
-          timezone: user.timezone
-        }) // end setState
-      }) // end axios .then
-      .catch( error => console.log(error) )
+    state.getLocalStorageItem('uid')
+      .then( uid => {
+        console.log('getProfile _id is', uid)
+        
+        axios.get(`/api/user/${uid}`)
+        .then( ({data: user}) => {
+          console.log('axios.get hit', user)
+          setState({ // set the parameters in the page to data from mongoDb
+            ...state,
+            title: user.title,
+            photoUrl: user.photoUrl,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            company: user.company,
+            email: user.email,
+            phone: user.phone,
+            location: user.location,
+            timezone: user.timezone
+          }) // end setState
+        }) // end axios .then
+        .catch( e => console.error(e) ) // axios catch
+      }) // end getLocalStorageItem.then
+      .catch( e => console.error(e) //getLocalStorageItem catch
   } // end getProfile
 
   state.handleFileUpload = _ => document.getElementById('imgInput').click()
