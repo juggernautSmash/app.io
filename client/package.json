@@ -25,7 +25,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "react-spring": "^8.0.27",
-    "react-swipeable-views": "^0.13.7"
+    "react-swipeable-views": "^0.13.7",
+    "reactstrap": "^8.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
