@@ -15,6 +15,12 @@ module.exports = app => {
             .catch(e => console.log(e))
     })
 
+    app.put('/api/company/:id', (req, res) => {
+        Company.updateOne({ _id: req.params.id }, { $set: req.body })
+            .then(company => res.json(company))
+            .catch(e => console.log(e))
+    })
+
     // get all the companies
     app.get('/api/companies', (req, res) => {
         Company.find()
@@ -58,7 +64,6 @@ module.exports = app => {
         Company.updateOne({ _id: req.params.id }, { $set: req.body })
             .then(company => res.json(company))
             .catch(e => console.log(e))
-
     })
 
     // remove a company

@@ -14,7 +14,7 @@ const BottomBarPage = props => {
     description: '',
     errors: [],
     isLoading: false,
-    openModal: true, 
+    isSuccess: false, 
   })
 
   // when you type something in the form it should get displayed and stored in the state
@@ -64,7 +64,7 @@ const BottomBarPage = props => {
           let boardList = JSON.parse(localStorage.getItem('board'))
           boardList.push(data._id)
           state.addLocalStorage('board', boardList)
-          setState({ ...state, isLoading: false, openModal: false}) // so we can disable the submit button after it is pressed once.
+          setState({ ...state, isLoading: false, isSuccess: true}) // so we can disable the submit button after it is pressed once.
         })
         .catch( e => console.error(e))
     } else {
