@@ -44,27 +44,6 @@ const BoardsPage = _ => {
       })
       .catch( e => console.log('error getting boards from storage', e))
 
-    // setTimeout(() => {
-
-    //   let boards_id = JSON.parse(localStorage.getItem('boards'))
-    //   let boards = []
-
-    //   boards_id.forEach(board_id => {
-    //     axios.get(`/api/boards/${board_id}`)
-    //       .then(({ data: { _id, title, description, lastUpdated } }) => {
-    //         boards.push({ _id, title, description, lastUpdated })
-    //         console.log('boards are...', boards)
-    //         setBoardState({ ...boardState, boards })
-    //       })
-    //       .catch(e => console.log(e))
-    //   }) // end forEach
-
-    //   setBoardState({ ...boardState, boards })
-
-    // }, 5000)
-
-    // setTimeout(() => setBoardState({ ...boardState, isLoading: false }), 5000)
-
     console.log('boardState.boards is now...', boardState.boards)
   }
 
