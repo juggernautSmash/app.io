@@ -10,7 +10,6 @@ import BottomBarPage from './pages/BottomBarPage'
 import ProfileDisplayPage from './pages/ProfileDisplayPage'
 import CompanyDisplayPage from './pages/CompanyDisplayPage'
 import BoardsPage from './pages/BoardsPage'
-import DashboardPage from './pages/DashboardPage'
 import LandingPage from './components/LandingPage'
 import TableDisplayPage from './pages/TablePage'
 
