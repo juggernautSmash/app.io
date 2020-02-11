@@ -84,7 +84,7 @@ const EditBoardModal = props => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const { title, description, isLoading, handleInputChange, handleSubmitBoard, boards } = React.useContext(BoardContext)
+  const { title, description, isLoading, handleInputChange, handleSubmitBoard } = React.useContext(BoardContext)
 
   return (
     <>
@@ -92,6 +92,7 @@ const EditBoardModal = props => {
         <MoreVertIcon />
       </ListItemText>
       <Modal
+        disableEnforceFocus 
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
         className={styles.modal}

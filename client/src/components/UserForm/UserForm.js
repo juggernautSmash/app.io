@@ -36,6 +36,7 @@ const UserForm = _ => {
     const styles = useStyles()
 
     const { 
+        company,
         title, 
         firstName, 
         lastName, 
@@ -52,7 +53,7 @@ const UserForm = _ => {
         handleInputChange, 
         handleShowPassword, 
         handleMouseDownPassword,
-        handleSubmitSignUp,
+        handleSubmitUserSignUp,
         displayError,
         clearErrors
     } = React.useContext(Context)
@@ -60,6 +61,19 @@ const UserForm = _ => {
     return (
         <form id="UFS" >
             <h2 id="user-modal-title">User Sign-Up</h2>
+            <div>
+                <FormControl>
+                    <InputLabel htmlFor="company">Company</InputLabel>
+                    <Input
+                        id="company"
+                        name="company"
+                        aria-describedby="company-helper-text"
+                        onChange={handleInputChange}
+                        value={company}
+                    />
+                    <FormHelperText id="company-helper-text"></FormHelperText>
+                </FormControl>
+            </div>
             <div>
                 <FormControl>
                     <InputLabel htmlFor="email">Email</InputLabel>
@@ -235,7 +249,7 @@ const UserForm = _ => {
             <div className={styles.wrapper}>
                 <Button
                     disabled={isLoading}
-                    onClick={handleSubmitSignUp}
+                    onClick={handleSubmitUserSignUp}
                 >
                     Submit
                 </Button>

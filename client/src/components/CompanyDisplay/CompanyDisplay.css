@@ -1,0 +1,16 @@
+.companyCard {
+  margin-top: 10vh !important;
+  max-width: 345;
+  text-align: center;
+}
+
+.employeeContainer {
+  margin-top: 2vh;
+  margin-bottom: 15vh;
+}
+
+.employeeCard{
+  margin-top: 1vh;
+  text-align: left;
+  background-color: darkslateblue !important;
+}

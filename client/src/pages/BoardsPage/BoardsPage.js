@@ -12,37 +12,43 @@ const BoardsPage = _ => {
     boards: []
   })
 
-
   boardState.handleInputChange = e => setBoardState({ ...boardState, [e.target.name]: e.target.value })
+
+  // get item from localSotrage
+  boardState.getLocalStorageItem = async function (key) {
+    let storedItem = await new Promise( (resolve, reject) => {
+      const item = JSON.parse(localStorage.getItem(key))
+      item ? resolve(item) : reject(new Error(`localStorage for ${key} does not exist`))
+    })
+
+    return storedItem
+  }
 
   boardState.getBoards = _ => {
 
-    setTimeout(() => {
+    let boards = []
 
-      let boards_id = JSON.parse(localStorage.getItem('board'))
-      let boards = []
+    boardState.getLocalStorageItem('boards')
+      .then( board_ids => {
 
-      boards_id.forEach(board_id => {
-        axios.get(`/api/boards/${board_id}`)
-          .then(({ data: { _id, title, description, lastUpdated } }) => {
-            boards.push({ _id, title, description, lastUpdated })
-            console.log('boards are...', boards)
-            setBoardState({ ...boardState, boards })
-          })
-          .catch(e => console.log(e))
-      }) // end forEach
+        board_ids.forEach( boardId => {
+          axios.get(`/api/boards/${boardId}`)
+            .then( ({ data: { _id, title, description, lastUpdated } }) => {
+              boards.push({ _id, title, description, lastUpdated })
+              console.log('boards are...', boards)
+            })
+            .catch( e => console.error('error getting boards from database', e))
+        }) // end forEach
 
-      setBoardState({ ...boardState, boards })
-
-    }, 5000)
-
-    setTimeout(() => setBoardState({ ...boardState, isLoading: false }), 5000)
+        setBoardState({ ...boardState, boards, isLoading: false })
+      })
+      .catch( e => console.log('error getting boards from storage', e))
 
     console.log('boardState.boards is now...', boardState.boards)
   }
 
   boardState.handleSubmitBoard = id => {
-    console.log(id)
+    console.log('submit board is pressed. Board ID is...', id)
     if (boardState.title && boardState.description) { // if title has an entry let the push happen
       setBoardState({ ...boardState, isLoading: true }) // so we can disable the submit button after it is pressed once.
 
@@ -91,7 +97,7 @@ const BoardsPage = _ => {
   }
 
   boardState.boardSync = () => {
-    const boardLength = JSON.parse(localStorage.getItem('board'))
+    const boardLength = JSON.parse(localStorage.getItem('boards'))
 
     if (boardState.boards.length === boardLength) {
       return false
@@ -99,11 +105,12 @@ const BoardsPage = _ => {
       return true
     }
   }
+  
   React.useEffect(() => {
     // console.log('running useEffect. boards are... ', boardState.boards)
     setBoardState({ ...boardState, isLoading: true })
     boardState.getBoards()
-  }, [boardState.boardSync()])
+  }, [])
 
   return (
     <BoardContext.Provider value={boardState}>

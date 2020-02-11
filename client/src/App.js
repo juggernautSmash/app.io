@@ -8,6 +8,7 @@ import firebase, { useAuth, FirebaseContext, PrivateRoute } from './utils/Auth'
 import NavPage from './pages/NavPage'
 import BottomBarPage from './pages/BottomBarPage'
 import ProfileDisplayPage from './pages/ProfileDisplayPage'
+import CompanyDisplayPage from './pages/CompanyDisplayPage'
 import BoardsPage from './pages/BoardsPage'
 import LandingPage from './components/LandingPage'
 import TableDisplayPage from './pages/TablePage'
@@ -22,8 +23,9 @@ function App(props) {
         <FirebaseContext.Provider value={{ user, firebase }} >
           <NavPage />
           <Switch>
-            <Route exact path="/" component={ user ? BoardsPage : LandingPage } {...props} />
+            <Route exact path="/" component={ LandingPage } {...props} />
             <Route exact path="/user" component={ProfileDisplayPage} {...props} />
+            <Route exact path="/company" component={CompanyDisplayPage} {...props} />
             <Route exact path="/boards" component={BoardsPage} {...props} />
             <Route exact path="/tables" component={TableDisplayPage} {...props} />
           </Switch>

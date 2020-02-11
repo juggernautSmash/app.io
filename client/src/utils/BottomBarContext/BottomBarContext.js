@@ -6,6 +6,7 @@ const BottomBarContext = React.createContext({
   description: '',
   isLoading: '',
   openModal: '',
+  isSuccess: '',
   errors: [],
   boards:[],
   handleInputChange: () => {},

@@ -4,7 +4,7 @@ module.exports = app => {
     // retrieve all boards
     app.get('/api/boards', (req, res) => {
         Board.find()
-            .populate('user')
+            .populate('employees')
             .populate('table')
             .populate('company')
             .then(board => res.json(board))
@@ -14,7 +14,7 @@ module.exports = app => {
     // retrieve one board
     app.get('/api/boards/:id', (req, res) => {
         Board.findOne({ _id: req.params.id })
-            .populate('user')
+            .populate('employees')
             .populate('table')
             .populate('company')
             .then(user => res.json(user))
@@ -23,8 +23,10 @@ module.exports = app => {
     
     // add a board 
     app.post('/api/boards', (req, res) => {
+        console.log('adding board to database', req.body)
         Board.create(req.body)
             .then(response => {
+                console.log('board created', response)
                 //updating the User
                 res.json(response)
                 User.updateOne({ _id: req.body.user }, { $push: { board: response._id } })

@@ -83,7 +83,7 @@ const AddBoardModal = _ => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const { title, description, isLoading, openModal, errors, handleInputChange, handleSubmitBoard, displayError } = React.useContext(BottomBarContext)
+  const { title, description, isLoading, isSuccess, errors, handleInputChange, handleSubmitBoard, displayError } = React.useContext(BottomBarContext)
 
   return (
     <>
@@ -92,8 +92,8 @@ const AddBoardModal = _ => {
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
         className={styles.modal}
-        open={open && openModal}
-        onClose={handleClose }
+        open={open}
+        onClose={ handleClose }
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -142,6 +142,7 @@ const AddBoardModal = _ => {
                     Submit
                 </Button>
                 {isLoading && <CircularProgress size={24} className={styles.buttonProgress} />}
+                {isSuccess && handleClose}
               </div>
             </form>
           </div>

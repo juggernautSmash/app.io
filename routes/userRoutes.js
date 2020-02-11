@@ -4,12 +4,20 @@ module.exports = app => {
     //add one user
     app.post('/api/user', (req, res) => {
         User.create(req.body)
-        .then( user => res.json(user) )
+        .then( user => {
+            if(req.body.company){
+                Company.updateOne({ companyName: req.body.company }, { $push: { employees: user._id } })
+                    .then(user => res.json(user))
+                    .catch(e => console.log(e))
+            }
+            res.json(user)
+        })
         .catch( e => console.error(e))
     })
 
     // get one user
     app.get('/api/user/:id', (req, res) => {
+        console.log('hit route for getting user by uid')
         User.findOne({ uid: req.params.id })
             .then(user => res.json(user))
             .catch(e => console.log(e))
@@ -25,8 +33,8 @@ module.exports = app => {
 
     // retrieve one user
     app.get('/api/users/:id', (req, res) => {
-        User.findOne({ uid: req.params.id })
-            .populate('board')
+        console.log('hit route for getting user by _id')
+        User.findOne({ _id: req.params.id })
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })

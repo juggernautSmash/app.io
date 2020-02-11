@@ -35,7 +35,7 @@ const CompanyForm = _ => {
     const styles = useStyles()
 
     const { 
-        name,
+        companyName,
         email, 
         phone, 
         address,
@@ -48,7 +48,7 @@ const CompanyForm = _ => {
         handleInputChange, 
         handleShowPassword, 
         handleMouseDownPassword,
-        handleSubmitSignUp,
+        handleSubmitCompanySignUp,
         displayError,
         clearErrors
     } = React.useContext(Context)
@@ -60,15 +60,15 @@ const CompanyForm = _ => {
                 <FormControl>
                     <InputLabel htmlFor="companyName">Company Name</InputLabel>
                     <Input
-                        id="name"
-                        name="name"
-                        aria-describedby="name-helper-text"
+                        id="companyName"
+                        name="companyName"
+                        aria-describedby="companyName-helper-text"
                         onChange={handleInputChange}
                         onBlur={handleBlur}
                         onClick={clearErrors}
-                        value={name}
+                        value={companyName}
                     />
-                    <FormHelperText id="name-helper-text">
+                    <FormHelperText id="companyName-helper-text">
                         {/* some text */}
                     </FormHelperText>
                 </FormControl>
@@ -199,7 +199,7 @@ const CompanyForm = _ => {
             <div className={styles.wrapper}>
                 <Button
                     disabled={isLoading}
-                    onClick={handleSubmitSignUp}
+                    onClick={handleSubmitCompanySignUp}
                 >
                     Submit
                 </Button>

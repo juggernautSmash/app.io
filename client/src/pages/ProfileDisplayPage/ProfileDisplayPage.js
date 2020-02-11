@@ -31,6 +31,7 @@ const ProfileDisplayPage = props => {
   // get user info
   state.getProfile = _ => {
 
+    console.log('getting employee profile')
     // set isLoading to true so we can generate a loading page.
     setState({ ...state, isLoading: true})
 

@@ -1,12 +1,19 @@
 import React from 'react'
 import Avatar from '@material-ui/core/Avatar'
-import CssBaseline from '@material-ui/core/CssBaseline'
+// import Image from 'material-ui-image'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
+import Badge from '@material-ui/core/Badge'
 import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardActionArea from '@material-ui/core/CardActionArea'
+import CardContent from '@material-ui/core/CardContent'
+import IconButton from '@material-ui/core/IconButton'
+import { Edit as EditIcon } from '@material-ui/icons'
 
-import ProfileContext from '../../utils/ProfileContext'
+import Context from '../../utils/Context'
+import blankProfile from '../../assets/images/blank-profile.png'
+import './CompanyDisplay.css'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -17,12 +24,14 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-    height: '90px',
-    width: '90px'
+    height: '20vh',
+    width: '20vh'
+  },
+  small: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   attr: {
@@ -35,46 +44,78 @@ const CompanyDisplay = _ => {
 
   const classes = useStyles()
 
-  const { company, email, phone, address, employees } = React.useContext(ProfileContext)
+  const { companyName, email, phone, address, photoUrl, employees, handleFileUpload, handleImageUpload } = React.useContext(Context)
+
+  console.log(` context data is...
+  photoUrl: ${photoUrl}
+  companyName: ${companyName}
+  address: ${address}
+  email: ${email}
+  phone: ${phone}
+  `)
 
   return (
-    <Card className="card">
-      <CssBaseline />
+    <>
+    <Card className="companyCard">
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          {/* add photo here */}
-          Company Picture
-        </Avatar>
+      <input 
+          type="file" 
+          id="imgInput"
+          hidden
+          onChange={ handleImageUpload }
+        />
+      <Badge
+          overlap="circle"
+          anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+          }}
+          badgeContent={
+            <IconButton onClick={ handleFileUpload }>
+                <EditIcon color="secondary" fontSize="large"/>
+            </IconButton>}
+          >
+          <Avatar 
+              className={classes.avatar}
+              src={ photoUrl || blankProfile}
+          />
+        </Badge>
       </div>
       <div className = {classes.form}>
-        <Grid container spacing={3}>
-          <Grid item xs={4}>
-            <Typography color="textSecondary" variant="h5" className={classes.attr}>Company</Typography>
-            <Typography color="textSecondary" variant="h5" className={classes.attr}>Address</Typography>
-            <Typography color="textSecondary" variant="h5" className={classes.attr}>Contact</Typography>
-            <Typography color="textSecondary" variant="h5" className={classes.attr}>Employees</Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography variant="h5" className={classes.attr}>
-              {company}
-            </Typography>
-            <Typography variant="h5" className={classes.attr}>
-              {address}
-            </Typography>
-            <Typography variant="h5" className={classes.attr}>
-              <p>{email}</p>
-              <p>{phone}</p>
-            </Typography>
-            <Typography variant="h5" className={classes.attr}>
-              {employees ? employees.map( (employee, i) => 
-                <p key={i}>{employee.name} : {employee.email}</p>
-                ) : null
-                }
-            </Typography>
-            </Grid>
-          </Grid>
+      <h1>{ companyName }</h1>
+      <Typography color="textSecondary" variant="subtitle1" className={classes.labels}>Address</Typography>
+        <Typography variant="body1">
+          { address ? address : '---' }
+        </Typography>
+        <Typography color="textSecondary" variant="subtitle1" className={classes.labels}>Phone #</Typography>
+        <Typography variant="body1">
+          { phone ? phone : '---' }
+        </Typography>
+        <Typography color="textSecondary" variant="subtitle1" className={classes.labels}>Email</Typography>
+        <Typography variant="body1">
+          { email ? email : '---' }
+        </Typography>
       </div>
     </Card>
+    <Card className="employeeContainer">
+      <CardContent>
+        <Typography color="textSecondary" variant="body1">Employees</Typography>
+        { employees ? (employees.map( employee => 
+            <Card className="employeeCard">
+              <CardActionArea>
+              <CardHeader 
+                avatar={
+                  <Avatar src={employee.photoUrl || blankProfile } className={classes.small} />
+                }
+                title={employee.firstName + ' ' + employee.lastName}
+                subheader={employee.title}
+              />
+              </CardActionArea>
+            </Card>
+          )) : '---'}
+      </CardContent>
+    </Card>
+    </>
   )
 }
 
