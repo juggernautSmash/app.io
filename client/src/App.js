@@ -2,7 +2,7 @@ import React from 'react'
 import { Container } from '@material-ui/core'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import firebase, { useAuth, FirebaseContext, PrivateRoute } from './utils/Auth'
+import firebase, { useAuth, FirebaseContext } from './utils/Auth'
 
 // components
 import NavPage from './pages/NavPage'

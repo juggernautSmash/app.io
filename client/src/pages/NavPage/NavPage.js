@@ -384,13 +384,13 @@ const NavPage = () => {
       // get the user _id from the localStorage
       state.getLocalStorageItem('user')
         .then( user => {
-          console.log('createBoads user is...', user._id)
+          console.log('createBoards for user...', user._id)
 
           // create 3 boards after sign up
           for( let i = 0; i<3 ; i++){
             // for cleaner code, set the req.body to a variable
             const payload = {
-              user: user._id,
+              owner: user._id,
               title: `Board #${i+1}`
             }
             
@@ -410,7 +410,6 @@ const NavPage = () => {
           } // end for loop
         })
         .catch( e => console.log('createBoards: error getting uid', e))
-
 
       boardsCreated ? resolve(boardsCreated) : reject(new Error('no boards were added'))
     })

@@ -21,7 +21,48 @@ const BottomBarPage = props => {
   state.handleInputChange = e => setState({ ...state, [e.target.name]: e.target.value})
 
   // store to localStorage
-  state.addLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value))
+  state.addLocalStorage = async function (key, value) {
+    console.log(`Putting key "${key}" in localStorage with value`, value)
+
+    let storedItem = await new Promise( (resolve, reject) => {
+      localStorage.setItem(key, JSON.stringify(value))
+      const item = JSON.parse(localStorage.getItem(key))
+      item ? resolve(item) : reject(new Error(`localStorage for ${key} does not exist`))
+    })
+
+    return storedItem
+  }
+
+  //get date from localStorage
+  state.getLocalStorageItem = async function (key) {
+    let storedItem = await new Promise( (resolve, reject) => {
+      const item = JSON.parse(localStorage.getItem(key))
+      item ? resolve(item) : reject(new Error(`localStorage for ${key} does not exist`))
+    })
+
+    return storedItem
+  }
+
+  //update localStorage
+  state.updateLocalStorageItem = async function (key,value) {
+    console.log(`updating storage for ${key} with value`, value)
+    let storedItem = await new Promise( (resolve, reject) => {
+      state.getLocalStorageItem(key)
+        .then( item => {
+          item.push(value)
+          state.addLocalStorage(key, item)
+            .then( r => {
+              console.log(`updating storage for ${key} with value`, r)
+              item ? resolve(item) : reject(new Error(`localStorage for ${key} does not exist`))
+            })
+            .catch( e => console.error(`error updating storage for ${key}`, e))
+        })
+        .catch( e => console.error(`error updating storage for ${key}`))
+
+    })
+
+    return storedItem
+  }
 
   // update the error state
   state.logError = errorMessage => {
@@ -33,43 +74,64 @@ const BottomBarPage = props => {
    // output a <p> per error
    state.displayError = errors => errors.map((error, i) => <p key={i}>{error.message}</p>)
 
-  // state.validateBoard = title => {
-  //   if(!title){
-  //     state.logError({ message: 'Please enter a title'})
-  //     return false
-  //   } else {
-  //     return true
-  //   }
-  // }
-
   state.handleSubmitBoard = e => {
+    console.log('submit board pressed')
     e.preventDefault()
     if(state.title){ // if title has an entry let the push happen
       setState({ ...state, isLoading: true}) // so we can disable the submit button after it is pressed once.
 
       // get the user _id from the localStorage
-      const user = JSON.parse(localStorage.getItem('user'))._id
+      state.getLocalStorageItem('user')
+        .then( ({_id}) => {
 
-      // for cleaner code, set the req.body to a variable
-      const payload = {
-        user,
-        title: state.title,
-        description: state.description
-      }
+          // for cleaner code, set the req.body to a variable
+          const payload = {
+            owner: _id,
+            title: state.title,
+            description: state.description
+          }
 
-      // post the created board in mongo
-      axios.post(`/api/boards`, payload)
-        .then( ({data}) => {
-          // console.log('axios board post is hit', data)
-          let boardList = JSON.parse(localStorage.getItem('board'))
-          boardList.push(data._id)
-          state.addLocalStorage('board', boardList)
-          setState({ ...state, isLoading: false, isSuccess: true}) // so we can disable the submit button after it is pressed once.
+          // post the created board in mongo
+          axios.post(`/api/boards`, payload)
+            .then( ({data}) => {
+
+              console.log('board created is...', data)
+              state.updateLocalStorageItem('boards', data._id)
+    
+              // // console.log('axios board post is hit', data)
+              // let boardList = JSON.parse(localStorage.getItem('board'))
+              // boardList.push(data._id)
+              // state.addLocalStorage('board', boardList)
+              //   .then( r => {
+              //     setState({ ...state, isLoading: false, isSuccess: true}) // so we can disable the submit button after it is pressed once.
+              //     console.log('successfully added board to storage', r)
+              //     state.createTable(data._id)
+              //   })
+              //   .catch( e => console.error('error storing board to storage', e) )
+            })
+            .catch( e => console.error(e))
+
         })
-        .catch( e => console.error(e))
+        .catch( e => console.error('error getting user from storage', e))
     } else {
       state.logError({ message: 'Please enter a title'})
     }
+  }
+
+  state.createTable = boardId => {
+    console.log('running create table for board# ', boardId)
+
+    const newTable = {
+      board: boardId,
+      title: "New Table"
+    }
+
+    axios.post(`/api/tables`, newTable)
+      .then( r => {
+        console.log('successfully created table', r)
+      })
+      .catch( e => console.error('error posting table to the database', e))
+
   }
 
   // React.useEffect( () => {

@@ -21,16 +21,14 @@ module.exports = app => {
 
     // add a table
     app.post('/api/tables', (req, res) => {
-        Table.create(req.body)
+        Table.create(req.body) // createa a table
             .then(({ _id }) => {
-                User.updateOne({ _id: req.body.user }, { $push: { table: _id } })
-                Board.updateOne({ _id: req.body.board }, {
-                    $push: { table: _id }
-                })
+                console.log('successfully created a table')
+                Board.updateOne({ _id: req.body.board }, { $push: { table: _id } })
                     .then(board => res.json(board))
                     .catch(e => console.log(e))
             })
-            .catch(e => console.log(e))
+            .catch(e => console.log('Error creating table', e))
 
     })
 

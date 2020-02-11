@@ -14,6 +14,19 @@ const BoardsPage = _ => {
 
   boardState.handleInputChange = e => setBoardState({ ...boardState, [e.target.name]: e.target.value })
 
+  // store to localStorage
+  boardState.addLocalStorage = async function (key, value) {
+    console.log(`Putting key "${key}" in localStorage with value`, value)
+
+    let storedItem = await new Promise( (resolve, reject) => {
+      localStorage.setItem(key, JSON.stringify(value))
+      const item = JSON.parse(localStorage.getItem(key))
+      item ? resolve(item) : reject(new Error(`localStorage for ${key} does not exist`))
+    })
+
+    return storedItem
+  }
+
   // get item from localSotrage
   boardState.getLocalStorageItem = async function (key) {
     let storedItem = await new Promise( (resolve, reject) => {
@@ -25,29 +38,39 @@ const BoardsPage = _ => {
   }
 
   boardState.getBoards = _ => {
+    console.log('running getBoards')
 
-    let boards = []
+    //get the user id
+    boardState.getLocalStorageItem('user')
+    .then( ({_id}) =>{
+      axios.get(`/api/users/${_id}`)
+      .then( ({data: { boards }}) => {
+        //get boards from the user DB
+        console.log('user boards are... ', boards)
+        boardState.addLocalStorage('boards', boards)
+        .then( boardList => {
+          let boards = []
+          boardList.forEach( boardId => {
+            axios.get(`/api/boards/${boardId}`)
+              .then( ({ data: { _id, title, description, lastUpdated } }) => {
+                boards.push({ _id, title, description, lastUpdated })
+                console.log('boards are...', boards)
+              })
+              .catch( e => console.error('error getting boards from database', e))
+          }) // end forEach
 
-    boardState.getLocalStorageItem('boards')
-      .then( board_ids => {
-
-        board_ids.forEach( boardId => {
-          axios.get(`/api/boards/${boardId}`)
-            .then( ({ data: { _id, title, description, lastUpdated } }) => {
-              boards.push({ _id, title, description, lastUpdated })
-              console.log('boards are...', boards)
-            })
-            .catch( e => console.error('error getting boards from database', e))
-        }) // end forEach
-
-        setBoardState({ ...boardState, boards, isLoading: false })
+          setBoardState({ ...boardState, boards, isLoading: false })
+        })
+        .catch( e => console.error('error adding boards to storage', e))
       })
-      .catch( e => console.log('error getting boards from storage', e))
+      .catch( e => console.error('error getting boards', e))
+    })
+    .catch( e => console.error('error getting user _id', e))
 
     console.log('boardState.boards is now...', boardState.boards)
   }
 
-  boardState.handleSubmitBoard = id => {
+  boardState.handleUpdateBoard = id => {
     console.log('submit board is pressed. Board ID is...', id)
     if (boardState.title && boardState.description) { // if title has an entry let the push happen
       setBoardState({ ...boardState, isLoading: true }) // so we can disable the submit button after it is pressed once.
