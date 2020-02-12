@@ -11,7 +11,8 @@ import CardContent from '@material-ui/core/CardContent'
 import IconButton from '@material-ui/core/IconButton'
 import { Edit as EditIcon } from '@material-ui/icons'
 
-import Context from '../../utils/Context'
+import Loading from '../Loading'
+import CompanyContext from '../../utils/CompanyContext'
 import blankProfile from '../../assets/images/blank-profile.png'
 import './CompanyDisplay.css'
 
@@ -44,18 +45,11 @@ const CompanyDisplay = _ => {
 
   const classes = useStyles()
 
-  const { companyName, email, phone, address, photoUrl, employees, handleFileUpload, handleImageUpload } = React.useContext(Context)
-
-  console.log(` context data is...
-  photoUrl: ${photoUrl}
-  companyName: ${companyName}
-  address: ${address}
-  email: ${email}
-  phone: ${phone}
-  `)
+  const { profile, employees, isLoading, handleFileUpload, handleImageUpload } = React.useContext(CompanyContext)
 
   return (
     <>
+    {isLoading && <Loading />}
     <Card className="companyCard">
       <div className={classes.paper}>
       <input 
@@ -77,23 +71,23 @@ const CompanyDisplay = _ => {
           >
           <Avatar 
               className={classes.avatar}
-              src={ photoUrl || blankProfile}
+              src={ profile.photoUrl || blankProfile}
           />
         </Badge>
       </div>
       <div className = {classes.form}>
-      <h1>{ companyName }</h1>
+      <h1>{ profile.companyName }</h1>
       <Typography color="textSecondary" variant="subtitle1" className={classes.labels}>Address</Typography>
         <Typography variant="body1">
-          { address ? address : '---' }
+          { profile.address ? profile.address : '---' }
         </Typography>
         <Typography color="textSecondary" variant="subtitle1" className={classes.labels}>Phone #</Typography>
         <Typography variant="body1">
-          { phone ? phone : '---' }
+          { profile.phone ? profile.phone : '---' }
         </Typography>
         <Typography color="textSecondary" variant="subtitle1" className={classes.labels}>Email</Typography>
         <Typography variant="body1">
-          { email ? email : '---' }
+          { profile.email ? profile.email : '---' }
         </Typography>
       </div>
     </Card>
