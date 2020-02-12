@@ -36,7 +36,7 @@ export default function LoginModal() {
 
   return (
     <div>
-      <Button id="modalButton" type="button" onClick={handleOpen}>
+      <Button className="modalButton" type="button" onClick={handleOpen}>
         Login
       </Button>
       <Modal
@@ -55,9 +55,9 @@ export default function LoginModal() {
         <Fade in={open}>
           <div className={classes.paper}>
             <LoginTab/>
-            <button id="modalButton" type="button" onClick={handleClose}>
+            <Button id="modalButton" type="button" onClick={handleClose}>
               Close
-            </button>
+            </Button>
           </div>
         </Fade>
       </Modal>

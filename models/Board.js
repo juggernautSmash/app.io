@@ -6,7 +6,7 @@ module.exports = (model, Schema) => {
     owner: { type: Schema.Types.ObjectId, ref: 'User' },
     table: [{ type: Schema.Types.ObjectId, ref: 'Table' }],
     company: [{ type: Schema.Types.ObjectId, ref: 'Company' }],
-    user: [{ type: Schema.Types.ObjectId, ref: 'User' }]
+    members: [{ type: Schema.Types.ObjectId, ref: 'User' }]
   }, { timestamps: { createdAt: 'birthday', updatedAt: 'lastUpdated' }})
   return model('Board', Board)
 }

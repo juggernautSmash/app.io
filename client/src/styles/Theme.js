@@ -9,7 +9,16 @@ const Theme = createMuiTheme({
   },
   Modal: {
     outline: 'none',
-  }
+  },
+  typography: {
+    subtitle1: {
+      fontSize: 10,
+    },
+    body1: {
+      fontSize: 15,
+      fontWeight: 500,
+    }
+  },
 })
 
 export default Theme

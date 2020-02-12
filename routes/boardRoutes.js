@@ -4,7 +4,7 @@ module.exports = app => {
     // retrieve all boards
     app.get('/api/boards', (req, res) => {
         Board.find()
-            .populate('user')
+            .populate('employees')
             .populate('table')
             .populate('company')
             .then(board => res.json(board))
@@ -14,24 +14,23 @@ module.exports = app => {
     // retrieve one board
     app.get('/api/boards/:id', (req, res) => {
         Board.findOne({ _id: req.params.id })
-            .populate('user')
             .populate('table')
-            .populate('company')
+            .populate('task')
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })
     
     // add a board 
     app.post('/api/boards', (req, res) => {
+        console.log('adding board to database', req.body)
         Board.create(req.body)
             .then(response => {
+                console.log('board created', response)
                 //updating the User
+                User.updateOne({ _id: req.body.owner }, { $push: { boards: response._id } })
+                .then( r => console.log('boards post route updating user', r))
+                .catch( e => console.log('boards post route failed updating user', e))
                 res.json(response)
-                User.updateOne({ _id: req.body.user }, { $push: { board: response._id } })
-                    .then( r => console.log('boards post route updating user', r))
-                    .catch( e => console.log('boards post route failed updating user', e))
-                //Updating the company
-                Company.updateOne({ _id: req.body.user }, { $push: { board: response._id } })
             })
             .catch(e => console.log(e)) // catch for Board.create
 

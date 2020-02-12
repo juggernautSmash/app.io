@@ -42,7 +42,7 @@ const CompanyLogin = _ => {
     clearErrors,
     handleBlur,
     handleInputChange, 
-    handleSubmitLogin, 
+    handleSubmitCompanyLogin, 
     handleShowPassword, 
     handleMouseDownPassword,
     displayError } = React.useContext(Context)
@@ -109,7 +109,7 @@ const CompanyLogin = _ => {
       <div className={styles.wrapper}>
         <Button 
             disabled={isLoading}
-            onClick={handleSubmitLogin}
+            onClick={handleSubmitCompanyLogin}
         >
             Submit
         </Button>

@@ -1,9 +1,9 @@
 import React from 'react'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 import NavBar from '../../components/NavBar'
 import Context from '../../utils/Context'
 import firebase from '../../utils/Auth'
-import { useHistory } from 'react-router-dom'
 import Loading from '../../components/Loading'
 
 const NavPage = () => {
@@ -11,18 +11,20 @@ const NavPage = () => {
   const history = useHistory()
 
   const [state, setState] = React.useState({
+    company: '',
     title: '',
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
     location: '',
-    name: '',
+    companyName: '',
     password: '',
     verifyPassword: '', 
     errors: [], // store errors
     showPassword: false, // to toggle if password is visible or not
-    isLoading: false // so we can display some loading animations
+    isLoading: false, // so we can display some loading animations
+    isCompany: false, // so we can distinguish during sign up
   })
 
   // when you type something in the form it should get displayed and stored in the state
@@ -38,7 +40,27 @@ const NavPage = () => {
   state.handleBlur = e => state.validateForm(state)
 
   // store to localStorage
-  state.addLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value))
+  state.addLocalStorage = async function (key, value) {
+    console.log(`Putting key "${key}" in localStorage with value`, value)
+
+    let storedItem = await new Promise( (resolve, reject) => {
+      localStorage.setItem(key, JSON.stringify(value))
+      const item = JSON.parse(localStorage.getItem(key))
+      item ? resolve(item) : reject(new Error(`localStorage for ${key} does not exist`))
+    })
+
+    return storedItem
+  }
+
+  // get item from localSotrage
+  state.getLocalStorageItem = async function (key) {
+    let storedItem = await new Promise( (resolve, reject) => {
+      const item = JSON.parse(localStorage.getItem(key))
+      item ? resolve(item) : reject(new Error(`localStorage for ${key} does not exist`))
+    })
+
+    return storedItem
+  }
 
   // update the error state
   state.logError = errorMessage => {
@@ -108,19 +130,20 @@ const NavPage = () => {
   } // end validateLogin
 
   // handler for the submit button in the signup page
-  state.handleSubmitSignUp = e => {
+  state.handleSubmitUserSignUp = async function (e) {
     e.preventDefault()
     if (state.validateForm(state)){
       // Clear the errors and set the isLoading to true to prevent the user from double-clicking the submit button
       setState({ ...state, errors: [], isLoading: true })
-      
+     
       // register user using firebase
       firebase.register(state.email, state.password)
         .then( uid => {
 
           // store uid in localStorage
-          localStorage.setItem('uid', uid)
-
+         state.addLocalStorage('uid', uid)
+          .then( userId => {
+            console.log('addLocalStorage promise is...', userId)
           // store sign up info in mongo
           axios.post(`/api/user`, {
             uid: uid,
@@ -132,16 +155,26 @@ const NavPage = () => {
             location: state.location,
             company: state.company
           })
-          
             //store user data from DB in localStorage
             .then( ({data}) => {
                 console.log('data from axios is...', data)
                 state.addLocalStorage('user', data)
-                state.addLocalStorage('board', data.board)
+                  .then( r => console.log('user stored in localStorage is ', r))
+                  .catch( e => console.error(e))
+                // state.addLocalStorage('boards', data.board)
+                //   .then( r => console.log('user stored in localStorage is ', r))
+                //   .catch( e => console.error(e))
                 state.addLocalStorage('company', data.company)
+                  .then( r => console.log('user stored in localStorage is ', r))
+                  .catch( e => console.error(e))
+                // create boards
+                state.createBoards()
+                  .then( boards => console.log('boards created...', boards))
+                  .catch( e => console.error('error creating boards...', e))
               })
             // if getting the user from DB fails log the error
             .catch( e => console.error('Error posting to DB', e))
+          }) // end addLocalStorage.then
 
             // after logging in, delay five seconds for everything to sync
             setTimeout( ()=>{        
@@ -149,8 +182,65 @@ const NavPage = () => {
               // and set the state to false to exit the loading page
               setState({ ...state, isLoading: false })
 
-               // redirect to the boards page
-               history.push('/boards')
+              // redirect to the boards page
+              history.push('/boards')
+            
+            }, 3000 ) // end setTimeout
+
+        }) // end firebase.register.then
+        // if firebase fails to sign up the user.
+        .catch( error => state.logError(error))
+    } // end if statement
+    else {
+      // if sign up form is not valid set isLoading so you can resumbit
+      setState({ ...state, isLoading: false })
+    }
+  } // handleSubmitUserSignUp
+
+  state.handleSubmitCompanySignUp = async function (e) {
+    e.preventDefault()
+    if (state.validateForm(state)){
+      // Clear the errors and set the isLoading to true to prevent the user from double-clicking the submit button
+      setState({ ...state, errors: [], isLoading: true })
+     
+      // register user using firebase
+      firebase.register(state.email, state.password)
+        .then( uid => {
+
+          // store uid in localStorage
+         state.addLocalStorage('uid', uid)
+          .then( userId => {
+            console.log('addLocalStorage promise is...', userId)
+          // store sign up info in mongo
+          axios.post(`/api/company`, {
+            uid: uid,
+            email: state.email,
+            phone: state.phone,
+            address: state.address,
+            companyName: state.companyName
+          })
+            //store user data from DB in localStorage
+            .then( ({data}) => {
+                console.log('data from axios is...', data)
+                state.addLocalStorage('user', data)
+                  .then( r => console.log('user stored in localStorage is ', data))
+                  .catch( e => console.error(e))
+                state.addLocalStorage('board', data.board)
+                  .then( r => console.log('user stored in localStorage is ', data))
+                  .catch( e => console.error(e))
+              })
+            // if getting the user from DB fails log the error
+            .catch( e => console.error('Error posting to DB', e))
+          }) // end addLocalStorage.then
+
+            // after logging in, delay five seconds for everything to sync
+            setTimeout( ()=>{        
+              
+              // and set the state to false to exit the loading page
+              setState({ ...state, isLoading: false })
+
+              // redirect to the company page
+              history.push('/company')
             
             }, 5000 ) // end setTimeout
 
@@ -162,11 +252,11 @@ const NavPage = () => {
       // if sign up form is not valid set isLoading so you can resumbit
       setState({ ...state, isLoading: false })
     }
-  } // handleSubmitSignUp
+  } // handleSubmitCompanySignUp
 
     // handler for the submit button in the login page
-  state.handleSubmitLogin = e => {
-    console.log('submit login pressed')
+  state.handleSubmitUserLogin = e => {
+    console.log('submit user login pressed')
     e.preventDefault()
     if (state.validateLogin(state)){
       // Clear the errors and set the isLoading to true to prevent the user from double-clicking the submit button
@@ -175,24 +265,28 @@ const NavPage = () => {
       // log in user using firebase
       firebase.login(state.email, state.password)
         .then( uid => {
-
-        // store uid in localStorage
-        localStorage.setItem('uid', uid)
+          state.addLocalStorage('uid', uid)
+            .then( storedId => {
+              console.log('success pushing uid to storage', storedId)
+              // get user from DB
+              axios.get(`/api/user/${uid}`)
+              // store user from DB to localStorage
+                .then( ({ data }) => {
+                // console.log('data from axios is...', data)
+                state.addLocalStorage('user', data)
+                  .then( r => console.log('data stored', r) )
+                  .catch( e => console.error(e) )
+                state.addLocalStorage('boards', data.board)
+                  .then( r => console.log('boards stored', r))
+                }) // end axios.get.then
+              // if getting the user from DB fails log the error
+              .catch( e => console.error( 'Error retrieving from DB', e ) )
+              //end axios
+            })
+            .catch( e => console.error(e) )
+            // end addLocalStorage
         
-        // get user from DB
-        axios.get(`/api/user/${uid}`)
-          // store user from DB to localStorage
-          .then( ({ data }) => {
-            // console.log('data from axios is...', data)
-            state.addLocalStorage('user', data)
-            state.addLocalStorage('board', data.board)
-            state.addLocalStorage('company', data.company)
-          }) // end axios.get.then
-          // if getting the user from DB fails log the error
-          .catch( e => console.error( 'Error retrieving from DB', e ) )
-        // end axios
-
-        // after logging in, delay five seconds for everything to sync
+        // after logging in, delay three seconds for everything to sync
         setTimeout( ()=> {        
           
           // after five seconds, redirect to the boards page
@@ -215,22 +309,118 @@ const NavPage = () => {
     }
   } //handleSubmitLogin
 
+  state.handleSubmitCompanyLogin = e => {
+    console.log('submit user login pressed')
+    e.preventDefault()
+    if (state.validateLogin(state)){
+      // Clear the errors and set the isLoading to true to prevent the user from double-clicking the submit button
+      setState({ ...state, errors: [], isLoading: true })
+      
+      // log in user using firebase
+      firebase.login(state.email, state.password)
+        .then( uid => {
+          state.addLocalStorage('uid', uid)
+            .then( storedId => {
+              console.log('success pushing uid to storage', storedId)
+              // get user from DB
+              axios.get(`/api/company/${uid}`)
+              // store user from DB to localStorage
+                .then( ({ data }) => {
+                // console.log('data from axios is...', data)
+                state.addLocalStorage('user', data)
+                  .then( r => console.log('data stored', r) )
+                  .catch( e => console.error(e) )
+                }) // end axios.get.then
+              // if getting the user from DB fails log the error
+              .catch( e => console.error( 'Error retrieving from DB', e ) )
+              //end axios
+            })
+            .catch( e => console.error(e) )
+            // end addLocalStorage
+        
+        // after logging in, delay three seconds for everything to sync
+        setTimeout( ()=> {        
+          
+          // after five seconds, redirect to the boards page
+          history.push('/company')
+
+          // and set the state to false to exit the loading page
+          setState({ ...state, isLoading: false })
+        
+        }, 3000 ) // end setTimeout
+
+        }) // end firebase.login.then
+        // if firebase fails to login the user.
+        .catch( error => state.logError( error ) )
+
+    } // end if statement
+    else {
+      // if sign up form is not valid set isLoading so you can resumbit
+      console.log('validate login fail')
+      setState({ ...state, isLoading: false })
+    }
+  } //handleSubmitCompanyLogin
+
   // handler for logout button to logout and clear the local storage
   state.logout = _ => {
     setState({ ...state, isLoading: true })
     console.log('logging out')
     localStorage.removeItem('uid') // remove uid from localStorage
     localStorage.removeItem('user') // remove user data from localStorage
-    localStorage.removeItem('board') // remove board data form localStorage
+    localStorage.removeItem('boards') // remove board data form localStorage
     localStorage.removeItem('company') // remove company data from localStorage
     history.push('/') // redirect to landing page after logout
     firebase.logout()
     setTimeout( () => setState({ ...state, isLoading: false }), 3000)
   }
 
-  React.useEffect( () => {
-    console.log('this is the history in navpage', history)
-  }, [])
+  state.createBoards = async function () {
+    console.log('creating boards')
+
+    const boards = new Promise( (resolve, reject) => {
+
+      let boardsCreated = []
+      let board_ids = []
+      // get the user _id from the localStorage
+      state.getLocalStorageItem('user')
+        .then( user => {
+          console.log('createBoards for user...', user._id)
+
+          // create 3 boards after sign up
+          for( let i = 0; i<3 ; i++){
+            // for cleaner code, set the req.body to a variable
+            const payload = {
+              owner: user._id,
+              title: `Board 1`
+            }
+            
+            axios.post(`/api/boards`, payload)
+            .then( ({data}) => {
+              console.log('axios board post is hit. Created board', data)
+              boardsCreated.push(payload)
+              board_ids.push(data._id)
+              // let boardList = JSON.parse(localStorage.getItem('boards'))
+              state.addLocalStorage('boards', board_ids)
+              .then( boardList => {
+                console.log('added the following boards in storage', boardList)
+              })
+              .catch( e => console.error('error storing boards in storage', e))
+            })
+            .catch( e => console.error('createBoards: error posting boards', e))
+          } // end for loop
+        })
+        .catch( e => console.log('createBoards: error getting uid', e))
+
+      boardsCreated ? resolve(boardsCreated) : reject(new Error('no boards were added'))
+    })
+
+
+    return boards
+  } // end createBoards
+
+  // React.useEffect( () => {
+  //   console.log('this is the history in navpage', history)
+  // }, [])
   
   return (
     <Context.Provider value={state}>
