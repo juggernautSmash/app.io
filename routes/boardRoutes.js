@@ -14,9 +14,8 @@ module.exports = app => {
     // retrieve one board
     app.get('/api/boards/:id', (req, res) => {
         Board.findOne({ _id: req.params.id })
-            .populate('employees')
             .populate('table')
-            .populate('company')
+            .populate('task')
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })

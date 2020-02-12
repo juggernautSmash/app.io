@@ -295,7 +295,7 @@ const NavPage = () => {
           // and set the state to false to exit the loading page
           setState({ ...state, isLoading: false })
         
-        }, 3000 ) // end setTimeout
+        }, 5000 ) // end setTimeout
 
         }) // end firebase.login.then
         // if firebase fails to login the user.
@@ -391,7 +391,7 @@ const NavPage = () => {
             // for cleaner code, set the req.body to a variable
             const payload = {
               owner: user._id,
-              title: `Board #${i+1}`
+              title: `Board 1`
             }
             
             axios.post(`/api/boards`, payload)

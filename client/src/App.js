@@ -27,6 +27,7 @@ function App(props) {
             <Route exact path="/user" component={ProfileDisplayPage} {...props} />
             <Route exact path="/company" component={CompanyDisplayPage} {...props} />
             <Route exact path="/boards" component={BoardsPage} {...props} />
+            <Route path="/boards/:boardId" component={TableDisplayPage} {...props} />
             <Route exact path="/tables" component={TableDisplayPage} {...props} />
           </Switch>
           <BottomBarPage />

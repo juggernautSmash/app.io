@@ -97,20 +97,12 @@ const BottomBarPage = props => {
 
               console.log('board created is...', data)
               state.updateLocalStorageItem('boards', data._id)
-    
-              // // console.log('axios board post is hit', data)
-              // let boardList = JSON.parse(localStorage.getItem('board'))
-              // boardList.push(data._id)
-              // state.addLocalStorage('board', boardList)
-              //   .then( r => {
-              //     setState({ ...state, isLoading: false, isSuccess: true}) // so we can disable the submit button after it is pressed once.
-              //     console.log('successfully added board to storage', r)
-              //     state.createTable(data._id)
-              //   })
-              //   .catch( e => console.error('error storing board to storage', e) )
-            })
-            .catch( e => console.error(e))
+                .then( newBoards => console.log('successful updating boards in storage', newBoards))
+                .catch( e => console.error('error updating boards in storage', e))
 
+                state.createTable(data._id)
+            })
+            .catch( e => console.error('error posting new board', e))
         })
         .catch( e => console.error('error getting user from storage', e))
     } else {

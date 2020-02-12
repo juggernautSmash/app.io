@@ -12,8 +12,8 @@ module.exports = app => {
 
     // retrieve one table
     app.get('/api/tables/:id', (req, res) => {
-        Tables.findOne({ _id: req.params.id })
-            .populate('user')
+        Table.findOne({ _id: req.params.id })
+            .populate('task')
             .populate('board')
             .then(user => res.json(user))
             .catch(e => console.log(e))
@@ -21,7 +21,7 @@ module.exports = app => {
 
     // add a table
     app.post('/api/tables', (req, res) => {
-        Table.create(req.body) // createa a table
+        Table.create(req.body) // create a table
             .then(({ _id }) => {
                 console.log('successfully created a table')
                 Board.updateOne({ _id: req.body.board }, { $push: { table: _id } })
