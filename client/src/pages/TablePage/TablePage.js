@@ -1,36 +1,67 @@
 import React from 'react'
 import axios from 'axios'
-import TaskContext from '../../utils/TaskContext'
+import TableContext from '../../utils/TableContext'
 import TableDisplay from '../../components/TableDisplay'
 
 
 const TableDisplayPage = props => {
 
-  console.log('Profile display page props...', props)
+  const boardId = props.match.params.boardId
+
+  console.log('board name is...', boardId)
 
   const [state, setState] = React.useState({
-    title: '',
-    owner: '',
-    task: [],
-    assigned: '',
-    dueDate: '',
-    priority: '',
-    status: '',
-    text: '',
-    timeline: '',
-    date: '',
-    numbers: '',
-    board: '',
-    user: ''
+    boardTitle: '',
+    boardDescription: '',
+    tables: []
   })
+
+  state.getTablesFromDB = async function (id) {
+    console.log('getting tables from DB')
+
+    let tables = new Promise ( (resolve, reject) => {
+
+      axios.get(`/api/boards/${id}`)
+        .then( ({ data }) => {
+          console.log('getting board info successful.', data )
+          data.table.forEach( t => {
+            state.getTasksFromTable (t)
+            // console.log('this is a table', t)
+            // console.log('these are the tasks in the table', t.task)
+          })
+          resolve(data)
+        })
+        .catch( e => {
+          console.error('error getting board info', e)
+          reject(new Error('Error getting tables', e))
+        })
+    })
+
+    return tables
+  }
+
+  state.getTasksFromTable = ({_id}) => {
+
+    // let table = new Promise ( (resolve, reject) => {
+    //   axios.get(`/api/tables/${_id}`)
+    //    .then( t => {})
+    // })
+
+    // task.forEach( t => {
+      axios.get(`/api/tables/${_id}`)
+        .then( item => console.log('Task extracted from table', item.data))
+        .catch( e => console.error('error getting tasks', e))
+    // })
+
+    // return tasks
+  }
 
   state.getTable = _ => {
     setState({ ...state })
     // get table info from DB
     axios.get('/api/tables')
       .then(({data: table}) => {
-        console.log(table[0])
-        console.log(table)
+        console.log(' getTable tables ', table)
         setState({
           tasks: table[0].tasks,
           title: table[0].title,
@@ -55,15 +86,24 @@ const TableDisplayPage = props => {
 
   React.useEffect(() => {
     // on page load, get the profile
-    state.getTable()
+    //state.getTable()
+    state.getTablesFromDB(boardId)
+      .then( data => setState({ 
+        ...state, 
+        tables: data.table,
+        boardTitle: data.title,
+        boardDescription: data.description
+        })
+       )
+      .catch( e => console.error('error getting tables', e))
 
   }, [])
 
 
   return (
-    <TaskContext.Provider value={state}>
+    <TableContext.Provider value={state}>
       <TableDisplay />
-    </TaskContext.Provider>
+    </TableContext.Provider>
   )
 
 }

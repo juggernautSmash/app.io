@@ -14,9 +14,8 @@ module.exports = app => {
     // retrieve one board
     app.get('/api/boards/:id', (req, res) => {
         Board.findOne({ _id: req.params.id })
-            .populate('employees')
             .populate('table')
-            .populate('company')
+            .populate('task')
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })
@@ -28,10 +27,10 @@ module.exports = app => {
             .then(response => {
                 console.log('board created', response)
                 //updating the User
+                User.updateOne({ _id: req.body.owner }, { $push: { boards: response._id } })
+                .then( r => console.log('boards post route updating user', r))
+                .catch( e => console.log('boards post route failed updating user', e))
                 res.json(response)
-                User.updateOne({ _id: req.body.user }, { $push: { board: response._id } })
-                    .then( r => console.log('boards post route updating user', r))
-                    .catch( e => console.log('boards post route failed updating user', e))
             })
             .catch(e => console.log(e)) // catch for Board.create
 

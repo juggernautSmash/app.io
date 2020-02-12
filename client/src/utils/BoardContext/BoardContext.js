@@ -8,9 +8,8 @@ const BoardContext = React.createContext({
   boards: [],
   errors: [],
   displayError: () => { },
-  handleInputChange: () => {},
   handleInputChange: () => { },
-  handleSubmitBoard: () => { },
+  handleUpdateBoard: () => { },
   handleSubmitTable: () => { }
 })
 

@@ -2,7 +2,6 @@ import React from 'react'
 
 const Context = React.createContext({
   uid:'', // uid from firebase for logging in
-  photoUrl: '',
   title: '', // title of user
   photo: '', // photo url of user or company
   firstName: '', // first name of user

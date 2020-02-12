@@ -84,7 +84,7 @@ const EditBoardModal = props => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const { title, description, isLoading, handleInputChange, handleSubmitBoard } = React.useContext(BoardContext)
+  const { title, description, isLoading, handleInputChange, handleUpdateBoard } = React.useContext(BoardContext)
 
   return (
     <>
@@ -141,7 +141,7 @@ const EditBoardModal = props => {
                   disabled={isLoading}
                   onClick={event => {
                     event.preventDefault()
-                    handleSubmitBoard(props.board._id)
+                    handleUpdateBoard(props.board._id)
                   }}
                 >
                   Submit

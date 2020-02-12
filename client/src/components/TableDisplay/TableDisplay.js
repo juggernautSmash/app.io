@@ -13,86 +13,94 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Board from 'react-trello'
+import TableContext from '../../utils/TableContext'
 
+import { Carousel } from 'react-responsive-carousel'
+import { CardHeader, CardActionArea } from '@material-ui/core';
 
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    marginTop: theme.spacing(1),
-    minWidth: 275
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-    marginTop: theme.spacing(1)
-  },
-  title: {
-    fontSize: 14,
-    marginTop: theme.spacing(1)
-  },
-  pos: {
-    marginBottom: 12,
-  }
-}))
+import './TableDisplay.css'
 
 const TableDisplay = () => {
-  const classes = useStyles()
 
   const {
-    title,
-    owner,
-    task,
-    assigned,
-    dueDate,
-    priority,
-    status,
-    text,
-    timeline
-  } = React.useContext(TaskContext)
+    boardTitle,
+    boardDescription,
+    tables,
+  } = React.useContext(TableContext)
+
+  console.log(` Context states are...
+  boardTitle: ${boardTitle}
+  boardDescription: ${boardDescription}
+  `)
 
   return (
 
-    <Card className={classes.root} variant="outlined">
+    <div>
+      <Card className="boardTitle">
+        <CardHeader 
+          title={boardTitle}
+          subheader={boardDescription}
+        />
+      </Card>
+      <Carousel showThumbs={false} >
+        {
+          tables.map( table => 
+            <div>
+              <Card>
+                <CardHeader 
+                  title={table.title}
+                />
+                <CardActionArea>
 
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          {title}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">{title}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {/* body */}
-              <TableRow>
-              <TableCell align="left">Owner: <Button variant="outlined" align="right" size="small">{owner}</Button></TableCell></TableRow>
-              <TableRow>
-              <TableCell align="left">Status:<Button variant="outlined" align="right" size="small">{status}</Button></TableCell></TableRow>
-              <TableRow>
-              <TableCell align="left">Task:<Button variant="outlined" align="right" size="small">{task}</Button></TableCell></TableRow>
-              <TableRow>
-              <TableCell align="left">Due date:<Button variant="outlined" align="right" size="small">{dueDate}</Button></TableCell></TableRow>
-              <TableRow>
-              <TableCell align="left">Text:<Button variant="outlined" align="right" size="small">{text}</Button></TableCell></TableRow>
-              <TableRow>
-              <TableCell align="left">Timeline:<Button variant="outlined" align="right" size="small">{timeline}</Button></TableCell></TableRow>
-              <TableRow>
-              <TableCell align="left">Assigned:<Button variant="outlined" align="right" size="small">{assigned}</Button></TableCell></TableRow>
-              <TableRow>
-              <TableCell align="left">Priority:<Button variant="outlined" align="right" size="small">{priority}</Button></TableCell></TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
+                </CardActionArea>
+              </Card>
+            </div>
+            )
+        }
+      </Carousel>
+    </div>
+    
+    // <Card className="table" variant="outlined">
 
-      </CardActions>
+    //   <CardContent>
+    //     <Typography variant="h5" component="h2">
+    //       {title}
+    //     </Typography>
+    //   </CardContent>
+    //   <CardActions>
+    //     <TableContainer component={Paper}>
+    //       <Table className={classes.table} aria-label="simple table">
+    //         <TableHead>
+    //           <TableRow>
+    //             <TableCell align="center">{title}</TableCell>
+    //           </TableRow>
+    //         </TableHead>
+    //         <TableBody>
+    //           {/* body */}
+    //           <TableRow>
+    //           <TableCell align="left">Owner: <Button variant="outlined" align="right" size="small">{owner}</Button></TableCell></TableRow>
+    //           <TableRow>
+    //           <TableCell align="left">Status:<Button variant="outlined" align="right" size="small">{status}</Button></TableCell></TableRow>
+    //           <TableRow>
+    //           <TableCell align="left">Task:<Button variant="outlined" align="right" size="small">{task}</Button></TableCell></TableRow>
+    //           <TableRow>
+    //           <TableCell align="left">Due date:<Button variant="outlined" align="right" size="small">{dueDate}</Button></TableCell></TableRow>
+    //           <TableRow>
+    //           <TableCell align="left">Text:<Button variant="outlined" align="right" size="small">{text}</Button></TableCell></TableRow>
+    //           <TableRow>
+    //           <TableCell align="left">Timeline:<Button variant="outlined" align="right" size="small">{timeline}</Button></TableCell></TableRow>
+    //           <TableRow>
+    //           <TableCell align="left">Assigned:<Button variant="outlined" align="right" size="small">{assigned}</Button></TableCell></TableRow>
+    //           <TableRow>
+    //           <TableCell align="left">Priority:<Button variant="outlined" align="right" size="small">{priority}</Button></TableCell></TableRow>
+    //         </TableBody>
+    //       </Table>
+    //     </TableContainer>
 
-    </Card>
+    //   </CardActions>
+
+    // </Card>
 
   )
 }

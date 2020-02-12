@@ -2,7 +2,7 @@ import React from 'react'
 import { Container } from '@material-ui/core'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import firebase, { useAuth, FirebaseContext, PrivateRoute } from './utils/Auth'
+import firebase, { useAuth, FirebaseContext } from './utils/Auth'
 
 // components
 import NavPage from './pages/NavPage'
@@ -27,6 +27,7 @@ function App(props) {
             <Route exact path="/user" component={ProfileDisplayPage} {...props} />
             <Route exact path="/company" component={CompanyDisplayPage} {...props} />
             <Route exact path="/boards" component={BoardsPage} {...props} />
+            <Route path="/boards/:boardId" component={TableDisplayPage} {...props} />
             <Route exact path="/tables" component={TableDisplayPage} {...props} />
           </Switch>
           <BottomBarPage />
