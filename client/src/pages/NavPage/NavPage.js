@@ -276,7 +276,7 @@ const NavPage = () => {
                 state.addLocalStorage('user', data)
                   .then( r => console.log('data stored', r) )
                   .catch( e => console.error(e) )
-                state.addLocalStorage('boards', data.board)
+                state.addLocalStorage('boards', data.boards)
                   .then( r => console.log('boards stored', r))
                 }) // end axios.get.then
               // if getting the user from DB fails log the error
