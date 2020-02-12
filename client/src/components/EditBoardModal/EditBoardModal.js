@@ -4,7 +4,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import ListItemText from '@material-ui/core/ListItemText'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete'
 import { FormControl, FormHelperText, Input, InputLabel, Button, CircularProgress } from '@material-ui/core'
 import { green } from '@material-ui/core/colors'
 
@@ -84,12 +85,12 @@ const EditBoardModal = props => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const { title, description, isLoading, handleInputChange, handleUpdateBoard } = React.useContext(BoardContext)
+  const { title, description, isLoading, handleInputChange, handleUpdateBoard, refreshPage } = React.useContext(BoardContext)
 
   return (
     <>
       <ListItemText onClick={handleOpen}>
-        <MoreVertIcon />
+        <EditIcon />
       </ListItemText>
       <Modal
         disableEnforceFocus 
@@ -142,6 +143,7 @@ const EditBoardModal = props => {
                   onClick={event => {
                     event.preventDefault()
                     handleUpdateBoard(props.board._id)
+                    window.location.reload(false)
                   }}
                 >
                   Submit
