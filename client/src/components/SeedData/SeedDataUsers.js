@@ -8,10 +8,11 @@ import { Email, Phone, Shop } from "@material-ui/icons";
     LastName: Kruger;
     (Title)JobPosition: Nightmares;
     Phone#: 56c-ruc-ifix;
-    Location: Dreams;
+    Location: Elm Street;
     Timezone: When you are sleeping
     ` 
 }
+// Pass: dontsleep
 
 {
     `
@@ -24,6 +25,7 @@ import { Email, Phone, Shop } from "@material-ui/icons";
     Timezone: US Pacific
     `   
 }
+// Pass: noswimming
 
 {
     `
@@ -32,10 +34,11 @@ import { Email, Phone, Shop } from "@material-ui/icons";
     LastName: Myers;
     (Title)JobPosition: Neiborhood Watch;
     Phone#: Dr Loomis 657-416-5485;
-    Location: Home;
+    Location: Your Home;
     Timezone: Halloween
     `
 }
+// Pass: trickortreat
 
 {
     `
@@ -48,6 +51,7 @@ import { Email, Phone, Shop } from "@material-ui/icons";
     Timezone: US Eastern
     ` 
 }
+// Pass: whospsycho
 
 {
     `
@@ -56,10 +60,11 @@ import { Email, Phone, Shop } from "@material-ui/icons";
     LastName: Todd;
     (Title)JobPosition: Barber;
     Phone#: walk in appointments only;
-    Location: Loveits Meat Pie Shop, London Eng;
+    Location: Lovettes Meat Pie Shop, London Eng;
     Timezone: Greenwich Mean Time
     ` 
 }
+// Pass: fleetstreet
 
 // Company 2 users
 {
@@ -73,6 +78,7 @@ import { Email, Phone, Shop } from "@material-ui/icons";
     Timezone: Eternal
     ` 
 }
+// Pass: smitewicked
 
 {
     `
@@ -85,6 +91,7 @@ import { Email, Phone, Shop } from "@material-ui/icons";
     Timezone: Eternal
     ` 
 }
+// Pass: iseeallsin
 
 {
     `
@@ -97,6 +104,7 @@ import { Email, Phone, Shop } from "@material-ui/icons";
     Timezone: Eternal
     `
 }
+// Pass: jesusowesme
 
 {
     `
@@ -109,6 +117,7 @@ import { Email, Phone, Shop } from "@material-ui/icons";
     Timezone: East Coast
     `
 }
+// Pass: inspiration
 
 {
     `
@@ -121,3 +130,4 @@ import { Email, Phone, Shop } from "@material-ui/icons";
     Timezone: Infernal
     `
 }
+// Pass: imademon
