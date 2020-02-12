@@ -10,6 +10,7 @@ import { Menu, ExitToApp, Home } from '@material-ui/icons'
 // App components
 import LoginModal from '../LoginModal'
 import SignupModal from '../SignupModal'
+import HamMenu from '../HamMenu'
 
 // Context
 import { FirebaseContext } from '../../utils/Auth'
@@ -23,6 +24,7 @@ const styles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   title: {
+    textAlign: 'center',
     flexGrow: 1
   }
 }))
@@ -37,9 +39,7 @@ const NavBar = () => {
       <AppBar position="fixed" color="primary">
         <Toolbar>
           { user ? (
-            <IconButton edge="start" className={ styles.menuButton }  color="inherit" aria-label="menu">
-              <Menu />
-            </IconButton>
+            <HamMenu />
           ) : (
             <IconButton edge="start" className={ styles.menuButton }  color="inherit" aria-label="menu">
               <Home />
