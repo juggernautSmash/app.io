@@ -24,6 +24,7 @@ const styles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   title: {
+    textAlign: 'center',
     flexGrow: 1
   }
 }))
