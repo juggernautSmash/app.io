@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import CompanyDisplay from '../../components/CompanyDisplay'
-import Context from '../../utils/Context'
+import CompanyContext from '../../utils/CompanyContext'
 import firebase from '../../utils/Auth'
 
 const CompanyDisplayPage = _ => {
@@ -12,6 +12,7 @@ const CompanyDisplayPage = _ => {
     email: '',
     phone: '',
     address: '',
+    profile: {},
     employees: [],
     isLoading: false
   })
@@ -63,82 +64,59 @@ const CompanyDisplayPage = _ => {
   }
 
   state.getProfile = _ => {
+    setState({ ...state, isLoading: true })
 
-    console.log('getting company profile')
-    // set isLoading to true so we can generate a loading page.
-    setState({ ...state, isLoading: true})
+    state.getLocalStorageItem('user')
+    .then( dBprofile => {
 
-    state.getLocalStorageItem('uid')
-      .then ( uid => {
+      let employees = []
 
-        // get user info from DB
-        console.log('uid from localStorage is...', uid)
-        axios.get(`/api/company/${uid}`)
-        .then( ({data: user}) => {
-          console.log('company axios.get hit', user)
-          setState({ // set the parameters in the page to data from mongoDb
-            ...state,
-            photoUrl: user.photoUrl,
-            companyName: user.companyName,
-            email: user.email,
-            phone: user.phone,
-            address: user.address
-          }) // end setState
-        }) // end axios get
-        .catch( e => console.error(e) )
-      })
-      .catch( e => console.error(e) )
+      let profile = {
+        photoUrl: dBprofile.photoUrl,
+        companyName: dBprofile.companyName,
+        email: dBprofile.email,
+        phone: dBprofile.phone,
+        address: dBprofile.address
+      }
+
+      dBprofile.employees.forEach( employee => {
+        console.log('getting the employee info for employee id: ', employee)
+        axios.get(`/api/employees/${employee}`)
+        .then( ({data}) => {
+          console.log('employee data is ', data)
+          let payload = {
+            photoUrl: data.photoUrl,
+            title: data.title,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phone: data.phone
+          }
+  
+          employees.push(payload)
+        })
+        .catch( e => console.error('error getting employee data', e))
+      }) // end forEach
+
+      setTimeout( () =>{ 
+        setState({ ...state, profile, employees, isLoading: false})
+       }, 5000)
+
+    })
+    .catch( e => console.error('Error getting user from storage', e))
       
   } // end getProfile
-
-  state.getEmployees = employees => {
-
-    let employeesInfo = []
-
-    state.addLocalStorage('employees', employees)
-      .then( users => {
-
-        users.forEach( userId => {
-          axios.get(`/api/users/${userId}`)
-          .then( ({data}) => { 
-            console.log('company users...', data )
-            let payload = {
-              photoUrl: data.photoUrl,
-              title: data.title,
-              firstName: data.firstName,
-              lastName: data.lastName,
-              email: data.email,
-              phone: data.phone
-            }
-            
-            employeesInfo.push(payload)
-            setState({ ...state, employees: employeesInfo})
-          })
-          .catch( e => console.error('error getting employess', e))
-        }) //end forEach
-
-      })
-      .catch( e => console.error('error adding employess to storage', e))
-
-  } // end getEmployees
-
   React.useEffect( () => {
 
-    // on page load, get the profile
-     state.getProfile()
-    
-    state.getLocalStorageItem('user')
-    .then( ({employees}) => {
-      state.getEmployees(employees)
-    })
-    .catch(e => console.error('error getting company info for employees', e))
+    //on page load, get the profile
+    state.getProfile()
     
   }, [ ])
 
   return (
-    <Context.Provider value={state}>
+    <CompanyContext.Provider value={state}>
       <CompanyDisplay />
-    </Context.Provider>
+    </CompanyContext.Provider>
   )
 }
 

@@ -32,7 +32,7 @@ module.exports = app => {
     })
 
     // retrieve one user
-    app.get('/api/users/:id', (req, res) => {
+    app.get('/api/employees/:id', (req, res) => {
         console.log('hit route for getting user by _id')
         User.findOne({ _id: req.params.id })
             .then(user => res.json(user))
