@@ -43,7 +43,7 @@ const BoardsPage = _ => {
     //get the user id
     boardState.getLocalStorageItem('user')
     .then( ({_id}) =>{
-      axios.get(`/api/users/${_id}`)
+      axios.get(`/api/employees/${_id}`)
       .then( ({data: { boards }}) => {
         //get boards from the user DB
         console.log('user boards are... ', boards)

@@ -15,18 +15,9 @@ export default function SimpleBackdrop() {
 
   return (
     <Backdrop className={classes.backdrop} open={true}>
-      <div class="loadingio-spinner-cube-utgvrl5pyw">
-        <div class="ldio-f4tj0h0mbb">
-          <div>
-          </div>
-          <div>
-          </div>
-          <div>
-          </div>
-          <div>
-          </div>
-        </div>
-      </div>
+<div class="loadingio-spinner-wedges-fh6hfp2esjt"><div class="ldio-9a8uio72yyr">
+<div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>
+</div></div>
     </Backdrop>
   )
 }

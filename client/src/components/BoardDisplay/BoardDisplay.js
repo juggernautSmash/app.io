@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import CardHeader from '@material-ui/core/CardHeader'
 import IconButton from '@material-ui/core/IconButton'
+import DeleteIcon from '@material-ui/icons/Delete'
+import EditIcon from '@material-ui/icons/Edit';
 
 import { Link } from 'react-router-dom'
 
@@ -20,27 +22,34 @@ const BoardDisplay = () => {
     <>
       {
         boards.length ? boards.map((board, i) =>
-          <Card key={i} className="card" variant="outlined" id={ i === 0 ? 'firstBoard' : i === boards.length -1 ? 'lastBoard' : null }>
+          <Card key={i} className="card" variant="outlined" id={i === 0 ? 'firstBoard' : i === boards.length - 1 ? 'lastBoard' : null}>
+            <CardHeader
+              action={
+                <>
+                  <IconButton aria-label="settings">
+                      <EditBoardModal board={board} />
+                  </IconButton>
+                  <IconButton aria-label="delete">
+                    <DeleteIcon >
+                      {/* <EditBoardModal board={board} /> */}
+                    </DeleteIcon >
+                  </IconButton>
+                </>
+              }
+              title={board.title}
+              subheader={'Updated: ' + Moment(board.lastUpdated).format('LLL')}
+            />
             <Link to={`/boards/${board._id}`} className="linkText">
               <CardActionArea>
                 <CardHeader
-                  action={
-                    <IconButton aria-label="settings">
-                      <EditBoardModal board={board} />
-                    </IconButton>
-                  }
-                  title={board.title}
-                  subheader={ 'Updated: ' + Moment(board.lastUpdated).format('LLL')}
-                />
-                  <CardHeader
-                  title= {
+                  title={
                     <Typography variant="subtitle2" color="textSecondary" component="h1">
                       Descritpion:
                     </Typography>
                   }
                   subheader={board.description}
-                    />
-                
+                />
+
               </CardActionArea>
             </Link>
           </Card >

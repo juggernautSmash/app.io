@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
@@ -93,7 +93,7 @@ const AddBoardModal = _ => {
         aria-describedby="spring-modal-description"
         className={styles.modal}
         open={open}
-        onClose={ handleClose }
+        onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -107,26 +107,26 @@ const AddBoardModal = _ => {
                 <h1>Add a Board</h1>
                 <FormControl>
                   <InputLabel htmlFor="title">Title</InputLabel>
-                  <Input 
-                    id="title" 
+                  <Input
+                    id="title"
                     name="title"
                     aria-describedby="title-helper-text"
                     onChange={handleInputChange}
-                    value={title} 
+                    value={title}
                     error={
                       errors.some(e => (e.message.toLowerCase().includes('title')) ? true : false)
                     }
                   />
-                  <FormHelperText id="title-helper-text">{ errors && displayError(errors)}</FormHelperText>
+                  <FormHelperText id="title-helper-text">{errors && displayError(errors)}</FormHelperText>
                 </FormControl>
               </div>
               <div>
                 <FormControl>
                   <InputLabel htmlFor="description">Description</InputLabel>
-                  <Input 
+                  <Input
                     multiline
-                    id="description" 
-                    name="description" 
+                    id="description"
+                    name="description"
                     aria-describedby="description-helper-text"
                     onChange={handleInputChange}
                     value={description}
@@ -135,11 +135,14 @@ const AddBoardModal = _ => {
                 </FormControl>
               </div>
               <div className={styles.wrapper}>
-                <Button 
-                    disabled={isLoading}
-                    onClick={handleSubmitBoard}
+                <Button
+                  disabled={isLoading}
+                  onClick={event => {
+                    handleSubmitBoard(event)
+                    window.location.reload(false)
+                  }}
                 >
-                    Submit
+                  Submit
                 </Button>
                 {isLoading && <CircularProgress size={24} className={styles.buttonProgress} />}
                 {isSuccess && handleClose}
