@@ -21,6 +21,7 @@ module.exports = app => {
 
     // add a table
     app.post('/api/tables', (req, res) => {
+        console.log('add table route is hit')
         Table.create(req.body) // create a table
             .then(({ _id }) => {
                 console.log('successfully created a table')
@@ -34,6 +35,7 @@ module.exports = app => {
 
     // update one table
     app.put('/api/tables/:id', (req, res) => {
+        console.log('update table route is hit')
         Table.updateOne({ _id: req.params.id }, { $set: req.body })
             .then(table => res.json(table))
             .catch(e => console.log(e))
@@ -42,6 +44,7 @@ module.exports = app => {
 
     // remove table
     app.delete('/api/tables/:id', (req, res) => {
+        console.log('remove table route ')
         Table.deleteOne({ _id: req.params.id })
             .then(table => { res.json(table) })
             .catch(e => console.log(e))

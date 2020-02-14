@@ -14,7 +14,7 @@ const BottomBarPage = props => {
     description: '',
     errors: [],
     isLoading: false,
-    isSuccess: false, 
+    isSuccess: false
   })
 
   // when you type something in the form it should get displayed and stored in the state
@@ -99,7 +99,6 @@ const BottomBarPage = props => {
               state.updateLocalStorageItem('boards', data._id)
                 .then( newBoards => console.log('successful updating boards in storage', newBoards))
                 .catch( e => console.error('error updating boards in storage', e))
-
                 state.createTable(data._id)
             })
             .catch( e => console.error('error posting new board', e))
@@ -121,6 +120,20 @@ const BottomBarPage = props => {
     axios.post(`/api/tables`, newTable)
       .then( r => {
         console.log('successfully created table', r)
+
+        // generate tasks in the table
+        for( let k = 0; k<3 ; k++ ){
+          const taskPayload = {
+            table: r.data._id,
+            task: `New Task #${k}`
+          }
+
+          axios.post('/api/task', taskPayload)
+            .then( r => {
+              console.log('successfully added task to table')
+            })
+            .catch( e => console.error('error posting tasks to table', e))
+        } // end for loop generating tasks
       })
       .catch( e => console.error('error posting table to the database', e))
 

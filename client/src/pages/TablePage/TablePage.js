@@ -37,7 +37,7 @@ const TableDisplayPage = props => {
           })
           .catch( e => console.error('error getting table info...', e))
       }) //end forEach
-      setState({ ...state, tables })
+      setState({ ...state, tables, isLoading: false })
     })
     .catch( e => console.error('error getting board info', e))
   }
@@ -175,6 +175,7 @@ const TableDisplayPage = props => {
   // }
 
   React.useEffect(() => {
+    console.log('running useEffect on the table page.')
   
     state.getTable()
 

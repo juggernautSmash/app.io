@@ -145,7 +145,7 @@ const AddBoardModal = _ => {
                   Submit
                 </Button>
                 {isLoading && <CircularProgress size={24} className={styles.buttonProgress} />}
-                {isSuccess && handleClose}
+                {isSuccess}
               </div>
             </form>
           </div>

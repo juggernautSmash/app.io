@@ -414,9 +414,24 @@ const NavPage = () => {
                   axios.post('/api/tables', tablePayload)
                     .then( r => {
                       console.log('successfully generated table')
+
+                      // generate tasks in the table
+                      for( let k = 0; k<3 ; k++ ){
+                        const taskPayload = {
+                          table: r.data._id,
+                          owner: user._id,
+                          task: `New Task #${k}`
+                        }
+
+                        axios.post('/api/task', taskPayload)
+                          .then( r => {
+                            console.log('successfully added task to table')
+                          })
+                          .catch( e => console.error('error posting tasks to table', e))
+                      } // end for loop generating tasks
                     })
                     .catch( e => console.error('error generating tables ', e))
-                }
+                } // end for loop for generating tables
               })
               .catch( e => console.error('error storing boards in storage', e))
             })

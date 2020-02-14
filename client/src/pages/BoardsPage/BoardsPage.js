@@ -133,6 +133,7 @@ const BoardsPage = _ => {
     // console.log('running useEffect. boards are... ', boardState.boards)
     setBoardState({ ...boardState, isLoading: true })
     boardState.getBoards()
+
   }, [])
 
   return (
