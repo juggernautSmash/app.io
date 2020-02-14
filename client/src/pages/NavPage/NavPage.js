@@ -375,7 +375,7 @@ const NavPage = () => {
   }
 
   state.createBoards = async function () {
-    console.log('creating boards')
+    // console.log('creating boards')
 
     const boards = new Promise( (resolve, reject) => {
 
@@ -384,25 +384,54 @@ const NavPage = () => {
       // get the user _id from the localStorage
       state.getLocalStorageItem('user')
         .then( user => {
-          console.log('createBoards for user...', user._id)
+          // console.log('createBoards for user...', user._id)
 
           // create 3 boards after sign up
           for( let i = 0; i<3 ; i++){
             // for cleaner code, set the req.body to a variable
-            const payload = {
+            const boardPayload = {
               owner: user._id,
-              title: `Board 1`
+              title: `Board ${i}`
             }
             
-            axios.post(`/api/boards`, payload)
+            axios.post(`/api/boards`, boardPayload)
             .then( ({data}) => {
-              console.log('axios board post is hit. Created board', data)
-              boardsCreated.push(payload)
+              // console.log('axios board post is hit. Created board', data)
+              boardsCreated.push(boardPayload)
               board_ids.push(data._id)
               // let boardList = JSON.parse(localStorage.getItem('boards'))
               state.addLocalStorage('boards', board_ids)
               .then( boardList => {
-                console.log('added the following boards in storage', boardList)
+                // console.log('added the following boards in storage', boardList)
+
+                for( let j = 0; j<3 ; j++){
+                  const tablePayload ={
+                    title: `Table ${j}`,
+                    board: data._id,
+                    owner: user._id
+                  }
+                  // create tables
+                  axios.post('/api/tables', tablePayload)
+                    .then( r => {
+                      console.log('successfully generated table')
+
+                      // generate tasks in the table
+                      for( let k = 0; k<3 ; k++ ){
+                        const taskPayload = {
+                          table: r.data._id,
+                          owner: user._id,
+                          task: `New Task #${k}`
+                        }
+
+                        axios.post('/api/task', taskPayload)
+                          .then( r => {
+                            console.log('successfully added task to table')
+                          })
+                          .catch( e => console.error('error posting tasks to table', e))
+                      } // end for loop generating tasks
+                    })
+                    .catch( e => console.error('error generating tables ', e))
+                } // end for loop for generating tables
               })
               .catch( e => console.error('error storing boards in storage', e))
             })
