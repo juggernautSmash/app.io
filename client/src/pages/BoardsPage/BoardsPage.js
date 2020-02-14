@@ -39,27 +39,28 @@ const BoardsPage = _ => {
 
   boardState.getBoards = _ => {
     console.log('running getBoards')
-    //setBoardState({ ...boardState, isLoading: true })
+    setBoardState({ ...boardState, isLoading: true })
     //get the user id
     boardState.getLocalStorageItem('user')
     .then( ({_id}) =>{
       axios.get(`/api/employees/${_id}`)
       .then( ({data: { boards }}) => {
         //get boards from the user DB
-        //console.log('user boards are... ', boards)
+        console.log('boards from DB... ', boards)
         boardState.addLocalStorage('boards', boards)
         .then( boardList => {
+          console.log('pushing boards to localStorage successful')
           let boards = []
           boardList.forEach( boardId => {
             axios.get(`/api/boards/${boardId}`)
               .then( ({ data: { _id, title, description, lastUpdated } }) => {
                 boards.push({ _id, title, description, lastUpdated })
-                console.log('boards are...', boardState.boards)
+                //console.log('boards are...', boardState.boards)
                 setBoardState({ ...boardState, boards, isLoading: false })
               })
               .catch( e => console.error('error getting boards from database', e))
           }) // end forEach
-
+          console.log('checking the boardState.boards', boardState.boards)
         })
         .catch( e => console.error('error adding boards to storage', e))
       })
