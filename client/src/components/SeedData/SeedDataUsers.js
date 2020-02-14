@@ -69,7 +69,7 @@ import { Email, Phone, Shop } from "@material-ui/icons";
 // Company 2 users
 {
     `
-    Email: firesword@email.com;
+    Email: flamesword@email.com;
     FirstName: Lokye;
     LastName: Angelis;
     (Title)JobPosition: Former Angel of Death;
@@ -85,7 +85,7 @@ import { Email, Phone, Shop } from "@material-ui/icons";
     Email: angeleyes@email.com;
     FirstName: Bartleby;
     LastName: Angelis;
-    (Title)JobPosition: Watcher;
+    (Title)JobPosition: Former Watcher;
     Phone#:984-653-2645;
     Location: Wisconson;
     Timezone: Eternal
@@ -123,11 +123,11 @@ import { Email, Phone, Shop } from "@material-ui/icons";
     `
     Email: apocalypsenow@email.com;
     FirstName: Azrael;
-    LastName: demonov;
+    LastName: Demonov;
     (Title)JobPosition: Central Air Salesman;
     Phone#: 666-684-8645;
     Location: Greenbay, Wisconson;
     Timezone: Infernal
     `
 }
-// Pass: imademon
+// Pass: imafndemon
