@@ -9,8 +9,9 @@ import { green } from '@material-ui/core/colors'
 
 import { useSpring, animated } from 'react-spring' // web.cjs is required for IE 11 support
 
-import BottomBarContext from '../../utils/BottomBarContext'
-import './AddBoardModal.css'
+// Context
+import TableContext from '../../utils/TableContext'
+
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -75,7 +76,7 @@ Fade.propTypes = {
   onExited: PropTypes.func,
 }
 
-const AddBoardModal = _ => {
+const EditTableModal = props => {
 
   const styles = useStyles()
   const [open, setOpen] = React.useState(false)
@@ -83,11 +84,11 @@ const AddBoardModal = _ => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const { title, description, isLoading, isSuccess, errors, handleInputChange, handleSubmitBoard, displayError } = React.useContext(BottomBarContext)
+  const { title, description, isLoading, errors, handleInputChange, handleEditTable, displayError } = React.useContext(TableContext)
 
   return (
     <>
-      <ListItemText primary='Add Board' onClick={handleOpen} />
+      <ListItemText primary='Edit Table' onClick={handleOpen} />
       <Modal
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
@@ -104,18 +105,19 @@ const AddBoardModal = _ => {
           <div className={styles.paper}>
             <form>
               <div>
-                <h1>Add a Board</h1>
+                <h1>Edit Table</h1>
+                <h2>{props.title}</h2>
                 <FormControl>
-                  <InputLabel htmlFor="title">Title</InputLabel>
+                  <InputLabel htmlFor="title">Table Name</InputLabel>
                   <Input
                     id="title"
                     name="title"
                     aria-describedby="title-helper-text"
                     onChange={handleInputChange}
                     value={title}
-                    error={
-                      errors.some(e => (e.message.toLowerCase().includes('title')) ? true : false)
-                    }
+                    // error={
+                    //   errors.some(e => (e.message.toLowerCase().includes('title')) ? true : false)
+                    // }
                   />
                   <FormHelperText id="title-helper-text">{errors && displayError(errors)}</FormHelperText>
                 </FormControl>
@@ -138,14 +140,14 @@ const AddBoardModal = _ => {
                 <Button
                   disabled={isLoading}
                   onClick={event => {
-                    handleSubmitBoard(event)
+                    event.preventDefault()
+                    handleEditTable(props.tableId)
                     window.location.reload(false)
                   }}
                 >
                   Submit
                 </Button>
                 {isLoading && <CircularProgress size={24} className={styles.buttonProgress} />}
-                {isSuccess && handleClose}
               </div>
             </form>
           </div>
@@ -156,4 +158,4 @@ const AddBoardModal = _ => {
 
 }
 
-export default AddBoardModal
+export default EditTableModal

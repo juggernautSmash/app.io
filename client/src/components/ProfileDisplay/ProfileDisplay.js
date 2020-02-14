@@ -84,8 +84,10 @@ const ProfileDisplay = () => {
           >
           <Avatar 
               className={classes.avatar}
-              src={ photoUrl || blankProfile}
-          />
+              src={ photoUrl }
+          >
+            <h3>{firstName[0] + lastName[0]}</h3>
+          </Avatar>
         </Badge>
       </div>
       <div className = {classes.form}>
