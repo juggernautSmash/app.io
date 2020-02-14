@@ -34,10 +34,10 @@ const TableDisplayPage = props => {
           .then( ({ data }) => {
             console.log('extracted table info...', data )
             tables.push(data)
+            setState({ ...state, tables, isLoading: false })
           })
           .catch( e => console.error('error getting table info...', e))
       }) //end forEach
-      setState({ ...state, tables, isLoading: false })
     })
     .catch( e => console.error('error getting board info', e))
   }
