@@ -35,6 +35,7 @@ module.exports = app => {
     app.get('/api/employees/:id', (req, res) => {
         console.log('hit route for getting user by _id')
         User.findOne({ _id: req.params.id })
+            .populate('board')
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })

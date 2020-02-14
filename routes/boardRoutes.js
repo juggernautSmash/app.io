@@ -6,7 +6,6 @@ module.exports = app => {
         Board.find()
             .populate('employees')
             .populate('table')
-            .populate('company')
             .then(board => res.json(board))
             .catch(e => console.log(e))
     })
@@ -15,7 +14,6 @@ module.exports = app => {
     app.get('/api/boards/:id', (req, res) => {
         Board.findOne({ _id: req.params.id })
             .populate('table')
-            .populate('task')
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })

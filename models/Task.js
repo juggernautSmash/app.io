@@ -2,7 +2,7 @@ module.exports = (model, Schema) => {
   const Task = new Schema({
     task: String,
     description: String,
-    dueDate: String,
+    dueDate: Date,
     priority: String,
     status: String,
     timeline: String,
