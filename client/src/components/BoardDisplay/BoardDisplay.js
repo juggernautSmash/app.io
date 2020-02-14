@@ -30,7 +30,7 @@ const BoardDisplay = () => {
                   </IconButton>
                   <IconButton aria-label="delete">
                     <DeleteIcon >
-                      {/* <EditBoardModal board={board} /> */}
+                      {/* <EditBoardModal board={board} /> */}/
                     </DeleteIcon >
                   </IconButton>
                 </>
