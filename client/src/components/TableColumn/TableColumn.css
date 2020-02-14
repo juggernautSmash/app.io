@@ -1,0 +1,9 @@
+.table {
+  margin-top: 10vh !important;
+  max-width: 345;
+}
+
+.taskCard {
+  margin-top: 1vh !important;
+  background-color: #7986cb !important;
+}

@@ -13,7 +13,7 @@ module.exports = app => {
     // retrieve one table
     app.get('/api/tables/:id', (req, res) => {
         Table.findOne({ _id: req.params.id })
-            .populate('task')
+            .populate('tasks')
             .populate('board')
             .then(user => res.json(user))
             .catch(e => console.log(e))
