@@ -1,16 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useSpring, animated } from 'react-spring'
+
+// Material-UI components
 import { makeStyles } from '@material-ui/core/styles'
-import Modal from '@material-ui/core/Modal'
-import Backdrop from '@material-ui/core/Backdrop'
-import ListItemText from '@material-ui/core/ListItemText'
-import { FormControl, FormHelperText, Input, InputLabel, Button, CircularProgress } from '@material-ui/core'
 import { green } from '@material-ui/core/colors'
+import { 
+  Modal,
+  Backdrop,
+  ListItemText,
+  FormControl, 
+  FormHelperText, 
+  Input, 
+  InputLabel, 
+  Button, 
+  CircularProgress, 
+  InputAdornment, 
+  IconButton } from '@material-ui/core'
 
-import { useSpring, animated } from 'react-spring' // web.cjs is required for IE 11 support
 
-import BottomBarContext from '../../utils/BottomBarContext'
-import './AddBoardModal.css'
+// Material-UI icons
+import EditIcon from '@material-ui/icons/Edit'
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+
+// Context
+import TableContext from '../../utils/TableContext'
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -75,7 +89,7 @@ Fade.propTypes = {
   onExited: PropTypes.func,
 }
 
-const AddBoardModal = _ => {
+const EditTaskModal = props => {
 
   const styles = useStyles()
   const [open, setOpen] = React.useState(false)
@@ -83,12 +97,15 @@ const AddBoardModal = _ => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const { title, description, isLoading, isSuccess, errors, handleInputChange, handleSubmitBoard, displayError } = React.useContext(BottomBarContext)
+  const { task, description, status, dueDate, isLoading, handleInputChange, handleUpdateTask } = React.useContext(TableContext)
 
   return (
     <>
-      <ListItemText primary='Add Board' onClick={handleOpen} />
+      <ListItemText onClick={handleOpen}>
+        <EditIcon />
+      </ListItemText>
       <Modal
+        disableEnforceFocus 
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
         className={styles.modal}
@@ -103,21 +120,19 @@ const AddBoardModal = _ => {
         <Fade in={open}>
           <div className={styles.paper}>
             <form>
+              <h1>Edit Task </h1>
+              <h3>{props.task.task}</h3>
               <div>
-                <h1>Add a Board</h1>
                 <FormControl>
-                  <InputLabel htmlFor="title">Title</InputLabel>
+                  <InputLabel htmlFor="task">Task</InputLabel>
                   <Input
-                    id="title"
-                    name="title"
-                    aria-describedby="title-helper-text"
+                    id="task"
+                    name="task"
+                    aria-describedby="task-helper-text"
                     onChange={handleInputChange}
-                    value={title}
-                    error={
-                      errors.some(e => (e.message.toLowerCase().includes('title')) ? true : false)
-                    }
+                    value={task}
                   />
-                  <FormHelperText id="title-helper-text">{errors && displayError(errors)}</FormHelperText>
+                  <FormHelperText id="task-helper-text"></FormHelperText>
                 </FormControl>
               </div>
               <div>
@@ -134,18 +149,56 @@ const AddBoardModal = _ => {
                   <FormHelperText id="description-helper-text"></FormHelperText>
                 </FormControl>
               </div>
+              <div>
+                <FormControl>
+                  <InputLabel htmlFor="dueDate">Due Date</InputLabel>
+                  <Input
+                    id="dueDate"
+                    name="dueDate"
+                    type="date"
+                    placeholder=""
+                    aria-describedby="dueDate-helper-text"
+                    onChange={handleInputChange}
+                    value={dueDate}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          edge="end"
+                        >
+                          <CalendarTodayIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                  <FormHelperText id="dueDate-helper-text"></FormHelperText>
+                </FormControl>
+              </div>
+              <div>
+                <FormControl>
+                  <InputLabel htmlFor="status">Status</InputLabel>
+                  <Input
+                    id="status"
+                    name="status"
+                    aria-describedby="description-helper-text"
+                    onChange={handleInputChange}
+                    value={status}
+                  />
+                  <FormHelperText id="description-helper-text"></FormHelperText>
+                </FormControl>
+              </div>
               <div className={styles.wrapper}>
                 <Button
+                  id={props.task._id}
                   disabled={isLoading}
                   onClick={event => {
-                    handleSubmitBoard(event)
-                    window.location.reload(false)
+                    event.preventDefault()
+                    handleUpdateTask(props.task._id)
+                    // window.location.reload(false)
                   }}
                 >
                   Submit
                 </Button>
                 {isLoading && <CircularProgress size={24} className={styles.buttonProgress} />}
-                {isSuccess && handleClose}
               </div>
             </form>
           </div>
@@ -154,6 +207,7 @@ const AddBoardModal = _ => {
     </>
   )
 
+
 }
 
-export default AddBoardModal
+export default EditTaskModal
