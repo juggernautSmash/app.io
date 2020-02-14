@@ -78,7 +78,7 @@ export default function HamMenu() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <Link to={'/user'}>
+                <Link style={{ textDecoration: 'none', color: 'white' }} to={'/user'}>
                     <StyledMenuItem onClick={_ => <Link to="/user" />}>
                         <ListItemIcon>
                             <PersonIcon fontSize="medium" />
@@ -86,7 +86,7 @@ export default function HamMenu() {
                         <ListItemText primary="Profile" />
                     </StyledMenuItem>
                 </Link>
-                <Link to={'/team'}>
+                <Link style={{ textDecoration: 'none', color: 'white' }} to={'/team'}>
                     <StyledMenuItem>
                         <ListItemIcon>
                             <GroupIcon fontSize="medium" />
@@ -94,7 +94,7 @@ export default function HamMenu() {
                         <ListItemText primary="Team" />
                     </StyledMenuItem>
                 </Link>
-                <Link to={'/boards'}>
+                <Link style={{ textDecoration: 'none', color: 'white' }} to={'/boards'}>
                     <StyledMenuItem>
                         <ListItemIcon>
                             <AssignmentIcon fontSize="medium" />
@@ -102,7 +102,7 @@ export default function HamMenu() {
                         <ListItemText primary="Boards" />
                     </StyledMenuItem>
                 </Link>
-                <Link to={'/'}>
+                <Link style={{ textDecoration: 'none', color: 'white' }} to={'/'}>
                     <StyledMenuItem>
                         <ListItemIcon>
                             <ExitToAppIcon onClick = {logout} fontSize="medium" />
