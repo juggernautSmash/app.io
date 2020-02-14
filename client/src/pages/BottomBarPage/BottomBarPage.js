@@ -99,7 +99,6 @@ const BottomBarPage = props => {
               state.updateLocalStorageItem('boards', data._id)
                 .then( newBoards => console.log('successful updating boards in storage', newBoards))
                 .catch( e => console.error('error updating boards in storage', e))
-
                 state.createTable(data._id)
             })
             .catch( e => console.error('error posting new board', e))
