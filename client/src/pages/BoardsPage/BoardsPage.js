@@ -39,14 +39,14 @@ const BoardsPage = _ => {
 
   boardState.getBoards = _ => {
     console.log('running getBoards')
-
+    //setBoardState({ ...boardState, isLoading: true })
     //get the user id
     boardState.getLocalStorageItem('user')
     .then( ({_id}) =>{
       axios.get(`/api/employees/${_id}`)
       .then( ({data: { boards }}) => {
         //get boards from the user DB
-        console.log('user boards are... ', boards)
+        //console.log('user boards are... ', boards)
         boardState.addLocalStorage('boards', boards)
         .then( boardList => {
           let boards = []
@@ -54,12 +54,12 @@ const BoardsPage = _ => {
             axios.get(`/api/boards/${boardId}`)
               .then( ({ data: { _id, title, description, lastUpdated } }) => {
                 boards.push({ _id, title, description, lastUpdated })
-                console.log('boards are...', boards)
+                console.log('boards are...', boardState.boards)
+                setBoardState({ ...boardState, boards, isLoading: false })
               })
               .catch( e => console.error('error getting boards from database', e))
           }) // end forEach
 
-          setBoardState({ ...boardState, boards, isLoading: false })
         })
         .catch( e => console.error('error adding boards to storage', e))
       })
@@ -131,10 +131,10 @@ const BoardsPage = _ => {
   
   React.useEffect(() => {
     // console.log('running useEffect. boards are... ', boardState.boards)
-    setBoardState({ ...boardState, isLoading: true })
+    // setBoardState({ ...boardState, isLoading: true })
     boardState.getBoards()
 
-  }, [])
+  }, [ ])
 
   return (
     <BoardContext.Provider value={boardState}>
