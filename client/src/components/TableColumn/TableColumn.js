@@ -68,7 +68,7 @@ const TableColumn = props => {
                         (event) => {
                           event.preventDefault()
                           handleAddTask(props.tableId)
-                          window.location.reload(false)
+                          //window.location.reload(false)
                         }
                       }/>
                     </IconButton>

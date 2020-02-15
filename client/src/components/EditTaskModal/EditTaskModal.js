@@ -216,7 +216,8 @@ const EditTaskModal = props => {
                   onClick={event => {
                     event.preventDefault()
                     handleUpdateTask(props.task._id)
-                    window.location.reload(false)
+                    handleClose()
+                    // window.location.reload(false)
                   }}
                 >
                   Submit

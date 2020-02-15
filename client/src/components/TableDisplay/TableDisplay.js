@@ -32,7 +32,7 @@ const TableDisplay = _ => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      {/* <SwipeableViews> */}
+      <SwipeableViews>
         {
           tables.map( (table, i) => 
           <TableColumn
@@ -44,7 +44,7 @@ const TableDisplay = _ => {
           />
           ) //end map
         }
-      {/* </SwipeableViews> */}
+      </SwipeableViews>
     </DragDropContext>
   )
 

@@ -140,7 +140,8 @@ const AddTableModal = _ => {
                   disabled={isLoading}
                   onClick={event => {
                     handleSubmitTable(event)
-                    window.location.reload(false)
+                    handleClose()
+                    //window.location.reload(false)
                   }}
                 >
                   Submit

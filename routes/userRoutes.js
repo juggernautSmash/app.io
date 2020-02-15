@@ -27,7 +27,7 @@ module.exports = app => {
     // retrieve all users
     app.get('/api/users', (req, res) => {
         User.find()
-            .populate('board')
+            .populate('boards')
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })
@@ -36,7 +36,7 @@ module.exports = app => {
     app.get('/api/employees/:id', (req, res) => {
         console.log('hit route for getting user by _id')
         User.findOne({ _id: req.params.id })
-            .populate('board')
+            .populate('boards')
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })

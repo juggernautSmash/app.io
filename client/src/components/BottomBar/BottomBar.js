@@ -54,7 +54,7 @@ const BottomBar = _ => {
           </Grid>
         </Grid>
         <Fab color="secondary" aria-label="add" className={classes.fabButton}>
-          <AddButton />
+          <AddButton  onClick={ () => console.log('FAB pressed')}/>
         </Fab>
       </Toolbar>
     </AppBar>

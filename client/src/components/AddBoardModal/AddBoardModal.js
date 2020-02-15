@@ -1,15 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useSpring, animated } from 'react-spring'
 import { makeStyles } from '@material-ui/core/styles'
-import Modal from '@material-ui/core/Modal'
-import Backdrop from '@material-ui/core/Backdrop'
-import ListItemText from '@material-ui/core/ListItemText'
-import { FormControl, FormHelperText, Input, InputLabel, Button, CircularProgress } from '@material-ui/core'
 import { green } from '@material-ui/core/colors'
+import { 
+  FormControl, 
+  FormHelperText, 
+  Input, 
+  InputLabel,
+  Button, 
+  CircularProgress,
+  Modal,
+  Backdrop,
+ } from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add'
 
-import { useSpring, animated } from 'react-spring' // web.cjs is required for IE 11 support
-
-import BottomBarContext from '../../utils/BottomBarContext'
+import BoardContext from '../../utils/BoardContext'
 import './AddBoardModal.css'
 
 const useStyles = makeStyles(theme => ({
@@ -83,11 +89,11 @@ const AddBoardModal = _ => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const { title, description, isLoading, isSuccess, errors, handleInputChange, handleSubmitBoard, displayError } = React.useContext(BottomBarContext)
+  const { title, description, isLoading, errors, handleInputChange, handleSubmitBoard, displayError } = React.useContext(BoardContext)
 
   return (
     <>
-      <ListItemText primary='Add Board' onClick={handleOpen} />
+      <AddIcon onClick={handleOpen} />
       <Modal
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
@@ -139,13 +145,13 @@ const AddBoardModal = _ => {
                   disabled={isLoading}
                   onClick={event => {
                     handleSubmitBoard(event)
-                    window.location.reload(false)
+                    handleClose()
+                    // window.location.reload(false)
                   }}
                 >
                   Submit
                 </Button>
                 {isLoading && <CircularProgress size={24} className={styles.buttonProgress} />}
-                {isSuccess}
               </div>
             </form>
           </div>

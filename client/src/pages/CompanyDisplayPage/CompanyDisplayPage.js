@@ -36,7 +36,7 @@ const CompanyDisplayPage = _ => {
               axios.put(`/api/company/${id}`, { photoUrl: url })
                 .then( r => {
                   console.log('profile axios hit. response... ', r.config.data )
-                 window.location.reload(false) 
+                  state.getProfile()
                 })
                 .catch( e => console.error(' error updating photoUrl for company', e))
             })
@@ -110,13 +110,14 @@ const CompanyDisplayPage = _ => {
                 setState({ ...state, profile, employees, isLoading: false })
                 console.log('profile is...', state.profile)
               })
-              .catch( e => console.error('error getting employee data', e))
+              .catch( e => console.error('error getting employee data', e)) //end axios get for employees
             }) // end forEach
           })
-          .catch( e => console.error(e) )
+          .catch( e => console.error(e) ) // end addLocalStorage
         }) // end axios.get.then
+
         // if getting the user from DB fails log the error
-        .catch( e => console.error( 'Error retrieving from DB', e ) )
+      .catch( e => console.error( 'Error retrieving from DB', e ) ) // end axios get company
     }) // end then for getLocalStorageItem for uid 
     .catch( e => console.error('error getting uid from storage', e)) // end axios catch
 
