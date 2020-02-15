@@ -117,6 +117,7 @@ const CompanyForm = _ => {
                     <Input
                         id="phone"
                         name="phone"
+                        type="tel"
                         aria-describedby="phone-helper-text"
                         onChange={handleInputChange}
                         onBlur={handleBlur}
@@ -154,7 +155,7 @@ const CompanyForm = _ => {
                             errors.some(e => (e.message.toLowerCase().includes('password')) ? true : false)
                         }
                     />
-                    <FormHelperText id="password-helper-text">Required
+                    <FormHelperText id="password-helper-text">
                     {
                             errors.some(e => (e.message.toLowerCase().includes('password'))) ? displayError(errors) : ''
                         }

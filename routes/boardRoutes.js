@@ -12,6 +12,7 @@ module.exports = app => {
 
     // retrieve one board
     app.get('/api/boards/:id', (req, res) => {
+        console.log('get boards route is hit')
         Board.findOne({ _id: req.params.id })
             .populate('table')
             .then(user => res.json(user))

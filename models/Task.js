@@ -1,5 +1,6 @@
 module.exports = (model, Schema) => {
   const Task = new Schema({
+    taskIndex: Number,
     task: String,
     description: String,
     dueDate: Date,

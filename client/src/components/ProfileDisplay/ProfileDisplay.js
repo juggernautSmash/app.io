@@ -1,32 +1,35 @@
 import React from 'react'
+
+// Material-UI components
 import {
   Avatar,
-  Typography,
   Card,
   CircularProgress,
-  CardHeader,
   IconButton,
   Badge,
   List,
   ListItem,
   ListItemText,
   ListItemAvatar,
-  Divider
+  CardHeader,
 } from '@material-ui/core'
+
+// Material-UI icons
 import {
-  Edit,
-  ListAlt,
+  Business,
   Email,
   Phone,
-  LocationCity,
-  AccessTime
+  LocationOn,
+  AccessTime,
+  PhotoCamera
 } from '@material-ui/icons'
+
+
 
 import { makeStyles } from '@material-ui/core/styles'
 import { red } from '@material-ui/core/colors'
 
 import './ProfileDisplay.css'
-import blankProfile from '../../assets/images/blank-profile.png'
 import Context from '../../utils/Context'
 
 const useStyles = makeStyles(theme => ({
@@ -35,16 +38,13 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    marginBottom: theme.spacing(14)
   },
   avatar: {
-    margin: theme.spacing(1),
-    // backgroundColor: theme.palette.secondary.main,
-    height: '20vh',
-    width: '20vh'
-  },
-  formsss: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    margin: theme.spacing(2),
+    backgroundColor: theme.palette.error.main,
+    height: '30vh',
+    width: '30vh'
   },
   buttonProgress: {
     color: red[500],
@@ -69,15 +69,16 @@ const ProfileDisplay = () => {
     location,
     timezone,
     photoUrl,
+    company,
     isLoading,
     handleFileUpload,
     handleImageUpload
   } = React.useContext(Context)
 
   return (
-    <Card className="card">
+    <Card className="profileCard">
       {isLoading && <CircularProgress size={24} className={classes.buttonProgress} />}
-      <div className={classes.paper}>
+      <div>
         <input
           type="file"
           id="imgInput"
@@ -92,66 +93,68 @@ const ProfileDisplay = () => {
           }}
           badgeContent={
             <IconButton onClick={handleFileUpload}>
-              <Edit color="secondary" fontSize="large" />
+              <PhotoCamera color="secondary" fontSize="large" />
             </IconButton>}
         >
           <Avatar
             className={classes.avatar}
             src={photoUrl}
           >
-            <h3>{firstName[0] + lastName[0]}</h3>
+            <span id="initials">{firstName[0] + lastName[0]}</span>
           </Avatar>
         </Badge>
       </div>
-      {/* <div className={classes.form}> */}
-      <h1>{firstName + ' ' + lastName}</h1>
+      <CardHeader 
+        title={<h1>{firstName + ' ' + lastName}</h1>}
+        subheader={<h3>{title ? title : null}</h3>}
+      />
+      {/* <h1>{firstName + ' ' + lastName}</h1>
+      <h4>{title ? title : null}</h4> */}
       <List >
         <ListItem>
           <ListItemAvatar>
             <Avatar>
-              <ListAlt />
+              <Business />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="Title:" secondary={title ? title : '---'} />
+          <ListItemText primary="Company" secondary={company ? company : '---'} />
         </ListItem>
-        <Divider variant="inset" component="li" />
         <ListItem>
           <ListItemAvatar>
             <Avatar>
               <Email />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="Email:" secondary={email} />
+          <ListItemText primary="Email" secondary={email} />
         </ListItem>
-        <Divider variant="inset" component="li" />
+
         <ListItem>
           <ListItemAvatar>
             <Avatar>
               <Phone />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="Phone:" secondary={phone ? phone : '---'} />
+          <ListItemText primary="Phone" secondary={phone ? phone : '---'} />
         </ListItem>
-        <Divider variant="inset" component="li" />
+
         <ListItem>
           <ListItemAvatar>
             <Avatar>
-              <LocationCity />
+              <LocationOn />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="Location:" secondary={location ? location : '---'} />
+          <ListItemText primary="Location" secondary={location ? location : '---'} />
         </ListItem>
-        <Divider variant="inset" component="li" />
+
         <ListItem>
           <ListItemAvatar>
             <Avatar>
               <AccessTime />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="Time Zone:" secondary={timezone ? timezone : '---'} />
+          <ListItemText primary="Time Zone" secondary={timezone ? timezone : '---'} />
         </ListItem>
       </List>
-      {/* </div> */}
     </Card>
   )
 }

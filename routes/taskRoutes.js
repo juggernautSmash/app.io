@@ -1,4 +1,4 @@
-const { Task, Table } = require('../models')
+const { Task, Table, Users } = require('../models')
 
 module.exports = app => {
 
@@ -9,18 +9,22 @@ module.exports = app => {
     .then( task => {
       res.json(task)
       Table.updateOne({ _id: req.body.table }, { $push: { tasks: task._id } })
-          .then(user => res.json(user))
-          .catch(e => console.log(e))
+          .then(table => console.log('updated table ', table) )
+          .catch(e => console.log('error updating table ', e) )
+      Users.updateOne({ _id: req.body.assignedTo }, { $push: {tasks: task._id} })
+        .then( user => console.log('update user ', user) )
+        .catch( e => console.error('error updating user with task ', e) )
     })
     .catch( e => console.error(e))
   })
 
   // get one task
   app.get('/api/task/:id', (req, res) => {
-    console.log('hit route for getting user by uid')
+    console.log('hit route for getting task')
     Task.findOne({ _id: req.params.id })
-        .then(task => res.json(task))
-        .catch(e => console.log(e))
+      .populate('assignedTo')
+      .then(task => res.json(task))
+      .catch(e => console.log(e))
   })
 
   // update one task
@@ -33,6 +37,7 @@ module.exports = app => {
 
   // delete one task
   app.delete('/api/task/:id', (req, res) => {
+    console.log('deleting task route hit')
     Task.deleteOne( { _id: req.params.id } ) // Get the row of the task of the ID.
       .then( response => res.json(response) )
       .catch(e => console.error(e))

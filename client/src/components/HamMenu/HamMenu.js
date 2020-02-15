@@ -1,17 +1,19 @@
-import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import React from 'react'
+
+// Material-UI Components
+import { withStyles } from '@material-ui/core/styles'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
 import { Link } from 'react-router-dom'
-// Icons
-import MenuIcon from '@material-ui/icons/Menu';
-import PersonIcon from '@material-ui/icons/Person';
-import GroupIcon from '@material-ui/icons/Group';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
+// Material-UI Icons
+import MenuIcon from '@material-ui/icons/Menu'
+import PersonIcon from '@material-ui/icons/Person'
+import GroupIcon from '@material-ui/icons/Group'
+import AssignmentIcon from '@material-ui/icons/Assignment'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 
 import Context from '../../utils/Context'
 
@@ -33,7 +35,7 @@ const StyledMenu = withStyles({
         }}
         {...props}
     />
-));
+))
 
 const StyledMenuItem = withStyles(theme => ({
     root: {
@@ -44,20 +46,20 @@ const StyledMenuItem = withStyles(theme => ({
             },
         },
     },
-}))(MenuItem);
+}))(MenuItem)
 
 export default function HamMenu() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = React.useState(null)
 
     const { logout } = React.useContext(Context)
 
     const handleClick = event => {
-        setAnchorEl(event.currentTarget);
-    };
+        setAnchorEl(event.currentTarget)
+    }
 
     const handleClose = () => {
-        setAnchorEl(null);
-    };
+        setAnchorEl(null)
+    }
 
     return (
         <div>
@@ -79,7 +81,7 @@ export default function HamMenu() {
                 onClose={handleClose}
             >
                 <Link style={{ textDecoration: 'none', color: 'white' }} to={'/user'}>
-                    <StyledMenuItem onClick={_ => <Link to="/user" />}>
+                    <StyledMenuItem onClick={handleClose}>
                         <ListItemIcon>
                             <PersonIcon fontSize="medium" />
                         </ListItemIcon>
@@ -87,7 +89,7 @@ export default function HamMenu() {
                     </StyledMenuItem>
                 </Link>
                 <Link style={{ textDecoration: 'none', color: 'white' }} to={'/team'}>
-                    <StyledMenuItem>
+                    <StyledMenuItem onClick={handleClose}> 
                         <ListItemIcon>
                             <GroupIcon fontSize="medium" />
                         </ListItemIcon>
@@ -95,7 +97,7 @@ export default function HamMenu() {
                     </StyledMenuItem>
                 </Link>
                 <Link style={{ textDecoration: 'none', color: 'white' }} to={'/boards'}>
-                    <StyledMenuItem>
+                    <StyledMenuItem onClick={handleClose}>
                         <ListItemIcon>
                             <AssignmentIcon fontSize="medium" />
                         </ListItemIcon>
@@ -103,7 +105,7 @@ export default function HamMenu() {
                     </StyledMenuItem>
                 </Link>
                 <Link style={{ textDecoration: 'none', color: 'white' }} to={'/'}>
-                    <StyledMenuItem>
+                    <StyledMenuItem onClick={handleClose}>
                         <ListItemIcon>
                             <ExitToAppIcon onClick = {logout} fontSize="medium" />
                         </ListItemIcon>
@@ -112,5 +114,5 @@ export default function HamMenu() {
                 </Link>
             </StyledMenu>
         </div>
-    );
+    )
 }

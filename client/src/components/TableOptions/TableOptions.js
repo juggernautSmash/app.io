@@ -4,7 +4,6 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import ListItemText from '@material-ui/core/ListItemText'
 
 // Material-UI Icons
 import MoreVertIcon from '@material-ui/icons/MoreVert'

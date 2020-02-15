@@ -25,7 +25,8 @@ const TableContext = React.createContext({
   handleAddTask: () => {},
   handleSubmitTable: () => {},
   handleEditTable: () => {},
-  handleDeleteTable: () => {}
+  handleDeleteTable: () => {},
+  handleAutoCompleteValue: () => {}
 })
 
 export default TableContext

@@ -1,22 +1,23 @@
 import React from 'react'
 
 // Material components
-import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core'
+import { AppBar, Toolbar, Typography, IconButton, ButtonGroup } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import { yellow } from '@material-ui/core/colors'
 
 // Material Icons
-import { Menu, ExitToApp, Home } from '@material-ui/icons'
+import { Home } from '@material-ui/icons'
 
 // App components
+import './NavBar.css'
 import LoginModal from '../LoginModal'
 import SignupModal from '../SignupModal'
 import HamMenu from '../HamMenu'
 
 // Context
 import { FirebaseContext } from '../../utils/Auth'
-import Context from '../../utils/Context'
 
-const styles = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   },
@@ -24,22 +25,28 @@ const styles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   title: {
-    textAlign: 'center',
     flexGrow: 1
+  },
+  authButton: {
+    textAlign: 'right',
+    backgroundColor: yellow[900]
   }
 }))
 
 const NavBar = () => {
 
   const { user } = React.useContext(FirebaseContext)
-  const { logout } = React.useContext(Context)
+  const styles = useStyles()
 
   return (
     <div className={styles.root}>
       <AppBar position="fixed" color="primary">
         <Toolbar>
           { user ? (
-            <HamMenu />
+            <IconButton className={ styles.menuButton }>
+              <HamMenu />
+            </IconButton>
+
           ) : (
             <IconButton edge="start" className={ styles.menuButton }  color="inherit" aria-label="menu">
               <Home />
@@ -50,14 +57,12 @@ const NavBar = () => {
             app.io
           </Typography>
           { user ? (
-            <IconButton edge="end" className={ styles.menuButton }  color="inherit" aria-label="menu"  onClick={logout}>
-              <ExitToApp/> 
-            </IconButton>
+            null
           ) : (
-            <>
-              <Button><LoginModal/></Button>
-              <Button><SignupModal/></Button>
-            </>
+              <>
+                <LoginModal/>
+                <SignupModal/>
+              </>
           )
         }
         </Toolbar>

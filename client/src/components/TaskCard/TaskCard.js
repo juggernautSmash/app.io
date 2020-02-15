@@ -19,8 +19,6 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 
 // Material-UI Icons
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import EditIcon from '@material-ui/icons/Edit';
-
 
 // local CSS
 import './TaskCard.css'
@@ -50,6 +48,8 @@ const useStyles = makeStyles(theme => ({
 
 const TaskCard = props => {
 
+  console.log('TaskCard props', props)
+
   const classes = useStyles()
   const [expanded, setExpanded] = React.useState(false)
 
@@ -60,7 +60,7 @@ const TaskCard = props => {
   const { handleDeleteTask } = React.useContext(TableContext)
 
   return (
-    <Draggable draggableId={props.task._id} index={props.index}>
+    <Draggable draggableId={props.task._id} index={props.task.taskIndex}>
       {
         (provided) => (
           <Card key={props.task._id}
@@ -83,7 +83,7 @@ const TaskCard = props => {
               />
             <CardActions disableSpacing>
               {
-                props.task.status ? (<Chip size="small" label={props.task.status} />) : null
+                props.task.status ? (<Chip size="large" label={props.task.status} />) : <Chip size="large" label="QUEUED" />
               }
               
               <IconButton

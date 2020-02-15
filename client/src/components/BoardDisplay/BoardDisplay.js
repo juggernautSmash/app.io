@@ -42,7 +42,7 @@ const BoardDisplay = () => {
               <CardActionArea>
                 <CardHeader
                   title={
-                    <Typography variant="subtitle2" color="textSecondary" component="h1">
+                    <Typography variant="subtitle2" color="textSecondary" component="h5">
                       Descritpion:
                     </Typography>
                   }

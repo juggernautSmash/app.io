@@ -1,6 +1,7 @@
 .modalButton {
     color: white;
-    font-size: 15px;
+    font-size: 5vh;
+    margin-right: 1vh !important;
 }
 
 #js-focus-visible :focus:not(.focus-visible) {
