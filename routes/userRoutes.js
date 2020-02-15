@@ -19,7 +19,7 @@ module.exports = app => {
     app.get('/api/user/:id', (req, res) => {
         console.log('hit route for getting user by uid')
         User.findOne({ uid: req.params.id })
-            .populate('board')
+            .populate('boards')
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })
