@@ -142,7 +142,8 @@ const EditBoardModal = props => {
                   onClick={event => {
                     event.preventDefault()
                     handleUpdateBoard(props.board._id)
-                    window.location.reload(false)
+                    handleClose()
+                    // window.location.reload(false)
                   }}
                 >
                   Submit

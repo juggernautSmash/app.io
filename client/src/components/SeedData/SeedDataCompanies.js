@@ -4,7 +4,7 @@ import { Email, WbIncandescent } from "@material-ui/icons"
 {
     `
     Company Name: Slashers Inc.;
-    Company Email: redrum@email.com;
+    Company Email: redrum@slashers.com;
     Company Adress: 1342 Elm Street, Rexingtrom CA,23189;
     Company Phone #: 261-751-1678
     ` 

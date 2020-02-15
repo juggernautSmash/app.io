@@ -133,7 +133,7 @@ const CompanyDisplay = _ => {
               />
               </CardActionArea>
             </Card>
-          )) : '---'}
+          )) : <Typography>No Employees Found</Typography>}
       </CardContent>
     </Card>
     </>

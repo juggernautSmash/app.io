@@ -3,14 +3,16 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
-import ListItemText from '@material-ui/core/ListItemText'
 import { Button } from '@material-ui/core'
 import { green } from '@material-ui/core/colors'
 
 import { useSpring, animated } from 'react-spring' // web.cjs is required for IE 11 support
 
+// Icons
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
+
 // Context
-import TableContext from '../../utils/TableContext'
+import BoardContext from '../../utils/BoardContext'
 
 
 const useStyles = makeStyles(theme => ({
@@ -76,7 +78,7 @@ Fade.propTypes = {
   onExited: PropTypes.func,
 }
 
-const DeleteTableModal = props => {
+const DeleteBoardModal = props => {
 
   const styles = useStyles()
   const [open, setOpen] = React.useState(false)
@@ -84,11 +86,11 @@ const DeleteTableModal = props => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const { handleDeleteTable } = React.useContext(TableContext)
+  const { handleDeleteBoard } = React.useContext(BoardContext)
 
   return (
     <>
-      <ListItemText primary='Delete Table' onClick={handleOpen} />
+      <DeleteForeverIcon onClick={handleOpen} />
       <Modal
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
@@ -103,12 +105,11 @@ const DeleteTableModal = props => {
       >
         <Fade in={open}>
           <div className={styles.paper}>
-            <p>Are you sure you want to delete this table?</p>
+            <p>Are you sure you want to delete this Board?</p>
             <Button onClick={ (event) => {
               event.preventDefault()
-              handleDeleteTable(props.tableId)
+              handleDeleteBoard(props.boardId)
               handleClose()
-              // window.location.reload(false)
               }
             }>
               Yes
@@ -124,4 +125,4 @@ const DeleteTableModal = props => {
 
 }
 
-export default DeleteTableModal
+export default DeleteBoardModal

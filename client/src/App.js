@@ -30,7 +30,7 @@ function App(props) {
             <Route path="/boards/:boardId" component={TableDisplayPage} {...props} />
             <Route exact path="/tables" component={TableDisplayPage} {...props} />
           </Switch>
-          <BottomBarPage />
+          {/* <BottomBarPage /> */}
         </FirebaseContext.Provider>
       </BrowserRouter>
     </Container>

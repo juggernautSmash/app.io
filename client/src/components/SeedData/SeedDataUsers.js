@@ -3,7 +3,7 @@ import { Email, Phone, Shop } from "@material-ui/icons";
 // company 1 users
 {
     `
-    Email: mcdreamy@email.com;
+    Email: mcdreamy@slashers.com;
     FirstName: Freddy;
     LastName: Kruger;
     (Title)JobPosition: Nightmares;

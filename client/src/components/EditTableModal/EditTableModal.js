@@ -142,7 +142,8 @@ const EditTableModal = props => {
                   onClick={event => {
                     event.preventDefault()
                     handleEditTable(props.tableId)
-                    window.location.reload(false)
+                    handleClose()
+                    // window.location.reload(false)
                   }}
                 >
                   Submit

@@ -70,7 +70,7 @@ const TableDisplayPage = props => {
           description: '', 
           status: ''
           })
-
+          state.getTable()
       })
       .catch(e => console.error('error updating task... ',e))
   }
@@ -82,7 +82,8 @@ const TableDisplayPage = props => {
     axios.delete(`/api/task/${id}`)
       .then( r => {
         console.log('delete success', r)
-        document.getElementById(id).remove()
+        state.getTable()
+        // document.getElementById(id).remove()
       })
       .catch( e => console.error('delete failed ', e))
   }
@@ -98,6 +99,7 @@ const TableDisplayPage = props => {
     axios.post(`/api/task/`, payload)
       .then( r => {
         console.log('posting new task to table success', r)
+        state.getTable()
       })
       .catch( e => console.error('posting task to table fail ', e))
   }
@@ -115,6 +117,7 @@ const TableDisplayPage = props => {
     axios.post('/api/tables', payload)
       .then( r => {
         console.log('successfull posting table', r)
+        state.getTable()
       })
       .catch( e => console.error('error posting table', e))
   }
@@ -133,6 +136,7 @@ const TableDisplayPage = props => {
     axios.put(`/api/tables/${id}`, payload)
       .then(response => {
         console.log('axios table put is hit', response)
+        state.getTable()
       })
       .catch(e => console.error(e))
   }
@@ -144,7 +148,8 @@ const TableDisplayPage = props => {
     axios.delete(`/api/tables/${id}`)
      .then( r => {
        console.log('delete table successsful', r)
-       setState({ ...state, isLoading: false})     
+       setState({ ...state, isLoading: false})    
+       state.getTable() 
      })
      .catch( e => console.error('error deleting table', e))
   }

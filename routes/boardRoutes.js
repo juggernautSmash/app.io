@@ -44,7 +44,7 @@ module.exports = app => {
     })
 
     // remove one board
-    app.delete('/boards/:id', (req, res) => {
+    app.delete('/api/boards/:id', (req, res) => {
         Board.deleteOne({ _id: req.params.id })
             .then(board => res.json(board))
             .catch(e => console.log(e))
