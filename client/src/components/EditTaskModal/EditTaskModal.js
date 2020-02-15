@@ -13,15 +13,13 @@ import {
   FormHelperText, 
   Input, 
   InputLabel, 
+  TextField,
   Button, 
-  CircularProgress, 
-  InputAdornment, 
-  IconButton } from '@material-ui/core'
-
+  CircularProgress  } from '@material-ui/core'
+import Autocomplete from '@material-ui/lab/Autocomplete'
 
 // Material-UI icons
 import EditIcon from '@material-ui/icons/Edit'
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
 // Context
 import TableContext from '../../utils/TableContext'
@@ -89,6 +87,13 @@ Fade.propTypes = {
   onExited: PropTypes.func,
 }
 
+const statusOptions = [
+  { status: 'QUEUED', color: 'text.disabled' },
+  { status: 'IN PROGRESS', color: 'warning.main' },
+  { status: 'STUCK!', color: 'error.main' },
+  { status: 'DONE', color:'success.main' }
+]
+
 const EditTaskModal = props => {
 
   const styles = useStyles()
@@ -97,7 +102,14 @@ const EditTaskModal = props => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const { task, description, status, dueDate, isLoading, handleInputChange, handleUpdateTask } = React.useContext(TableContext)
+  const { 
+    task, 
+    description, 
+    dueDate, 
+    isLoading, 
+    handleInputChange, 
+    handleUpdateTask,
+    handleAutoCompleteValue } = React.useContext(TableContext)
 
   return (
     <>
@@ -128,9 +140,10 @@ const EditTaskModal = props => {
                   <Input
                     id="task"
                     name="task"
+                    placeholder={props.task.task}
                     aria-describedby="task-helper-text"
                     onChange={handleInputChange}
-                    value={task}
+                    value={task || props.task.task}
                   />
                   <FormHelperText id="task-helper-text"></FormHelperText>
                 </FormControl>
@@ -142,9 +155,10 @@ const EditTaskModal = props => {
                     multiline
                     id="description"
                     name="description"
+                    placeholder={props.task.description}
                     aria-describedby="description-helper-text"
                     onChange={handleInputChange}
-                    value={description}
+                    value={description || props.task.description}
                   />
                   <FormHelperText id="description-helper-text"></FormHelperText>
                 </FormControl>
@@ -156,26 +170,36 @@ const EditTaskModal = props => {
                     id="dueDate"
                     name="dueDate"
                     type="date"
-                    placeholder=""
+                    placeholder={props.task.dueDate}
                     aria-describedby="dueDate-helper-text"
                     onChange={handleInputChange}
-                    value={dueDate}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          edge="end"
-                        >
-                          <CalendarTodayIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    }
+                    value={dueDate || props.task.dueDate}
                   />
                   <FormHelperText id="dueDate-helper-text"></FormHelperText>
                 </FormControl>
               </div>
               <div>
                 <FormControl>
-                  <InputLabel htmlFor="status">Status</InputLabel>
+                  <Autocomplete
+                    id="status"
+                    name="status"
+                    placeholder={props.task.status}
+                    // value={status}
+                    style={{ width: 200 }}
+                    options={statusOptions}
+                    getOptionLabel={option => option.status}
+                    onInputChange={ (event, value, reason) => {
+                      handleAutoCompleteValue('status',value)
+                    }}
+                    renderInput={params => (
+                      <TextField 
+                        {...params} 
+                        fullWidth 
+                        label="Status"   
+                      />
+                    )}
+                  />
+                  {/* <InputLabel htmlFor="status">Status</InputLabel>
                   <Input
                     id="status"
                     name="status"
@@ -183,17 +207,16 @@ const EditTaskModal = props => {
                     onChange={handleInputChange}
                     value={status}
                   />
-                  <FormHelperText id="description-helper-text"></FormHelperText>
+                  <FormHelperText id="description-helper-text"></FormHelperText> */}
                 </FormControl>
               </div>
               <div className={styles.wrapper}>
                 <Button
-                  id={props.task._id}
                   disabled={isLoading}
                   onClick={event => {
                     event.preventDefault()
                     handleUpdateTask(props.task._id)
-                    // window.location.reload(false)
+                    window.location.reload(false)
                   }}
                 >
                   Submit

@@ -36,7 +36,7 @@ export default function LoginModal() {
 
   return (
     <div>
-      <Button className="modalButton" type="button" onClick={handleOpen}>
+      <Button variant="contained" color="secondary" className="modalButton" type="button" onClick={handleOpen}>
         Login
       </Button>
       <Modal

@@ -84,7 +84,7 @@ const DeleteTableModal = props => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const { handleDeleteTable, isLoading } = React.useContext(TableContext)
+  const { handleDeleteTable } = React.useContext(TableContext)
 
   return (
     <>

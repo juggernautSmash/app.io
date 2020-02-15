@@ -3,6 +3,7 @@ const { Company, User, Board } = require('../models')
 module.exports = app => {
     // add a company
     app.post('/api/company', (req, res) => {
+        console.log(' company post route is hit', req.body)
         Company.create(req.body)
         .then( company => res.json(company) )
         .catch( e => console.error(e) )
@@ -10,7 +11,17 @@ module.exports = app => {
 
     // get one company for company login
     app.get('/api/company/:id', (req, res) => {
+        console.log('company login is hit')
         Company.findOne({ uid: req.params.id })
+            .then(company => res.json(company))
+            .catch(e => console.log(e))
+    })
+
+    // get company by name
+    app.get('/api/company/name/:name', (req, res) => {
+        console.log('get company by name  is hit')
+        Company.findOne({ companyName: req.params.name })
+            .populate('employees')
             .then(company => res.json(company))
             .catch(e => console.log(e))
     })

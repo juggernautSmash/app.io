@@ -34,7 +34,11 @@ const CompanyDisplayPage = _ => {
               setState({ ...state, photoUrl: url})
               let id = JSON.parse(localStorage.getItem('user'))._id
               axios.put(`/api/company/${id}`, { photoUrl: url })
-                .then( r => console.log('profile axios hit. response... ', r ))
+                .then( r => {
+                  console.log('profile axios hit. response... ', r.config.data )
+                 window.location.reload(false) 
+                })
+                .catch( e => console.error(' error updating photoUrl for company', e))
             })
         })
     } //end if
@@ -66,51 +70,61 @@ const CompanyDisplayPage = _ => {
   state.getProfile = _ => {
     setState({ ...state, isLoading: true })
 
-    state.getLocalStorageItem('user')
-    .then( dBprofile => {
+    state.getLocalStorageItem('uid')
+    .then( uid => {
+      axios.get(`/api/company/${uid}`)
+      // store user from DB to localStorage
+      .then( ({ data }) => {
+      // console.log('data from axios is...', data)
+        state.addLocalStorage('user', data)
+          .then( dBprofile => {
+            console.log('data stored', dBprofile)
 
-      let employees = []
+            let employees = []
 
-      let profile = {
-        photoUrl: dBprofile.photoUrl,
-        companyName: dBprofile.companyName,
-        email: dBprofile.email,
-        phone: dBprofile.phone,
-        address: dBprofile.address
-      }
+            let profile = {
+              photoUrl: dBprofile.photoUrl,
+              companyName: dBprofile.companyName,
+              email: dBprofile.email,
+              phone: dBprofile.phone,
+              address: dBprofile.address
+            }
 
-      dBprofile.employees.forEach( employee => {
-        console.log('getting the employee info for employee id: ', employee)
-        axios.get(`/api/employees/${employee}`)
-        .then( ({data}) => {
-          console.log('employee data is ', data)
-          let payload = {
-            photoUrl: data.photoUrl,
-            title: data.title,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            phone: data.phone
-          }
-  
-          employees.push(payload)
-        })
-        .catch( e => console.error('error getting employee data', e))
-      }) // end forEach
-
-      setTimeout( () =>{ 
-        setState({ ...state, profile, employees, isLoading: false})
-       }, 5000)
-
-    })
-    .catch( e => console.error('Error getting user from storage', e))
+            // setState({ ...state, profile })
       
-  } // end getProfile
-  React.useEffect( () => {
+            dBprofile.employees.forEach( employee => {
+              console.log('getting the employee info for employee id: ', employee)
+              axios.get(`/api/employees/${employee}`)
+              .then( ({data}) => {
+                console.log('employee data is ', data)
+                let payload = {
+                  photoUrl: data.photoUrl,
+                  title: data.title,
+                  firstName: data.firstName,
+                  lastName: data.lastName,
+                  email: data.email,
+                  phone: data.phone
+                }
+        
+                employees.push(payload)
+                setState({ ...state, profile, employees, isLoading: false })
+                console.log('profile is...', state.profile)
+              })
+              .catch( e => console.error('error getting employee data', e))
+            }) // end forEach
+          })
+          .catch( e => console.error(e) )
+        }) // end axios.get.then
+        // if getting the user from DB fails log the error
+        .catch( e => console.error( 'Error retrieving from DB', e ) )
+    }) // end then for getLocalStorageItem for uid 
+    .catch( e => console.error('error getting uid from storage', e)) // end axios catch
 
+  } // end getProfile
+
+  React.useEffect( () => {
     //on page load, get the profile
-    state.getProfile()
-    
+    state.getProfile()   
   }, [ ])
 
   return (

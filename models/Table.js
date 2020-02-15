@@ -1,5 +1,6 @@
 module.exports = (model, Schema) => {
   const Table = new Schema({
+    tableIndex: Number,
     title: {
       type: String,
       uppercase: true,

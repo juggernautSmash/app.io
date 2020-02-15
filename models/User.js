@@ -16,7 +16,8 @@ module.exports = (model, Schema) => {
     timezone: String,
     company: String,
     companyName: [{ type: Schema.Types.ObjectId, ref: 'Company' }],
-    boards: [{ type: Schema.Types.ObjectId, ref: 'Board' }]
+    boards: [{ type: Schema.Types.ObjectId, ref: 'Board' }],
+    tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
   }, { timestamps: { createdAt: 'birthday', updatedAt: 'lastUpdated' } })
 
   return model('User', User)

@@ -1,17 +1,21 @@
 import React from 'react'
+import axios from 'axios'
 import PropTypes from 'prop-types'
+import { useSpring, animated } from 'react-spring'
 import { makeStyles } from '@material-ui/core/styles'
-import Modal from '@material-ui/core/Modal'
-import Backdrop from '@material-ui/core/Backdrop'
-import ListItemText from '@material-ui/core/ListItemText'
-import EditIcon from '@material-ui/icons/Edit';
-import { FormControl, FormHelperText, Input, InputLabel, Button, CircularProgress } from '@material-ui/core'
 import { green } from '@material-ui/core/colors'
+import { 
+  Modal,
+  Backdrop,
+  FormControl,
+  ListItemText,
+  Button, 
+  CircularProgress, 
+  TextField } from '@material-ui/core'
 
-import { useSpring, animated } from 'react-spring' // web.cjs is required for IE 11 support
+// Context
+import TableContext from '../../utils/TableContext'
 
-import BoardContext from '../../utils/BoardContext'
-import './EditBoardModal.css'
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -76,23 +80,27 @@ Fade.propTypes = {
   onExited: PropTypes.func,
 }
 
-const EditBoardModal = props => {
 
+const AssignedToModal = _ => {
+  
   const styles = useStyles()
   const [open, setOpen] = React.useState(false)
-
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+  
+  const { name, isLoading, handleInputChange } = React.useContext(TableContext)
 
-  const { title, description, isLoading, handleInputChange, handleUpdateBoard } = React.useContext(BoardContext)
+    const getEmployees = _ => {
+      let employees = []
+    
+      axios.get(``)
+      
+    }
 
   return (
     <>
-      <ListItemText onClick={handleOpen}>
-        <EditIcon />
-      </ListItemText>
+      <ListItemText primary='Assign Task' onClick={handleOpen} />
       <Modal
-        disableEnforceFocus 
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
         className={styles.modal}
@@ -108,40 +116,22 @@ const EditBoardModal = props => {
           <div className={styles.paper}>
             <form>
               <div>
-                <h1>Edit Board</h1>
+                <h1>Assign To</h1>
                 <FormControl>
-                  <InputLabel htmlFor="title">Title</InputLabel>
-                  <Input
-                    id="title"
-                    name="title"
-                    aria-describedby="title-helper-text"
+                  <TextField
+                    id="name"
+                    name="name"
+                    aria-describedby="name-helper-text"
                     onChange={handleInputChange}
                     value={title}
                   />
-                  <FormHelperText id="title-helper-text"></FormHelperText>
-                </FormControl>
-              </div>
-              <div>
-                <FormControl>
-                  <InputLabel htmlFor="description">Description</InputLabel>
-                  <Input
-                    multiline
-                    id="description"
-                    name="description"
-                    aria-describedby="description-helper-text"
-                    onChange={handleInputChange}
-                    value={description}
-                  />
-                  <FormHelperText id="description-helper-text"></FormHelperText>
                 </FormControl>
               </div>
               <div className={styles.wrapper}>
                 <Button
-                  id={props.board._id}
                   disabled={isLoading}
                   onClick={event => {
-                    event.preventDefault()
-                    handleUpdateBoard(props.board._id)
+                    handleSubmitTable(event)
                     window.location.reload(false)
                   }}
                 >
@@ -158,4 +148,4 @@ const EditBoardModal = props => {
 
 }
 
-export default EditBoardModal
+export default AssignedToModal

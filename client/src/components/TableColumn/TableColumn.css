@@ -1,9 +1,13 @@
 .table {
   margin-top: 10vh !important;
   max-width: 345;
+  margin-bottom: 15vh;
 }
 
-.taskCard {
-  margin-top: 1vh !important;
-  background-color: #7986cb !important;
+.addTaskCard {
+  /* margin-top: 1vh !important; */
+  margin-left: 2vh;
+  margin-right: 2vh;
+  margin-bottom: 2vh;
+  background-color: #1976d2 !important;
 }

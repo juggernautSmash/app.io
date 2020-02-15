@@ -5,16 +5,15 @@ module.exports = app => {
     app.get('/api/tables', (req, res) => {
         Table.find()
             .populate('user')
-            .populate('board')
             .then(table => res.json(table))
             .catch(e => console.log(e))
     })
 
     // retrieve one table
     app.get('/api/tables/:id', (req, res) => {
+        console.log('getting one table route is hit')
         Table.findOne({ _id: req.params.id })
             .populate('tasks')
-            .populate('board')
             .then(user => res.json(user))
             .catch(e => console.log(e))
     })
@@ -23,9 +22,10 @@ module.exports = app => {
     app.post('/api/tables', (req, res) => {
         console.log('add table route is hit')
         Table.create(req.body) // create a table
-            .then(({ _id }) => {
+            .then( table => {
                 console.log('successfully created a table')
-                Board.updateOne({ _id: req.body.board }, { $push: { table: _id } })
+                res.json(table)
+                Board.updateOne({ _id: req.body.board }, { $push: { table: table._id } })
                     .then(board => res.json(board))
                     .catch(e => console.log(e))
             })
@@ -44,7 +44,7 @@ module.exports = app => {
 
     // remove table
     app.delete('/api/tables/:id', (req, res) => {
-        console.log('remove table route ')
+        console.log('remove table route is hit')
         Table.deleteOne({ _id: req.params.id })
             .then(table => { res.json(table) })
             .catch(e => console.log(e))

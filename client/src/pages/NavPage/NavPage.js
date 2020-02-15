@@ -161,9 +161,6 @@ const NavPage = () => {
                 state.addLocalStorage('user', data)
                   .then( r => console.log('user stored in localStorage is ', r))
                   .catch( e => console.error(e))
-                // state.addLocalStorage('boards', data.board)
-                //   .then( r => console.log('user stored in localStorage is ', r))
-                //   .catch( e => console.error(e))
                 state.addLocalStorage('company', data.company)
                   .then( r => console.log('user stored in localStorage is ', r))
                   .catch( e => console.error(e))
@@ -387,7 +384,7 @@ const NavPage = () => {
           // console.log('createBoards for user...', user._id)
 
           // create 3 boards after sign up
-          for( let i = 0; i<3 ; i++){
+          for( let i = 1; i<4 ; i++){
             // for cleaner code, set the req.body to a variable
             const boardPayload = {
               owner: user._id,
@@ -396,36 +393,38 @@ const NavPage = () => {
             
             axios.post(`/api/boards`, boardPayload)
             .then( ({data}) => {
-              // console.log('axios board post is hit. Created board', data)
               boardsCreated.push(boardPayload)
               board_ids.push(data._id)
-              // let boardList = JSON.parse(localStorage.getItem('boards'))
               state.addLocalStorage('boards', board_ids)
               .then( boardList => {
                 // console.log('added the following boards in storage', boardList)
 
-                for( let j = 0; j<3 ; j++){
+                for( let j = 1; j<4 ; j++){
                   const tablePayload ={
                     title: `Table ${j}`,
                     board: data._id,
-                    owner: user._id
+                    owner: user._id,
+                    tableIndex: j
                   }
                   // create tables
                   axios.post('/api/tables', tablePayload)
-                    .then( r => {
-                      console.log('successfully generated table')
+                    .then( table => {
+                      console.log('successfully generated table', table.data)
 
                       // generate tasks in the table
-                      for( let k = 0; k<3 ; k++ ){
+                      for( let k = 1; k<4 ; k++ ){
+                        console.log('generating task')
                         const taskPayload = {
-                          table: r.data._id,
+                          table: table.data._id,
                           owner: user._id,
-                          task: `New Task #${k}`
+                          task: `New Task #${k}`,
+                          taskIndex: k,
+                          assignedTo: user._id
                         }
 
                         axios.post('/api/task', taskPayload)
                           .then( r => {
-                            console.log('successfully added task to table')
+                            console.log('successfully added task to table', r)
                           })
                           .catch( e => console.error('error posting tasks to table', e))
                       } // end for loop generating tasks

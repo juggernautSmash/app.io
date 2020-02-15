@@ -41,19 +41,19 @@ const TableColumn = props => {
             </IconButton>
           }
         />
-          <Droppable droppableId={props.tableId}>
+          <Droppable droppableId={props.tableId} index={props.table.tableIndex}>
              { (provided) => (
                <CardContent
                 ref={provided.innerRef}
                 { ...provided.droppableProps }
                 >
-                  { props.tasks.map( (task, i) => <TaskCard key={task._id} task={task} index={i}/> ) }
+                  { props.tasks.map( (task, i) => <TaskCard key={task._id} task={task}/> ) }
                   {provided.placeholder}
                 </CardContent>
                )
               }
           </Droppable>
-          <Card className="taskCard">
+          <Card className="addTaskCard">
             <CardContent>
               <Input 
                 placeholder="Add task"
@@ -63,13 +63,12 @@ const TableColumn = props => {
                 onChange={handleInputChange}
                 endAdornment={
                   <InputAdornment position="end">
-                    <IconButton
-                      edge="end"
-                    >
+                    <IconButton>
                       <SaveIcon onClick={
                         (event) => {
                           event.preventDefault()
                           handleAddTask(props.tableId)
+                          window.location.reload(false)
                         }
                       }/>
                     </IconButton>

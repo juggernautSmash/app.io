@@ -1,15 +1,27 @@
 import React from 'react'
 import Avatar from '@material-ui/core/Avatar'
-// import Image from 'material-ui-image'
-import Typography from '@material-ui/core/Typography'
+
+// Material UI components
 import { makeStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
 import Badge from '@material-ui/core/Badge'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import CardContent from '@material-ui/core/CardContent'
 import IconButton from '@material-ui/core/IconButton'
-import { Edit as EditIcon } from '@material-ui/icons'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import ListItemText from '@material-ui/core/ListItemText'
+
+//Material-UI icons
+import { 
+  PhotoCamera,
+  Email,
+  Phone,
+  LocationOn,
+ } from '@material-ui/icons'
 
 import Loading from '../Loading'
 import CompanyContext from '../../utils/CompanyContext'
@@ -18,7 +30,7 @@ import './CompanyDisplay.css'
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(1),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -66,7 +78,7 @@ const CompanyDisplay = _ => {
           }}
           badgeContent={
             <IconButton onClick={ handleFileUpload }>
-                <EditIcon color="secondary" fontSize="large"/>
+                <PhotoCamera color="secondary" fontSize="large"/>
             </IconButton>}
           >
           <Avatar 
@@ -77,18 +89,33 @@ const CompanyDisplay = _ => {
       </div>
       <div className = {classes.form}>
       <h1>{ profile.companyName }</h1>
-      <Typography color="textSecondary" variant="subtitle1" className={classes.labels}>Address</Typography>
-        <Typography variant="body1">
-          { profile.address ? profile.address : '---' }
-        </Typography>
-        <Typography color="textSecondary" variant="subtitle1" className={classes.labels}>Phone #</Typography>
-        <Typography variant="body1">
-          { profile.phone ? profile.phone : '---' }
-        </Typography>
-        <Typography color="textSecondary" variant="subtitle1" className={classes.labels}>Email</Typography>
-        <Typography variant="body1">
-          { profile.email ? profile.email : '---' }
-        </Typography>
+      <List >
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <LocationOn />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={ profile.address ? profile.address : '---'} secondary="ADDRESS" />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <Email />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={profile.email ? profile.email : '---'} secondary="EMAIL" />
+        </ListItem>
+
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <Phone />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={profile.phone ? profile.phone : '---'}  secondary="PHONE" />
+        </ListItem>
+      </List>
       </div>
     </Card>
     <Card className="employeeContainer">
