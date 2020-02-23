@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
-import BoardDisplay from '../../components/BoardDisplay'
+
+// Local files
+import BoardDisplay from '../../components/Displays/Boards'
 import Loading from '../../components/Loading'
 import BoardContext from '../../utils/BoardContext'
 
@@ -137,6 +139,7 @@ const BoardsPage = _ => {
               console.log('board created is...', data)
               boardState.createTable(data._id)
               boardState.getBoards()
+              setBoardState({ ...boardState, title: '', description: '' })
             })
             .catch( e => console.error('error posting new board', e))
         })

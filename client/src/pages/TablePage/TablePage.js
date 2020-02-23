@@ -3,7 +3,7 @@ import axios from 'axios'
 import { DragDropContext } from 'react-beautiful-dnd'
 
 import TableContext from '../../utils/TableContext'
-import TableDisplay from '../../components/TableDisplay'
+import TableDisplay from '../../components/Displays/Tables'
 
 
 const TableDisplayPage = props => {

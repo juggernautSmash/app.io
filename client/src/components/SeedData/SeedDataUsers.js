@@ -16,7 +16,7 @@ import { Email, Phone, Shop } from "@material-ui/icons";
 
 {
     `
-    Email: mamasboy@email.com;
+    Email: mamasboy@slashers.com;
     FirstName: Jason;
     LastName: Vorhees;
     (Title)JobPosition: Camp Councilor;
@@ -29,7 +29,7 @@ import { Email, Phone, Shop } from "@material-ui/icons";
 
 {
     `
-    Email: hallowseve@email.com;
+    Email: hallowseve@slashers.com;
     FirstName: Michael;
     LastName: Myers;
     (Title)JobPosition: Neiborhood Watch;
@@ -38,7 +38,7 @@ import { Email, Phone, Shop } from "@material-ui/icons";
     Timezone: Halloween
     `
 }
-// Pass: trickortreat
+// Pass: noswimming
 
 {
     `
